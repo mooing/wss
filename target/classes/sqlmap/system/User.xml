@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+
+	<!-- 获取有效用户列表 -->
+	<select id="findAllUserCount" resultType="int">
+		select count(*) from
+		sys_user 
+	</select>
+	<select id="findAllUser" resultType="User" parameterType="map">
+		select
+		id,
+		username,
+		realname,
+		usertype,
+		reg_time regtime,
+		lastlogin_time lastLoginTime,
+		ip,
+		status
+		from
+		sys_user 
+		limit #{startrecord} , #{recordsize}
+	</select>
+	<!-- 根据id获取用户 -->
+	<select id="findUserById" resultType="User" parameterType="int">
+		select
+		u.id,
+		u.username,
+		u.realname,
+		u.usertype,
+		u.status
+		from
+		sys_user u where
+		u.status=1 and
+		u.id=#{userid}
+	</select>
+	<!-- 根据name获取用户 -->
+	<select id="getUserByName" resultType="User" parameterType="string">
+		select
+		u.id,
+		u.password,
+		u.username,
+		u.usertype,
+		u.random,
+		u.status
+		from
+		sys_user u where
+		u.status=1 and
+		u.username=#{username}
+	</select>
+	<select id="getUserCountByName" resultType="int" parameterType="string">
+		select
+		count(*)
+		from
+		sys_user u where
+		u.username=#{username}
+	</select>
+
+	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into sys_user(
+		username,
+		realname,
+		password,
+		usertype,
+		reg_time,
+		ip,
+		random,
+		lastlogin_time
+		)
+		values(
+		#{username},
+		#{realname},
+		#{password},
+		#{usertype},
+		now(),
+		#{ip},
+		#{random},
+		now()
+		)
+	</insert>
+	<!-- 根据id修改用户 -->
+	<update id="updateUserById" parameterType="User">
+		update sys_user set
+		realname=#{realname},
+		usertype=#{usertype}
+		where id=#{id}
+	</update>
+
+	<!-- del -->
+	<update id="delUserById" parameterType="int">
+		update sys_user set
+		status=0
+		where id=#{userid}
+	</update>
+
+	<select id="getSQLPassword" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select password(#{password}) as password
+	</select>
+</mapper>

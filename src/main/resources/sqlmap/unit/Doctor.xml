@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Doctor">
+
+	<!-- 保存医生信息 -->
+	<insert id="saveDoctor" parameterType="Doctor">
+		insert into hos_doctor(
+		userid
+		)
+		values(
+		#{userid}
+		)
+	</insert>
+	
+	<!-- 根据用户id,设置医生无效 -->
+	<update id="delDoctorByUserId" parameterType="int">
+		update hos_doctor set
+			status=0
+		where userid=#{userid};
+	</update>
+</mapper>

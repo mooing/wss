@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"  
+  version="2.0">
+    
+    <description>date functions library</description>
+    <tlib-version>1.0</tlib-version>  
+    <short-name>date</short-name>  
+    <uri>http://www.qunar.com/admin/func/date</uri>
+    
+    <function>  
+      <name>formatLongToDate</name>
+      <function-class>com.mooing.wss.common.util.DateFunction</function-class>  
+      <function-signature>java.lang.String formatLongToDate(long)</function-signature>  
+    </function>
+
+    <function>  
+      <name>formatLongToDateTime</name>              
+      <function-class>com.qunar.qss.common.util.DateFunction</function-class>  
+      <function-signature>java.lang.String formatLongToDateTime(long)</function-signature>  
+    </function>
+    
+    <function>  
+      <name>formatDateToSimpleDate</name>              
+      <function-class>com.mooing.wss.common.util.DateFunction</function-class>  
+      <function-signature>java.lang.String formatDateToSimpleDate(java.util.Date)</function-signature>  
+    </function>
+    
+    <function>  
+      <name>formatDateToSimpleDatetime</name>              
+      <function-class>com.mooing.wss.common.util.DateFunction</function-class>  
+      <function-signature>java.lang.String formatDateToSimpleDatetime(java.util.Date)</function-signature>  
+    </function>
+    
+    <function>  
+      <name>formatDateToHHmm</name>              
+      <function-class>com.mooing.wss.common.util.DateFunction</function-class>  
+      <function-signature>java.lang.String formatDateToHHmm(java.util.Date)</function-signature>  
+    </function>
+    
+</taglib>   
