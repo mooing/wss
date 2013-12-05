@@ -60,13 +60,6 @@
 		<filter-name>servletExceptionHandlerFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!-- <jsp-config> <taglib> <taglib-uri>http://www.qunar.com/admin/func/date</taglib-uri> 
-		<taglib-location>/WEB-INF/taglib/dateFunction.xml</taglib-location> </taglib> 
-		<taglib> <taglib-uri>http://www.qunar.com/qreport</taglib-uri> <taglib-location>/WEB-INF/taglib/qreport.xml</taglib-location> 
-		</taglib> <taglib> <taglib-uri>http://www.qunar.com/hcs/tag/page</taglib-uri> 
-		<taglib-location>/WEB-INF/taglib/Pagination.tld</taglib-location> </taglib> 
-		</jsp-config> <error-page> <error-code>404</error-code> <location>/WEB-INF/views/error.jsp</location> 
-		</error-page> -->
 	<error-page>
 		<error-code>405</error-code>
 		<location>/WEB-INF/views/error.jsp</location>
@@ -85,6 +78,6 @@
 	</session-config>
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file></welcome-file>
 	</welcome-file-list>
 </web-app>

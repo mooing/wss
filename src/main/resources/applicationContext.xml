@@ -11,9 +11,6 @@
 
 	<import resource="applicationContext-db.xml" />
 	<import resource="applicationContext-web.xml" />
-	<!-- 
-	<import resource="ehcache.xml" />
-	 -->
 	<!-- MessageSource -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	

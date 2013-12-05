@@ -99,7 +99,7 @@ public class SystemController extends BaseController {
 		session.setAttribute(UserConstants.USER_SESSION_KEY, userSession);
 
 		log.info("login succ! username - {} , ip: {}", username, this.getIpAddr(request));
-		mv = new ModelAndView("redirect:/user/index");
+		mv = new ModelAndView("redirect:/user/list");
 
 		return mv;
 	}
