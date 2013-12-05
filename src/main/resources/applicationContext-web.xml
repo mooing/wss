@@ -14,6 +14,7 @@
 	<context:component-scan base-package="com.mooing.wss" />
 	<!-- 默认启动annotation-config -->
 
+	<!-- ehcache config -->
 	<ehcache:annotation-driven cache-manager="ehCacheManager" />
 	<bean id="ehCacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
@@ -61,24 +62,68 @@
 		</property>
 	</bean>
 
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath">
+			<value>/</value>
+		</property>
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">utf-8</prop>
+				<prop key="output.encoding">utf-8</prop>
+				<prop key="contentType">text/html;charset=utf-8</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean name="negotiationViewResolver"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1"></property>
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean id="viewResolver"
+					class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+					<property name="order" value="2" />
+					<property name="prefix">
+						<value>/WEB-INF/views/</value>
+					</property>
+					<property name="suffix">
+						<value>.html</value>
+					</property>
+					<property name="exposeSpringMacroHelpers">
+						<value>true</value>
+					</property>
+					<property name="contentType">
+						<value>text/html;charset=utf-8</value>
+					</property>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
+		</property>
+	</bean>
+
+<!-- 
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="mediaTypes">
 			<map>
 				<entry key="html" value="text/html" />
 				<entry key="json" value="application/json" />
-				<!-- <entry key="xml" value="application/xml"/> -->
 				<entry key="excel" value="application/vnd.ms-excel" />
 			</map>
 		</property>
 		<property name="viewResolvers">
 			<list>
-				<!-- view resolver会顺序查找 -->
-				<!-- bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"> 
-					<property name="viewClass" value="org.springframework.web.servlet.view.velocity.VelocityView" 
-					/> <property name="exposeSpringMacroHelpers" value="true" /> <property name="cache" 
-					value="false" /> <property name="suffix" value=".vm" /> <property name="contentType" 
-					value="text/html; charset=UTF-8" /> </bean -->
 				<bean id="jspViewResolver"
 					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 					<property name="viewClass"
@@ -91,14 +136,13 @@
 		<property name="defaultContentType" value="text/html" />
 		<property name="defaultViews">
 			<list>
-				<!-- 输出为JSON数据 -->
 				<bean
 					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
 				</bean>
 			</list>
 		</property>
 	</bean>
-
+ -->
 	<mvc:resources mapping="/images/**" location="/images/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
 	<mvc:resources mapping="/css/**" location="/css/" />
