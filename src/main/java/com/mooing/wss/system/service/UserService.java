@@ -19,10 +19,10 @@ import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.common.util.Sha1Util;
+import com.mooing.wss.hos.model.Doctor;
 import com.mooing.wss.system.enums.UserType;
 import com.mooing.wss.system.model.Role;
 import com.mooing.wss.system.model.User;
-import com.mooing.wss.unit.model.Doctor;
 
 @Service
 public class UserService extends SystemBaseService {

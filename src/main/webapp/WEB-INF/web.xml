@@ -62,15 +62,15 @@
 	</filter-mapping>
 	<error-page>
 		<error-code>405</error-code>
-		<location>/WEB-INF/views/error.jsp</location>
+		<location>/WEB-INF/views/error.html</location>
 	</error-page>
 	<error-page>
 		<error-code>403</error-code>
-		<location>/WEB-INF/views/error.jsp</location>
+		<location>/WEB-INF/views/error.html</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/WEB-INF/views/error.jsp</location>
+		<location>/WEB-INF/views/error.html</location>
 	</error-page>
 
 	<session-config>

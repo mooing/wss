@@ -105,24 +105,16 @@
 				</bean>
 			</list>
 		</property>
+		<!-- 
 		<property name="defaultViews">
 			<list>
 				<bean
 					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 			</list>
 		</property>
+		 -->
 	</bean>
 
-	<!-- <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"> 
-		<property name="mediaTypes"> <map> <entry key="html" value="text/html" /> 
-		<entry key="json" value="application/json" /> <entry key="excel" value="application/vnd.ms-excel" 
-		/> </map> </property> <property name="viewResolvers"> <list> <bean id="jspViewResolver" 
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" 
-		/> <property name="prefix" value="/WEB-INF/views/" /> <property name="suffix" 
-		value=".jsp" /> </bean> </list> </property> <property name="defaultContentType" 
-		value="text/html" /> <property name="defaultViews"> <list> <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"> 
-		</bean> </list> </property> </bean> -->
 	<mvc:resources mapping="/images/**" location="/images/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
 	<mvc:resources mapping="/css/**" location="/css/" />

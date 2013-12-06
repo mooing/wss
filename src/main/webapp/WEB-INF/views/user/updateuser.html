@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+	#parse("/WEB-INF/views/common/head.html")
+</head>
+<body>
+<form action="../user/update"  id="userform" class="form" method="post">
+	<input type="hidden" name="id" value="$!user.id "/>
+		<table cellspacing="0" cellpadding="0" class="tblBookRec">
+			<tr class="line">
+				<td>真实姓名:<input name="realname" value="$!user.realname"/></td>
+				<th>用户类型:
+				</th>
+				<th>用户角色:
+				</th>
+			</tr>
+			<a onclick="submit()" href="javascript:void(0);" id="savenow">保存</a><a>取消</a>
+		</table>
+</form>
+</body>
+<script>
+	if('$!error'!=''){
+		$("#savenow").hide();
+		alert("数据异常，您选择的用户不存在或无效！");
+	}
+	function submit(){
+		$("#userform").submit();
+	}
+</script>
+</html>

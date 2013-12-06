@@ -1,4 +1,4 @@
-package com.mooing.wss.unit.model;
+package com.mooing.wss.hos.model;
 
 import com.mooing.wss.common.model.BaseModel;
 

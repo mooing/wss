@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+	#parse("/WEB-INF/views/common/head.html")
+</head>
+<body>
+<form action="../role/addrole"  id="roleform"   method="post">
+
+		<table cellspacing="0" cellpadding="0" class="tblBookRec">
+			<tr class="line">
+				<td>角色名:<input name="rolename" /></td>
+			</tr>
+			<a onclick="submit()" href="javascript:void(0);" id="save">保存</a><a>取消</a>
+		</table>
+</form>
+</body>
+<script>
+$(function(){
+	if('$!error'=='1'){
+		$("#save").hide();
+		alert("当前登录用户没有新增用户权限,请用管理员身份登录！");
+	}
+});
+	function submit(){
+		$("#roleform").submit();
+	}
+</script>
+</html>

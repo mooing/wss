@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+		
+	#parse("/WEB-INF/views/common/head.html")
+	</head>
+	<body>
+	
+	<div class="qn_header autowidth">
+			<div class="inner">
+				<h1></h1>
+			</div>
+		</div>
+		<div class="qn_page">
+			<div class="qn_usercenter">
+				<div class="win winLogin">
+					<div class="hd"></div>
+					<div class="ct">
+					 #if($!errorMsg)
+						<div class="errorExplanation">
+							<p>错误信息</p>
+							<ul>
+								<li>$!errorMsg </li>
+							</ul>
+						</div>
+						#end
+						<form action="../system/login" name="loginform" id="loginform" class="form" method="post">
+							<p>
+								<label>用户名</label>
+								<input class="textbox" id="username" name="username" type="text" value="admin"/>
+							</p>
+							<p>
+								<label>密码</label>
+								<input class="textbox" id="password" name="password" type="password"  value='123456'/>
+							</p>
+							<p>
+								<label>验证码</label>
+								<input class="textbox_new textbox"  id="validCodeTxt" name="validCode" onchange="checkValidCode()" type="text" maxlength="10" value=""/>
+								<img id="imgVcode"  src=""/>
+								<a href="javascript:void(0)" onclick="getValidCode()">换一换</a>
+							<p>		
+							</p>
+							<p class="r">
+								<input class="button" name="commit" type="submit" value="登录" />
+								<input type="reset" value="重置" class="button"/>
+							</p>
+							<div class="clr"></div>
+						</form>
+					</div>
+					<div class="ft">
+						<div class="b2"></div>	<div class="b1"></div>
+					</div>
+				</div>			
+			</div>						
+		</div>
+		<div class="qn_footer">
+			<div class="inner">
+				<div class="cr">
+				</div>
+			</div>
+		</div>
+	
+	</body>
+	
+	<script  type="text/javascript">
+		//获取验证码
+		$(function(){
+			getValidCode();
+		});
+		
+		   function getValidCode(){
+				$("#imgVcode").attr("src", "../system/validcode?st="+new Date());
+		   }
+		   
+		   function checkValidCode(){
+			   var validCode=$("#validCodeTxt").val();
+		   }
+		</script>
+</html>

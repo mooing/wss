@@ -41,7 +41,6 @@ public class UserAclInterceptor implements HandlerInterceptor {
 		String pathInfo = RequestUtil.getPathInfo(req);
 
 		// 处理未登录和session失效重定向到登陆页面
-		// log.info("UserAclInterceptor| preHandle ================,pathInfo:"+pathInfo+";userSession:"+userSession);
 		if (userSession == null && !pathInfo.endsWith("/system/login")&& !pathInfo.endsWith("/system/validcode")&& !pathInfo.endsWith("/system/checkvalidcode")) {
 			res.sendRedirect(req.getContextPath() + "/system/login");
 			return false;
