@@ -1,98 +1,66 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css">
-    <link rel="stylesheet" type="text/css" href="themes/icon.css">
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.easyui.min.js"></script>
-</head>
-<body class="easyui-layout">
-        <div data-options="region:'north'" style="height:80px"></div>
+#parse("/WEB-INF/views/common/head.html")
+<script>document.body.className = "easyui-layout";</script>
 
-        <div data-options="region:'west',split:true" title="West" style="width:200px;">
+<div data-options="region:'north'" style="height:80px"></div>
 
-        	<div class="easyui-accordion">
-        		<div title="About" data-options="iconCls:'icon-ok'" style="overflow:auto;padding:10px;">
-        			<a href="#" class="easyui-linkbutton" onclick="addTab('google','http://www.google.com')">google</a>
-				    <a href="#" class="easyui-linkbutton" onclick="addTab('jquery','http://jquery.com/')">jquery</a>
-				    <a href="#" class="easyui-linkbutton" onclick="addTab('easyui','http://jeasyui.com/')">easyui</a>
-        		</div>
-        		<div title="Help" data-options="iconCls:'icon-help'" style="padding:10px;">
-        			<a href="">menu1</a>
-        		</div>
-        		<div title="TreeMenu" data-options="iconCls:'icon-search'" style="padding:10px;">
-        			<a href="">menu1</a>
-        		</div>
-        	</div>
+<div data-options="region:'west',split:true" title="菜单" style="width:200px;">
+
+    <div class="easyui-accordion">
+        <div title="用户管理" data-options="iconCls:'icon-ok'" style="overflow:auto;padding:10px;">
+            <a href="#" onclick="addTab('用户列表','/user/list')">用户列表</a>
         </div>
+    </div>
+</div>
 
-        <div region="center" id="content" class="easyui-tabs" >
-            <div title="Home">
-            	<table class="easyui-datagrid">
-            		<thead>
-            			<tr>
-            				<th data-options="field:'itemid'">Item ID</th>
-            				<th data-options="field:'productid'">Product</th>
-            				<th data-options="field:'listprice',align:'right'">List Price</th>
-            				<th data-options="field:'attr1'">Attribute</th>
-            			</tr>
-            		</thead>
-            		<tbody>
-            			<tr>
-            				<td>EST-1</td>
-            				<td>FI-SW-01</td>
-            				<td>36.50</td>
-            				<td>Large</td>
-            			</tr>
-            			<tr>
-            				<td>EST-10</td>
-            				<td>K9-DL-01</td>
-            				<td>18.50</td>
-            				<td>Spotted Adult Female</td>
-            			</tr>
-            			<tr>
-            				<td>EST-11</td>
-            				<td>RP-SN-01</td>
-            				<td>28.50</td>
-            				<td>Venomless</td>
-            			</tr>
-            			<tr>
-            				<td>EST-12</td>
-            				<td>RP-SN-01</td>
-            				<td>26.50</td>
-            				<td>Rattleless</td>
-            			</tr>
-            			<tr>
-            				<td>EST-13</td>
-            				<td>RP-LI-02</td>
-            				<td>35.50</td>
-            				<td>Green Adult</td>
-            			</tr>
-            		</tbody>
-            	</table>
-            </div>
-        </div>
+<div region="center" id="content" class="easyui-tabs" >
+    <div title="Home">
+        <table class="easyui-datagrid">
+            <thead>
+                <tr>
+                    <th data-options="field:'itemid'">Item ID</th>
+                    <th data-options="field:'productid'">Product</th>
+                    <th data-options="field:'listprice',align:'right'">List Price</th>
+                    <th data-options="field:'attr1'">Attribute</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>EST-1</td>
+                    <td>FI-SW-01</td>
+                    <td>36.50</td>
+                    <td>Large</td>
+                </tr>
+                <tr>
+                    <td>EST-10</td>
+                    <td>K9-DL-01</td>
+                    <td>18.50</td>
+                    <td>Spotted Adult Female</td>
+                </tr>
+                <tr>
+                    <td>EST-11</td>
+                    <td>RP-SN-01</td>
+                    <td>28.50</td>
+                    <td>Venomless</td>
+                </tr>
+                <tr>
+                    <td>EST-12</td>
+                    <td>RP-SN-01</td>
+                    <td>26.50</td>
+                    <td>Rattleless</td>
+                </tr>
+                <tr>
+                    <td>EST-13</td>
+                    <td>RP-LI-02</td>
+                    <td>35.50</td>
+                    <td>Green Adult</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <style>
-	#content .panel-body{
-		overflow: hidden;
-	}
-</style>
-
- <script>
- function addTab(title, url){
-    if ($('#content').tabs('exists', title)){
-        $('#content').tabs('select', title);
-    } else {
-        var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
-        $('#content').tabs('add',{
-            title:title,
-            content:content,
-            closable:true
-        });
+    #content .panel-body{
+        overflow: hidden;
     }
-}
-</script>
-</body>
-</html>
+</style>
+#parse("/WEB-INF/views/common/footer.html")
