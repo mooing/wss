@@ -1,0 +1,19 @@
+#content .panel-body{
+    overflow: hidden;
+}
+
+.menu-link{
+	display: block;
+	text-decoration: none;
+	line-height: 20px;
+	height: 20px;
+}
+
+.msg{
+	padding:10px;
+	border:1px solid #ccc;
+}
+.msg-error{
+	background: pink;
+	color:#333;
+}

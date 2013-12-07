@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title></title>
-	#parse("/WEB-INF/views/common/head.html")
-	</head>
-	<body>
-	<table cellspacing="0" cellpadding="0" class="tblBookRec">
-					<tr class="line">
-						<th>角色名称</th>
-					</tr>
-					 #foreach($!role in $!page.data )
-						<tr class="line" >
-							<td class="c3"><c:out value="$!role.rolename "/></td>
-						</tr>
-					#end
-					#if($!${page.data} == 0 )
-				        <tr>
-				            <td colspan="8">没有找到记录</td>
-				        </tr>
-				    #end
-				</table>
-				<div class="comm_page">
-				</div>
-	</body>
-</html>
+#parse("/WEB-INF/views/common/head.html")
+<table class="easyui-datagrid">
+	<thead>
+		<tr>
+			<th data-options="field:'rolename'">角色名称</th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach($!role in $!page.data )
+		<tr>
+			<td>$!role.rolename</td>
+		</tr>
+		#end
+		#if($!${page.data} == 0 )
+		<tr>
+			<td>没有找到记录</td>
+		</tr>
+		#end
+	</tbody>
+
+</table>
+<div class="comm_page">
+</div>
+<script type="text/javascript" src="/js/module/role.js"></script>
+#parse("/WEB-INF/views/common/footer.html")

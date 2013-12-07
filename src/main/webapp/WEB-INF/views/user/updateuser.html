@@ -1,32 +1,34 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title></title>
-	#parse("/WEB-INF/views/common/head.html")
-</head>
-<body>
-<form action="../user/update"  id="userform" class="form" method="post">
-	<input type="hidden" name="id" value="$!user.id "/>
-		<table cellspacing="0" cellpadding="0" class="tblBookRec">
-			<tr class="line">
-				<td>真实姓名:<input name="realname" value="$!user.realname"/></td>
-				<th>用户类型:
-				</th>
-				<th>用户角色:
-				</th>
-			</tr>
-			<a onclick="submit()" href="javascript:void(0);" id="savenow">保存</a><a>取消</a>
-		</table>
+#parse("/WEB-INF/views/common/head.html")
+#if( $!error != '' )
+<div class="msg msg-error">数据异常，您选择的用户不存在或无效！</div>
+#else
+<form id="user-form" method="post" action="/user/update">
+    <div>
+        <label for="username">真实姓名:</label>
+        <input class="easyui-validatebox" type="text" name="realname" value="$!user.realname"/>
+    </div>
+    <div>
+        <label for="username">用户类型:</label>
+        <select name="" class="easyui-validatebox">
+        	<option value="">test</option>
+        </select>
+    </div>
+     <div>
+        <label for="username">角色类型:</label>
+        <select name="" class="easyui-validatebox">
+        	<option value="">test</option>
+        </select>
+    </div>
+    <div>
+        <label for="password">初始密码:</label>
+        <input class="easyui-validatebox" type="text" name="password" data-options="required:true" value="123456"/>
+    </div>
+    <div>
+    	<input type="hidden" name="id" value="$!user.id "/>
+    	<input type="submit" value="保存">
+    </div>
 </form>
-</body>
-<script>
-	if('$!error'!=''){
-		$("#savenow").hide();
-		alert("数据异常，您选择的用户不存在或无效！");
-	}
-	function submit(){
-		$("#userform").submit();
-	}
-</script>
-</html>
+#end
+<script type="text/javascript" src="/js/module/user.js"></script>
+#parse("/WEB-INF/views/common/footer.html")
+
