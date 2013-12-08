@@ -1,5 +1,5 @@
 #parse("/WEB-INF/views/common/head.html")
-<table class="easyui-datagrid">
+<table class="easyui-datagrid" data-options="fitColumns:true" id="">
 	<thead>
 		<tr>
 			<th data-options="field:'username'">用户名</th>
@@ -29,6 +29,7 @@
 	</tbody>
 					
 </table>
+
 <div class="comm_page">
 	<page:pagination controller="../user" action="list" page="$!page" params="$!param" />
 </div>
