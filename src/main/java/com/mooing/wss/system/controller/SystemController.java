@@ -45,6 +45,12 @@ public class SystemController extends BaseController {
 		log.info("当前登录用户请求的的路径为：{}", requestUrl);
 		return new ModelAndView("user/login");
 	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView home(HttpServletRequest request) {
+		String requestUrl = request.getRequestURI();
+		return new ModelAndView("layout");
+	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ModelAndView loginAcion(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request,
@@ -99,7 +105,7 @@ public class SystemController extends BaseController {
 		session.setAttribute(UserConstants.USER_SESSION_KEY, userSession);
 
 		log.info("login succ! username - {} , ip: {}", username, this.getIpAddr(request));
-		mv = new ModelAndView("redirect:/user/list");
+		mv = new ModelAndView("redirect:/system/home");
 
 		return mv;
 	}

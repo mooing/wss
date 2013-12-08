@@ -1,47 +1,49 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title></title>
-	#parse("/WEB-INF/views/common/head.html")
-	</head>
-	<body>
-	<table cellspacing="0" cellpadding="0" class="tblBookRec">
-					<tr class="line">
-						<th>用户名</th>
-						<th>真实姓名</th>
-						<th>创建时间</th>
-						<th>状态</th>
-					</tr>
-					 #foreach($!user in $!page.data )
-						<tr class="line" >
-							<td class="c3">$!user.username </td>
-							<td class="c2">$!user.realname </td>
-							<td class="c1">$!user.regtime</td>
-							<td class="c2">$!user.status </td>
-							<td class="c2"><a href="javascript:void(0);" onclick="grantRole($!{user.id})" >授予角色</a></td>
-						</tr>
-					#end
-					#if($!${page.data} == 0 )
-				        <tr>
-				            <td colspan="8">没有找到记录</td>
-				        </tr>
-				    #end
-				</table>
-				<div class="comm_page">
-					<page:pagination controller="../user" action="list" page="$!page" params="$!param" />
-				</div>
-				
-				<div style="display: none;" id="userRoleDiv">
-					<form action="../user/grantrole"
+#parse("/WEB-INF/views/common/head.html")
+<table class="easyui-datagrid" data-options="fitColumns:true" id="">
+	<thead>
+		<tr>
+			<th data-options="field:'username'">用户名</th>
+			<th data-options="field:'realname'">真实姓名</th>
+			<th data-options="field:'regtime'">创建时间</th>
+			<th data-options="field:'status'">状态</th>
+			<th data-options="field:'role'"></th>
+		</tr>
+	</thead>
+	<tbody>
+	#foreach($!user in $!page.data )
+	<tr>
+		<td>$!user.username</td>
+		<td>$!user.realname</td>
+		<td>$!user.regtime</td>
+		<td>$!user.status</td>
+		<td>
+			<a href="javascript:void(0);" onclick="grantRole($!{user.id})" >授予角色</a>
+		</td>
+	</tr>
+	#end
+	#if($!${page.data} == 0 )
+	<tr>
+		<td colspan="4">没有找到记录</td>
+	</tr>
+	#end
+	</tbody>
+					
+</table>
+
+<div class="comm_page">
+	<page:pagination controller="../user" action="list" page="$!page" params="$!param" />
+</div>
+
+<div style="display: none;" id="userRoleDiv">
+	<form action="../user/grantrole"
 					method="post" id="userRoleform">
-					 <input type='checkbox' name='roleIds' />1
-					 <input type='checkbox' name='roleIds' />1
-					 <input type='checkbox' name='roleIds' />1
-					</form>
-				</div>
-	</body>
-	
-<script>
-</script>
-</html>
+		<input type='checkbox' name='roleIds' />
+		1
+		<input type='checkbox' name='roleIds' />
+		1
+		<input type='checkbox' name='roleIds' />
+		1
+	</form>
+</div>
+<script type="text/javascript" src="/js/module/user.js"></script>
+#parse("/WEB-INF/views/common/footer.html")
