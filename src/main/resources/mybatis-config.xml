@@ -29,6 +29,7 @@
 		<typeAlias alias="UserRole" type="com.mooing.wss.system.model.UserRole" />
 		<typeAlias alias="Module" type="com.mooing.wss.system.model.Module" />
 		<typeAlias alias="Doctor" type="com.mooing.wss.hos.model.Doctor" />
+		<typeAlias alias="Hospital" type="com.mooing.wss.hos.model.Hospital" />
 	</typeAliases>
 
 	<mappers>

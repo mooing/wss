@@ -4,18 +4,70 @@
 
 	<!-- 保存医生信息 -->
 	<insert id="saveHospital" parameterType="Hospital">
-		insert into hos_doctor(
-		userid
+		insert into hos_hospital(
+	name,
+	hos_code,
+	org_code,
+	region_code,
+	ext_address,
+	sort,
+	isbjy,
+	contacts,
+	phone,
+	zipcode,
+	hos_property,
+	level,
+	classify_code,
+	sms_account,
+	sms_password,
+	status,
+	remark
 		)
 		values(
-		#{userid}
+		#{name},
+		#{hosCode},
+		#{orgCode},
+		#{regionCode},
+		#{extAddress},
+		#{sort},
+		#{isbjy},
+		#{contacts},
+		#{phone},
+		#{zipcode},
+		#{hosProperty},
+		#{level},
+		#{classifyCode},
+		#{smsAccount},
+		#{smsPassword},
+		1,
+		#{remark}
 		)
 	</insert>
 	
-	<!-- 根据用户id,设置医生无效 -->
-	<update id="delDoctorByUserId" parameterType="int">
-		update hos_doctor set
-			status=0
-		where userid=#{userid};
+	<!-- 根据id  ,update-->
+	<update id="updateHospitalById" parameterType="int">
+		update hos_hospital set
+			name,
+		hos_code=#{hosCode},
+		org_code=#{orgCode},
+		region_code=#{regionCode},
+		ext_address=#{extAddress},
+		sort=#{sort},
+		isbjy=#{isbjy},
+		contacts=#{contacts},
+		phone=#{phone},
+		zipcode=#{zipcode},
+		hos_property=#{hosProperty},
+		level=#{level},
+		classify_code=#{classifyCode},
+		sms_account=#{smsAccount},
+		sms_password=#{smsPassword},
+		status=#{status},
+		remark=#{remark}
+		where id=#{id};
 	</update>
+	
+	<delete id="delHospitalById" parameterType="int">
+		delete from hos_hospital where id=#{id}
+	</delete>
 </mapper>

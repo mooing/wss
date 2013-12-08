@@ -15,6 +15,11 @@
 		maxElementsOnDisk="100" eternal="false" overflowToDisk="true"
 		diskSpoolBufferSizeMB="20" timeToIdleSeconds="100" timeToLiveSeconds="100"
 		transactionalMode="off" memoryStoreEvictionPolicy="LRU" />
+	<!-- hospital缓存 -->
+	<cache name="hospitalCache" maxElementsInMemory="100"
+		maxElementsOnDisk="100" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="100" timeToLiveSeconds="100"
+		transactionalMode="off" memoryStoreEvictionPolicy="LRU" />
 
 </ehcache>
 
