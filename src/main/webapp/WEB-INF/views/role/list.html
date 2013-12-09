@@ -1,8 +1,13 @@
 #parse("/WEB-INF/views/common/head.html")
+<div>
+	<a id="btn" href="/role/toaddrole" class="easyui-linkbutton">创建权限组</a>
+</div>
+<br>
+
 <table class="easyui-datagrid">
 	<thead>
 		<tr>
-			<th data-options="field:'rolename'">角色名称</th>
+			<th data-options="field:'rolename'">权限组名称</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,7 +24,6 @@
 	</tbody>
 
 </table>
-<div class="comm_page">
-</div>
+<div class="comm_page"></div>
 <script type="text/javascript" src="/js/module/role.js"></script>
 #parse("/WEB-INF/views/common/footer.html")

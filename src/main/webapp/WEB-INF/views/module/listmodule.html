@@ -1,7 +1,10 @@
 #parse("/WEB-INF/views/common/head.html")
 
-#parse("/WEB-INF/views/common/ztreehead.html")
-<script type="text/javascript" src="/js/backup/system/module.js"></script>
+
+    <ul id="module-tree" class="easyui-tree">
+    </ul>
+
+
 
   <form action="" method="post" name="form1">
   <input type="hidden" id="nodeid"/><!-- 点击节点对应各id值保存在这里 -->
@@ -70,4 +73,5 @@
 </div>
 
 </form>
+<script type="text/javascript" src="/js/module/module.js"></script>
 #parse("/WEB-INF/views/common/footer.html")
