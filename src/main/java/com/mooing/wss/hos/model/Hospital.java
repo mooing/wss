@@ -57,7 +57,7 @@ public class Hospital extends BaseModel {
 	/**
 	 * 单位性质 1:国企 2：私企
 	 */
-	private String hosProperty;
+	private int hosProperty;
 
 	/**
 	 * 医院等级 关联字典表id
@@ -152,14 +152,6 @@ public class Hospital extends BaseModel {
 		this.zipcode = zipcode;
 	}
 
-	public String getHosProperty() {
-		return hosProperty;
-	}
-
-	public void setHosProperty(String hosProperty) {
-		this.hosProperty = hosProperty;
-	}
-
 	public int getLevel() {
 		return level;
 	}
@@ -198,5 +190,13 @@ public class Hospital extends BaseModel {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public int getHosProperty() {
+		return hosProperty;
+	}
+
+	public void setHosProperty(int hosProperty) {
+		this.hosProperty = hosProperty;
 	}
 }
