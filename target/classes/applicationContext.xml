@@ -22,10 +22,10 @@
 	</bean>
 	
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
-        <property name="host" value="mail.qunar.com"/>
+        <property name="host" value="mail.mooing.com"/>
         <property name="port" value="25" />  
-        <property name="username" value="qboss_notify@qunar.com" />  
-        <property name="password" value="qunar.com" />  
+        <property name="username" value="qboss_notify@mooing.com" />  
+        <property name="password" value="mooing.com" />  
         <property name="javaMailProperties">  
             <props>  
                 <prop key="mail.smtp.auth">true</prop>  

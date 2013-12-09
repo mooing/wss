@@ -16,8 +16,8 @@
 
 	<repositories>
 		<repository>
-			<id>QunarNexus</id>
-			<url>http://svn.corp.qunar.com:8081/nexus/content/groups/public</url>
+			<id>mooingNexus</id>
+			<url>http://svn.corp.mooing.com:8081/nexus/content/groups/public</url>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -636,7 +636,7 @@
 					<version>1.1.1</version>
 					<dependencies>
 						<dependency>
-							<groupId>com.qunar.ams.maven.enforcer</groupId>
+							<groupId>com.mooing.ams.maven.enforcer</groupId>
 							<artifactId>enforcer-custom-rules</artifactId>
 							<version>1.0.0</version>
 							<scope>compile</scope>
@@ -761,7 +761,7 @@
 				<artifactId>maven-enforcer-plugin</artifactId>
 				<dependencies>
 					<dependency>
-						<groupId>com.qunar.ams.maven.enforcer</groupId>
+						<groupId>com.mooing.ams.maven.enforcer</groupId>
 						<artifactId>enforcer-custom-rules</artifactId>
 						<version>1.0.0</version>
 						<scope>compile</scope>
