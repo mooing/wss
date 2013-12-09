@@ -30,7 +30,7 @@ import com.mooing.wss.system.service.UserService;
  * 
  */
 @Controller
-@RequestMapping("/system")
+@RequestMapping("system")
 public class SystemController extends BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(SystemController.class);

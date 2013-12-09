@@ -13,7 +13,6 @@ import com.mooing.wss.common.exception.ServiceException;
 import com.mooing.wss.common.util.Configuration;
 
 /**
- * @author 付亮亮 liangliang.fu@qunar.com
  * @version $id$
  *
  */

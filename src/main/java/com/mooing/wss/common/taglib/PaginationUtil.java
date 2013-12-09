@@ -1,7 +1,6 @@
 /*
  * $Id: PaginationUtil.java 2463 2011-10-10 09:28:53Z zijing.zhang $ 
  *
- * Copyright (c) 2011 Qunar.com. All Rights Reserved.
  */
 package com.mooing.wss.common.taglib;
 

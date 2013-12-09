@@ -1,7 +1,6 @@
 /*
  *  $Id: PaginationTag.java 2463 2011-10-10 09:28:53Z zijing.zhang $.
  *
- *  Copyright (c) 2011 Qunar.com. All Rights Reserved.
  */
 package com.mooing.wss.common.taglib;
 
@@ -15,7 +14,6 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 /**
  * 分页标签.
  * 
- * @author <a href="mailto:li.su@qunar.com">Su Li</a>
  */
 public class PaginationTag<E> extends SimpleTagSupport {
     private String controller;

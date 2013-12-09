@@ -1,7 +1,7 @@
 /*
  *  $Id: HtmlUtil.java 2462 2011-10-10 09:27:59Z zijing.zhang $
  * 
- *  Copyright (c) 2011 Qunar.com. All Rights Reserved.
+ *  Copyright (c) 2011 mooing.com. All Rights Reserved.
  */
 package com.mooing.wss.common.util;
 
