@@ -1,7 +1,7 @@
 #!/bin/sh
 ##############################################################################
 # File:			build.sh
-# Descption:		a template of qunar build script
+# Descption:		a template of mooing build script
 # Version:		1.0
 # Modified times:	0
 # Date:			2011/7/22

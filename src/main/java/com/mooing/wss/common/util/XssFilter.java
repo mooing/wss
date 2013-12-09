@@ -1,7 +1,7 @@
 /*
  *  $Id: XssFilter.java 2494 2011-10-13 02:55:33Z zijing.zhang $
  * 
- *  Copyright (c) 2011 Qunar.com. All Rights Reserved.
+ *  Copyright (c) 2011 mooing.com. All Rights Reserved.
  */
 package com.mooing.wss.common.util;
 

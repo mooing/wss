@@ -19,7 +19,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForObject(java.lang.String,
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForObject(java.lang.String,
 	 * java.lang.Object, java.lang.Class)
 	 */
 	@Override
@@ -53,7 +53,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.qunar.base.meerkat.dao.QueryDAO#executeForMap(java.lang.String,
+	 * @see com.mooing.base.meerkat.dao.QueryDAO#executeForMap(java.lang.String,
 	 * java.lang.Object)
 	 */
 	public Map<String, Object> executeForMap(String sqlID, Object bindParams) {
@@ -76,7 +76,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForObjectArray(java.lang.String
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForObjectArray(java.lang.String
 	 * , java.lang.Object, java.lang.Class)
 	 */
 	@SuppressWarnings("unchecked")
@@ -111,7 +111,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForMapArray(java.lang.String,
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForMapArray(java.lang.String,
 	 * java.lang.Object)
 	 */
 	public Map<String, Object>[] executeForMapArray(String sqlID, Object bindParams) {
@@ -134,7 +134,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForObjectArray(java.lang.String
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForObjectArray(java.lang.String
 	 * , java.lang.Object, java.lang.Class, int, int)
 	 */
 	@SuppressWarnings("unchecked")
@@ -170,7 +170,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForMapArray(java.lang.String,
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForMapArray(java.lang.String,
 	 * java.lang.Object, int, int)
 	 */
 	public Map<String, Object>[] executeForMapArray(String sqlID, Object bindParams, int beginIndex, int maxCount) {
@@ -193,7 +193,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForObjectList(java.lang.String
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForObjectList(java.lang.String
 	 * , java.lang.Object)
 	 */
 	@SuppressWarnings("unchecked")
@@ -217,7 +217,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForMapList(java.lang.String,
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForMapList(java.lang.String,
 	 * java.lang.Object)
 	 */
 	public List<Map<String, Object>> executeForMapList(String sqlID, Object bindParams) {
@@ -239,7 +239,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForObjectList(java.lang.String
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForObjectList(java.lang.String
 	 * , java.lang.Object, int, int)
 	 */
 	@SuppressWarnings("unchecked")
@@ -263,7 +263,7 @@ public class GenericBaseDaoImpl extends SqlSessionDaoSupport implements GenericB
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.qunar.base.meerkat.dao.QueryDAO#executeForMapList(java.lang.String,
+	 * com.mooing.base.meerkat.dao.QueryDAO#executeForMapList(java.lang.String,
 	 * java.lang.Object, int, int)
 	 */
 	public List<Map<String, Object>> executeForMapList(String sqlID, Object bindParams, int beginIndex, int maxCount) {

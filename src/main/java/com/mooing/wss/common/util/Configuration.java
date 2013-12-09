@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author 付亮亮 liangliang.fu@qunar.com
+ * @author 付亮亮 liangliang.fu@mooing.com
  * @version $id$
  *
  */
