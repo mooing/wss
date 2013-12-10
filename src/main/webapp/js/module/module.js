@@ -63,6 +63,7 @@ $(".module-addroot").on("click",function(){
 
 // 删除
 $(".module-del").on("click",function(){
+	if(!$('#module-tree').tree('getSelected')) return false;
 	var node = $('#module-tree').tree('getSelected'),
 		isleaf = node.attributes.isleaf,
 		data = {};
@@ -92,6 +93,7 @@ $(".module-del").on("click",function(){
 
 // 添加
 $(".module-add").on("click",function(){
+	if(!$('#module-tree').tree('getSelected')) return false;
 	var node = $('#module-tree').tree('getSelected'),
 		isleaf = node.attributes.isleaf,
 		data = {};
