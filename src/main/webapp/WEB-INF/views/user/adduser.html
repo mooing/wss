@@ -1,36 +1,62 @@
-#parse("/WEB-INF/views/common/head.html")
+<div class="pageContent">
 #if( $!error == '1' )
-<div class="msg msg-error">当前登录用户没有新增用户权限,请用管理员身份登录！</div>
+<span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
-<form id="user-form" method="post" action="/user/add">
-    <div>
-        <label for="username">&nbsp;&nbsp;用户名:</label>
-        <input class="easyui-validatebox" type="text" name="username" data-options="required:true" />
+<form method="post" action="/user/add" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+    <div class="pageFormContent nowrap" layoutH="97">
+        <dl>
+            <dt>用户名:</dt>
+            <dd>
+                <input type="text" name="username" maxlength="20" class="required" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>真实姓名:</dt>
+            <dd>
+                <input type="text" name="realname" maxlength="20" class="required" />
+            </dd>
+        </dl>
+        <dl>
+            <dt>用户类型:</dt>
+            <dd>
+                <select class="combox" name="test">
+                    <option value="1">1</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt>角色类型:</dt>
+            <dd>
+                <select class="combox" name="test">
+                    <option value="1">1</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt>初始密码:</dt>
+            <dd>
+                <input type="text" name="password" maxlength="20" class="required" value="123456"/>
+            </dd>
+        </dl>
     </div>
-    <div>
-        <label for="username">真实姓名:</label>
-        <input class="easyui-validatebox" type="text" name="realname" />
-    </div>
-    <div>
-        <label for="usertype">用户类型:</label>
-        <select name="" class="easyui-validatebox">
-        	<option value="">test</option>
-        </select>
-    </div>
-     <div>
-        <label for="roletype">角色类型:</label>
-        <select name="" class="easyui-validatebox">
-        	<option value="">test</option>
-        </select>
-    </div>
-    <div>
-        <label for="password">初始密码:</label>
-        <input class="easyui-validatebox" type="text" name="password" data-options="required:true" value="123456"/>
-    </div>
-    <div>
-    	<input type="submit" value="保存">
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </form>
 #end
-<script type="text/javascript" src="/js/module/user.js"></script>
-#parse("/WEB-INF/views/common/footer.html")
+</div>

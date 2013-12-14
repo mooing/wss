@@ -1,18 +1,33 @@
-#parse("/WEB-INF/views/common/head.html")
 #if( $!error != '' )
-<div class="msg msg-error">数据异常，您选择的用户不存在或无效！</div>
+<span>数据异常，您选择的用户不存在或无效！</span>
 #else
-<form id="user-form" method="post" action="/role/updaterole">
-    <div>
-        <label for="rolename">角色名称:</label>
-        <input class="easyui-validatebox" type="text" name="realname" value="$!role.rolename"/>
-    </div>
-    <div>
+<form method="post" action="/role/updaterole" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+    <div class="pageFormContent nowrap" layoutH="97">
     	<input type="hidden" name="id" value="$!role.id "/>
-    	<input type="submit" value="保存">
+        <dl>
+            <dt>角色名:</dt>
+            <dd>
+                <input type="text" name="rolename" maxlength="20" class="required" value="$!role.id"/>
+            </dd>
+        </dl>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </form>
 #end
-<script type="text/javascript" src="/js/module/role.js"></script>
-#parse("/WEB-INF/views/common/footer.html")
-
