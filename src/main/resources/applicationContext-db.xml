@@ -23,7 +23,7 @@
         <property name="minPoolSize" value="1" />
         <property name="maxPoolSize" value="5" />
         <property name="maxIdleTime" value="600" />
-        <property name="maxStatements" value="20" />
+        <property name="maxStatements" value="0" />
         <property name="autoCommitOnClose" value="true" />
     </bean>
     
