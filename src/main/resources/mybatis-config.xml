@@ -38,6 +38,7 @@
 		<mapper resource="sqlmap/system/Role.xml" />
 		<mapper resource="sqlmap/system/Module.xml" />
 		<mapper resource="sqlmap/unit/Doctor.xml" />
+		<mapper resource="sqlmap/unit/Hospital.xml" />
 	</mappers>
 
 </configuration>

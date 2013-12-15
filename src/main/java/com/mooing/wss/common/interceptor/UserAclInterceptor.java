@@ -8,17 +8,17 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mooing.wss.common.web.RequestUtil;
+import com.mooing.wss.system.model.User;
 import com.mooing.wss.system.model.UserConstants;
 import com.mooing.wss.system.model.UserSession;
 
 /**
  * 
-* Title: UserAclInterceptor
-* Description: 
-*
-* @author kaiming.chi
-*
-* @date 2013-11-29
+ * Title: UserAclInterceptor Description:
+ * 
+ * @author kaiming.chi
+ * 
+ * @date 2013-11-29
  */
 public class UserAclInterceptor implements HandlerInterceptor {
 
@@ -41,8 +41,18 @@ public class UserAclInterceptor implements HandlerInterceptor {
 		String pathInfo = RequestUtil.getPathInfo(req);
 
 		// 处理未登录和session失效重定向到登陆页面
-		if (userSession == null && !pathInfo.endsWith("/system/login")&& !pathInfo.endsWith("/system/validcode")&& !pathInfo.endsWith("/system/checkvalidcode")) {
+		if (userSession == null && !pathInfo.endsWith("/system/login") && !pathInfo.endsWith("/system/validcode")
+				&& !pathInfo.endsWith("/system/checkvalidcode")) {
 			res.sendRedirect(req.getContextPath() + "/system/login");
+			return false;
+		} else if (userSession != null && (pathInfo.endsWith("/system/login")) && !pathInfo.endsWith("/system/validcode")
+				&& !pathInfo.endsWith("/system/checkvalidcode")) {
+			User loginUser = userSession.getUser();
+			if (loginUser != null && pathInfo.endsWith("/user/editpassword")) {
+				req.getRequestDispatcher("/system/editpassword").forward(req, res);
+			} else {
+				req.getRequestDispatcher("/system/home").forward(req, res);
+			}
 			return false;
 		}
 		return true;

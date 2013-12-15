@@ -1,6 +1,6 @@
 package com.mooing.wss.hos.model;
 
-import com.mooing.wss.common.model.BaseModel;
+import com.mooing.wss.common.model.NamedModel;
 
 /**
  * 医院实体
@@ -12,7 +12,7 @@ import com.mooing.wss.common.model.BaseModel;
  * 
  * @date 2013-12-6
  */
-public class Hospital extends BaseModel {
+public class Hospital extends NamedModel {
 	/**
 	 * 
 	 */
@@ -79,6 +79,10 @@ public class Hospital extends BaseModel {
 	 * 备注
 	 */
 	private String remark;
+
+	/********* 页面显示使用 **************************/
+	// 地区名
+	private String regionName;
 
 	public String getHosCode() {
 		return hosCode;
@@ -198,5 +202,13 @@ public class Hospital extends BaseModel {
 
 	public void setHosProperty(int hosProperty) {
 		this.hosProperty = hosProperty;
+	}
+
+	public String getRegionName() {
+		return regionName;
+	}
+
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
 	}
 }

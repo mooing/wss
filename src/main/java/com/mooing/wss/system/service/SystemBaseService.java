@@ -47,7 +47,7 @@ public class SystemBaseService extends BaseService {
 		for (Integer roleid : roleIds) {
 			UserRole ur = new UserRole();
 			ur.setUserid(userid);
-			ur.setRolerid(roleid);
+			ur.setRoleid(roleid);
 			userRoleList.add(ur);
 		}
 		wssBaseDao.execute("Role.saveBatchUserRole", userRoleList);

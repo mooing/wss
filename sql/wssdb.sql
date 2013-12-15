@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `hos_doctor`;
 CREATE TABLE `hos_doctor` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL COMMENT '用户id  对应用户表',
+  `user_id` int(11) NOT NULL COMMENT '用户id  对应用户表',
   `name` varchar(50) DEFAULT NULL COMMENT '医生姓名',
   `birthday` date DEFAULT NULL COMMENT '出生日期',
   `sex` tinyint(4) DEFAULT NULL COMMENT '性别  1 男；2 女',
@@ -27844,8 +27844,8 @@ CREATE TABLE `sys_role` (
 DROP TABLE IF EXISTS `sys_role_module`;
 CREATE TABLE `sys_role_module` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `roleid` int(11) NOT NULL COMMENT '角色id',
-  `moduleid` int(11) NOT NULL COMMENT '模块id',
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `module_id` int(11) NOT NULL COMMENT '模块id',
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色模块表';
@@ -27890,7 +27890,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO sys_user VALUES ('1', 'admin', '', '7bb081dd65e675210697ee2c799ac92f636ac5', '0', '2013-12-06 09:30:57', '2013-12-06 09:30:57', null, 'SVymOOiCKovMdsEI9YG2', '1');
+INSERT INTO sys_user VALUES ('1', 'admin', '', '7bb081dd65e675210697ee2c799ac92f636ac5', '1', '2013-12-06 09:30:57', '2013-12-06 09:30:57', null, 'SVymOOiCKovMdsEI9YG2', '1');
 
 -- ----------------------------
 -- Table structure for `sys_user_role`
@@ -27898,8 +27898,8 @@ INSERT INTO sys_user VALUES ('1', 'admin', '', '7bb081dd65e675210697ee2c799ac92f
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL,
-  `roleid` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 

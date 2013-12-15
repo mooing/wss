@@ -3,22 +3,25 @@
 <mapper namespace="User">
 
 	<!-- 获取有效用户列表 -->
-	<select id="findAllUserCount" resultType="int">
+	<select id="findUserCount" resultType="int">
 		select count(*) from
 		sys_user 
 	</select>
 	<select id="findAllUser" resultType="User" parameterType="map">
 		select
-		id,
-		username,
-		realname,
-		usertype,
-		reg_time regtime,
-		lastlogin_time lastLoginTime,
-		ip,
-		status
+		user.id,
+		user.username,
+		user.realname,
+		user.usertype,
+		user.reg_time regtime,
+		user.lastlogin_time lastLoginTime,
+		user.ip,
+		user.status,
+		doc.hospital_id hospitalId,
+		hos.region_code regionCode
 		from
-		sys_user 
+		sys_user user left join hos_doctor doc on user.id=doc.user_id 
+		left join hos_hospital hos on doc.hospital_id=hos.id 
 		limit #{startrecord} , #{recordsize}
 	</select>
 	<!-- 根据id获取用户 -->
