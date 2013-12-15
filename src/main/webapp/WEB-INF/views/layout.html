@@ -1,25 +1,163 @@
 #parse("/WEB-INF/views/common/head.html")
-<script>document.body.className = "easyui-layout";</script>
-
-<div data-options="region:'north'" style="height:80px"></div>
-
-<div data-options="region:'west',split:true" title="菜单" style="width:200px;">
-
-    <div class="easyui-accordion">
-        <div title="用户管理" data-options="iconCls:'icon-ok'">
-            <a href="/user/list" class="menu-link" title="用户列表">用户列表</a>
-            <a href="/user/toadd" class="menu-link" title="添加用户">添加用户</a>
-        </div>
-        <div title="角色管理" data-options="iconCls:'icon-ok'">
-            <a href="/role/list" class="menu-link" title="用户列表">角色列表</a>
-            <a href="/role/toaddrole" class="menu-link" title="添加用户">添加角色</a>
+<div id="layout">
+    <!-- header -->
+    <div id="header">
+        <div class="headerNav">
+            <a class="logo" href="/">标志</a>
         </div>
     </div>
+
+    <!-- sidebar -->
+    <div id="leftside">
+        <div id="sidebar_s">
+            <div class="collapse">
+                <div class="toggleCollapse">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div id="sidebar">
+            <div class="toggleCollapse">
+                <h2>主菜单</h2>
+                <div>收缩</div>
+            </div>
+
+            <div class="accordion" fillSpace="sidebar">
+                <div class="accordionHeader">
+                    <h2>
+                        <span>Folder</span>
+                        系统管理
+                    </h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree">
+                        <li>
+                            <a href="/user/list" target="navTab" rel="systemUser">用户管理</a>
+                        </li>
+                        <li>
+                            <a href="/role/list" target="navTab" rel="systemRole">角色管理</a>
+                        </li>
+                        <li>
+                            <a href="/module/totree" target="navTab" rel="systemModule">模块管理</a>
+                        </li>
+                        <li>
+                            <a href="" target="navTab" rel="systemLog">日志管理</a>
+                        </li>
+                        <li>
+                            <a href="" target="navTab" rel="systemSetting">基础配置</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="accordionHeader">
+                    <h2>
+                        <span>Folder</span>
+                        出生证明
+                    </h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree treeFolder">
+                        <li>
+                            <a>证件管理</a>
+                            <ul>
+                                <li>
+                                    <a href="" target="navTab" rel="">证件入库</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">证件申请</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">证件召回</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">废证入库</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a>证件办理</a>
+                            <ul>
+                                <li>
+                                    <a href="" target="navTab" rel="">待签发列表</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">已签发列表</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">特殊签发</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a>查询统计</a>
+                            <ul>
+                                <li>
+                                    <a href="" target="navTab" rel="">单证追踪</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">动态库存</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">证件使用综合统计</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">办证查询统计</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">废证率统计分析</a>
+                                </li>
+                                <li>
+                                    <a href="" target="navTab" rel="">统计报表</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- container -->
+    <div id="container">
+        <div id="navTab" class="tabsPage">
+            <div class="tabsPageHeader">
+                <div class="tabsPageHeaderContent">
+                    <!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
+                    <ul class="navTab-tab">
+                        <li tabid="main" class="main">
+                            <a href="javascript:;">
+                                <span>
+                                    <span class="home_icon">我的主页</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabsLeft">left</div>
+                <!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
+                <div class="tabsRight">right</div>
+                <!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+                <div class="tabsMore">more</div>
+            </div>
+            <ul class="tabsMoreList">
+                <li>
+                    <a href="javascript:;">我的主页</a>
+                </li>
+            </ul>
+            <div class="navTab-panel tabsPageContent layoutBox">
+                <div class="page unitBox">
+                    我的主页
+                    <div class="pageFormContent" layoutH="80" style="margin-right:230px"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div region="center" id="content" class="easyui-tabs" >
-    <div title="首页">
-        首页
-    </div>
-</div>
+<!-- footer -->
+<div id="footer">Copyright &copy; 2013</div>
 #parse("/WEB-INF/views/common/footer.html")

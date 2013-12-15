@@ -1,25 +1,37 @@
-#parse("/WEB-INF/views/common/head.html")
-<table class="easyui-datagrid">
-	<thead>
-		<tr>
-			<th data-options="field:'rolename'">角色名称</th>
-		</tr>
-	</thead>
-	<tbody>
-		#foreach($!role in $!page.data )
-		<tr>
-			<td>$!role.rolename</td>
-		</tr>
-		#end
-		#if($!${page.data} == 0 )
-		<tr>
-			<td>没有找到记录</td>
-		</tr>
-		#end
-	</tbody>
-
-</table>
-<div class="comm_page">
+<form id="pagerForm" method="post" action="/role/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="" />
+</form>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/role/toaddrole" target="navTab"><span>添加</span></a></li>
+			<li><a class="edit" href="/role/toaddrole?uid={sid_user}" target="navTab" warn="请选择一个角色"><span>修改</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="/role/del" class="delete"><span>删除</span></a></li>
+		</ul>
+	</div>
+	<div id="w_list_print">
+		<table class="list" width="98%" targetType="navTab" layoutH="53">
+			<thead>
+				<tr>
+					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="120">角色名称</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($!role in $!page.data )
+				<tr target="rid"  rel="$!{role.id}">
+					<td><input name="ids" value="$!{role.id}" type="checkbox"></td>
+					<td>$!role.rolename</td>
+				</tr>
+				#end
+				#if($!${page.data} == 0 )
+				<tr>
+					<td>没有找到记录</td>
+				</tr>
+				#end
+			</tbody>
+		</table>
+	</div>
+	#parse("/WEB-INF/views/common/pager.html")
 </div>
-<script type="text/javascript" src="/js/module/role.js"></script>
-#parse("/WEB-INF/views/common/footer.html")
