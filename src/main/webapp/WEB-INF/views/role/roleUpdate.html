@@ -1,15 +1,13 @@
 #if( $!error != '' )
 <span>数据异常，您选择的用户不存在或无效！</span>
 #else
-<form method="post" action="/role/updaterole" class="pageForm required-validate" onsubmit="return validateCallback(this)">
-    <div class="pageFormContent nowrap" layoutH="97">
+<form method="post" action="/role/updaterole" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    <div class="pageFormContent nowrap" layoutH="56">
     	<input type="hidden" name="id" value="$!role.id "/>
-        <dl>
-            <dt>角色名:</dt>
-            <dd>
-                <input type="text" name="rolename" maxlength="20" class="required" value="$!role.id"/>
-            </dd>
-        </dl>
+        <p>
+            <label>角色名:</label>
+            <input type="text" name="rolename" class="required" value="$!role.id"/>
+        </p>
     </div>
     <div class="formBar">
         <ul>
