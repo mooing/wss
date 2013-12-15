@@ -2,46 +2,38 @@
 #if( $!error != '' )
 <span>数据异常，您选择的用户不存在或无效！</span>
 #else
-<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this)">
-    <div class="pageFormContent nowrap" layoutH="97">
+<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    <div class="pageFormContent" layoutH="56">
         <input type="hidden" name="id" value="$!user.id "/>
-        <dl>
-            <dt>用户名:</dt>
-            <dd>
-                <input type="text" name="username" maxlength="20" class="required" value="$!user.username"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt>真实姓名:</dt>
-            <dd>
-                <input type="text" name="realname" maxlength="20"   value="$!user.realname"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt>用户类型:</dt>
-            <dd>
-                #foreach($!role in $!roleList )
-            <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
-             #end
-            </dd>
-        </dl>
-        <dl>
-            <dt>角色类型:</dt>
-            <dd>
-            <select class="combox" name="usertype">
-               <option value="0">--请选择--</option>
-                  #foreach($!type in $!userTypeList )
-                    <option value="$!type.type">$!type.name</option>
-                    #end
-            </select>
-            </dd>
-        </dl>
-        <dl>
-            <dt>初始密码:</dt>
-            <dd>
-                <input type="text" name="password" maxlength="20" class="required" value="123456"/>
-            </dd>
-        </dl>
+        <p>
+            <label>用户名：</label>
+            <input type="text" name="username" class="required" value="$!user.username"/>        
+        </p>
+         <p>
+            <label>真实姓名：</label>
+            <input type="text" name="realname" value="$!user.realname"/>
+        </p>
+        <p>
+            <label>用户类型：</label>
+             #foreach($!role in $!roleList )
+             <span class="checkbox-wrap">
+                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
+             </span>
+             #end        
+        </p>
+        <p>
+            <label>角色类型：</label>
+             <select class="combox" name="usertype">
+                 <option value="0">--请选择--</option>
+                 #foreach($!type in $!userTypeList )
+                 <option value="$!type.type">$!type.name</option>
+                 #end
+             </select>        
+        </p>
+        <p>
+            <label>初始密码:</label>
+            <input type="text" name="password" class="required" value="123456"/>
+        </p>
     </div>
     <div class="formBar">
         <ul>

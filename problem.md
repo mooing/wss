@@ -50,5 +50,32 @@ ajax接口返回格式
 
 总计13个页面，麻烦把controller先写一下，对应到相对模板，目前模板都是空页面
 
+##增，改
+都改为弹窗
+成功返回：
+
+	{
+		"statusCode": "200",
+		"message": "操作成功", //正确提示
+		"navTabId": "",
+		"rel": "",
+		"callbackType": "closeCurrent", //关闭当前弹出层
+		"forwardUrl": "",
+		"confirmMsg": ""
+	}
+
+失败返回:
+
+	{
+		"statusCode": "300",
+		"message": "操作失败", //错误信息
+		"navTabId": "",
+		"rel": "",
+		"callbackType": "",
+		"forwardUrl": "",
+		"confirmMsg": ""
+	}
+
+未用到的项先留空，遇到特殊处理的会用到
 
 
