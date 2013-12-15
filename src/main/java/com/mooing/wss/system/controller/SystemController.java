@@ -48,7 +48,6 @@ public class SystemController extends BaseController {
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request) {
-		String requestUrl = request.getRequestURI();
 		return new ModelAndView("layout");
 	}
 
