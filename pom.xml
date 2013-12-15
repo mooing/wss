@@ -14,23 +14,6 @@
 		<qmq.version>1.1.1</qmq.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>mooingNexus</id>
-			<url>http://svn.corp.mooing.com:8081/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-		</repository>
-	</repositories>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -319,7 +302,7 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.1.2</version>
+				<version>1.1.20</version>
 				<scope>compile</scope>
 			</dependency>
 
