@@ -29,7 +29,7 @@ public class RoleController extends BaseController {
 
 	@RequestMapping("list")
 	public ModelAndView findAllRole(SearchBoxModel searchBox, HttpSession session) {
-		ModelAndView mv = new ModelAndView("role/list");
+		ModelAndView mv = new ModelAndView("role/roleList");
 		Map<String, Object> search = new HashMap<String, Object>();
 		Pagination<Role> page = roleService.pageList(searchBox, search);
 		mv.addObject("page", page);
@@ -45,7 +45,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("toaddrole")
 	public ModelAndView toAddRole(HttpSession session) {
-		ModelAndView mv = new ModelAndView("role/addRole");
+		ModelAndView mv = new ModelAndView("role/roldAdd");
 		User loginUser = getLoginUser(session);
 		try {
 			mv.addObject("role", new Role());
@@ -94,7 +94,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("toupdaterole")
 	public ModelAndView toUpdateRole(@RequestParam(value = "roleid") int roleid, HttpSession session) {
-		ModelAndView mv = new ModelAndView("role/updateRole");
+		ModelAndView mv = new ModelAndView("role/roleUpdate");
 		User loginUser = getLoginUser(session);
 		try {
 			Role role = roleService.toUpdateRole(loginUser, roleid);
@@ -165,7 +165,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("gotorole")
 	public ModelAndView findAllRole() {
-		ModelAndView mv = new ModelAndView("user/rolelist");
+		ModelAndView mv = new ModelAndView("user/roleList");
 		List<Role> roleList = roleService.findAllRole();
 		mv.addObject("roleList", roleList);
 		return mv;

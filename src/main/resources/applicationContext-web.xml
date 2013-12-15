@@ -13,7 +13,7 @@
 
 	<context:component-scan base-package="com.mooing.wss" />
 
-	<!-- 配置默认欢迎页-->
+	<!-- 配置默认欢迎页 -->
 	<mvc:view-controller path="/" view-name="index" />
 	<!-- ehcache config -->
 	<ehcache:annotation-driven cache-manager="ehCacheManager" />
@@ -102,17 +102,17 @@
 					<property name="contentType">
 						<value>text/html;charset=utf-8</value>
 					</property>
+					<property name="dateToolAttribute">
+						<value>dateTool</value>
+					</property>
+					<property name="numberToolAttribute">
+						<value>numberTool</value>
+					</property>
 				</bean>
 			</list>
 		</property>
-		<!-- 
-		<property name="defaultViews">
-			<list>
-				<bean
-					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-			</list>
-		</property>
-		 -->
+		<!-- <property name="defaultViews"> <list> <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" 
+			/> </list> </property> -->
 	</bean>
 
 	<mvc:resources mapping="/images/**" location="/images/" />

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.ehcache.annotations.TriggersRemove;
-import com.mooing.wss.common.cache.base.SystemCache;
+import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.dao.GenericBaseDAO;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
@@ -28,7 +28,7 @@ public class HospitalService {
 	@Qualifier("baseDao")
 	public GenericBaseDAO wssBaseDao;
 	@Resource
-	private SystemCache systemCache;
+	private UnitCache unitCache;
 
 	public Pagination<Hospital> pageList(SearchBoxModel searchBox, Map<String, Object> search) {
 		search.put("startrecord", searchBox.getPnum());
@@ -59,7 +59,7 @@ public class HospitalService {
 	 * @throws UserException
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	@TriggersRemove(cacheName = "hospitalCache", removeAll = true)
+	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
 	public void addHospital(Hospital hospital) throws UserException {
 		// 判断角色名是否存在
 		// Integer roleCount =
@@ -88,7 +88,7 @@ public class HospitalService {
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	@TriggersRemove(cacheName = "hospitalCache", removeAll = true)
+	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
 	public void updateHospital(Hospital hospital) throws UserException {
 		// 判断角色名是否存在
 		// Integer roleCount =
@@ -107,8 +107,8 @@ public class HospitalService {
 	 * @param roleid
 	 * @throws UserException
 	 */
-	@TriggersRemove(cacheName = "hospitalCache", removeAll = true)
-	public void delRole(User loginUser, int hospitalid) throws UserException {
+	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
+	public void delHospital(User loginUser, int hospitalid) throws UserException {
 		wssBaseDao.execute("Hospital.delHospitalById", hospitalid);
 	}
 }

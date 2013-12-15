@@ -18,7 +18,7 @@ public class UserRole extends BaseModel {
 	private static final long serialVersionUID = 2776836831310112618L;
 
 	private int userid;
-	private int rolerid;
+	private int roleid;
 
 	public int getUserid() {
 		return userid;
@@ -28,12 +28,12 @@ public class UserRole extends BaseModel {
 		this.userid = userid;
 	}
 
-	public int getRolerid() {
-		return rolerid;
+	public int getRoleid() {
+		return roleid;
 	}
 
-	public void setRolerid(int rolerid) {
-		this.rolerid = rolerid;
+	public void setRoleid(int roleid) {
+		this.roleid = roleid;
 	}
 
 }

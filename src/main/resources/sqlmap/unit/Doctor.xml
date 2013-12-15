@@ -5,7 +5,7 @@
 	<!-- 保存医生信息 -->
 	<insert id="saveDoctor" parameterType="Doctor">
 		insert into hos_doctor(
-		userid
+		user_id
 		)
 		values(
 		#{userid}
@@ -16,6 +16,6 @@
 	<update id="delDoctorByUserId" parameterType="int">
 		update hos_doctor set
 			status=0
-		where userid=#{userid};
+		where user_id=#{userid};
 	</update>
 </mapper>

@@ -42,7 +42,7 @@ public class User extends BaseModel {
 	/**
 	 * 用户类型 1：管理员 2：医生
 	 */
-	private int usertype;
+	private Integer usertype;
 
 	private String ip;
 	/**
@@ -51,6 +51,20 @@ public class User extends BaseModel {
 	private String random;
 
 	/************** 以下供页面使用 **************/
+	// 医院id
+	private int hospitalId;
+	// 所属地区code
+	private int regionCode;
+	// 医院名称
+	private String hospitalName;
+	// 医院地址
+	private String hospitalAddress;
+	/**
+	 * 用户类型 1：管理员 2：医生
+	 */
+	private String userTypeName;
+	private String userStatus;
+
 	private List<Integer> roleIds;
 	private List<Role> roleList;
 
@@ -102,14 +116,6 @@ public class User extends BaseModel {
 		this.ip = ip;
 	}
 
-	public int getUsertype() {
-		return usertype;
-	}
-
-	public void setUsertype(int usertype) {
-		this.usertype = usertype;
-	}
-
 
 	public String getRandom() {
 		return random;
@@ -133,6 +139,62 @@ public class User extends BaseModel {
 
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
+	}
+
+	public int getHospitalId() {
+		return hospitalId;
+	}
+
+	public void setHospitalId(int hospitalId) {
+		this.hospitalId = hospitalId;
+	}
+
+	public int getRegionCode() {
+		return regionCode;
+	}
+
+	public void setRegionCode(int regionCode) {
+		this.regionCode = regionCode;
+	}
+
+	public String getHospitalName() {
+		return hospitalName;
+	}
+
+	public void setHospitalName(String hospitalName) {
+		this.hospitalName = hospitalName;
+	}
+
+	public String getHospitalAddress() {
+		return hospitalAddress;
+	}
+
+	public void setHospitalAddress(String hospitalAddress) {
+		this.hospitalAddress = hospitalAddress;
+	}
+
+	public String getUserTypeName() {
+		return userTypeName;
+	}
+
+	public void setUserTypeName(String userTypeName) {
+		this.userTypeName = userTypeName;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	public Integer getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(Integer usertype) {
+		this.usertype = usertype;
 	}
 
 }

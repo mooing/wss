@@ -37,7 +37,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping("list")
 	public ModelAndView findAllUser(SearchBoxModel searchBox, HttpSession session) {
-		ModelAndView mv = new ModelAndView("user/list");
+		ModelAndView mv = new ModelAndView("user/userList");
 		Map<String, Object> search = new HashMap<String, Object>();
 		Pagination<User> page = userService.pageList(searchBox, search);
 		mv.addObject("page", page);
@@ -51,7 +51,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("toadd")
 	public ModelAndView toAdd(HttpSession session) {
-		ModelAndView mv = new ModelAndView("user/adduser");
+		ModelAndView mv = new ModelAndView("user/userAdd");
 		try {
 			mv.addObject("user", new User());
 			User loginUser = getLoginUser(session);
@@ -85,6 +85,7 @@ public class UserController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -113,7 +114,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("toupdate")
 	public ModelAndView toUpdate(@RequestParam(value = "userid") int userid, HttpSession session) {
-		ModelAndView mv = new ModelAndView("user/updateuser");
+		ModelAndView mv = new ModelAndView("user/userUpdate");
 		try {
 			User user = new User();
 			User loginUser = getLoginUser(session);
@@ -131,6 +132,7 @@ public class UserController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}

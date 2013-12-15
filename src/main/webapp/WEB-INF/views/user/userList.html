@@ -16,10 +16,12 @@
 				<tr>
 					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
 					<th width="120">用户名</th>
-					<th width="150">真实姓名</th>
-					<th width="200">创建时间</th>
+					<th width="150">用户类型</th>
+					<th width="150">所在单位</th>
+					<th width="200">单位所在地区</th>
+					<th width="150">注册时间</th>
 					<th>状态</th>
-					<th></th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,9 +29,11 @@
 				<tr target="uid" rel="$!{user.id}">
 					<td><input name="ids" value="$!{user.id}" type="checkbox"></td>
 					<td>$!user.username</td>
-					<td>$!user.realname</td>
-					<td>$!user.regtime</td>
-					<td>$!user.status</td>
+					<td>$!user.userTypeName</td>
+					<td>$!user.hospitalName</td>
+					<td>$!user.hospitalAddress</td>
+					<td>$dateTool.format("yyyy-MM-dd HH:mm:ss", $!user.regtime)</td>
+					<td>$!user.userStatus</td>
 					<td>
 						<a href="javascript:void(0);">授予角色</a>
 					</td>

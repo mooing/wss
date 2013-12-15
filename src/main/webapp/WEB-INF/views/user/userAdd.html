@@ -13,22 +13,25 @@
         <dl>
             <dt>真实姓名:</dt>
             <dd>
-                <input type="text" name="realname" maxlength="20" class="required" />
+                <input type="text" name="realname" maxlength="20"  />
             </dd>
         </dl>
         <dl>
             <dt>用户类型:</dt>
             <dd>
-                <select class="combox" name="test">
-                    <option value="1">1</option>
-                </select>
+             #foreach($!role in $!roleList )
+            <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
+             #end
             </dd>
         </dl>
         <dl>
             <dt>角色类型:</dt>
             <dd>
-                <select class="combox" name="test">
-                    <option value="1">1</option>
+                <select class="combox" name="usertype">
+                    <option value="0">--请选择--</option>
+                  #foreach($!type in $!userTypeList )
+                    <option value="$!type.type">$!type.name</option>
+                    #end
                 </select>
             </dd>
         </dl>
