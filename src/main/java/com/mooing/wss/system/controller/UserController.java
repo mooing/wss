@@ -66,6 +66,7 @@ public class UserController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -151,6 +152,7 @@ public class UserController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -170,6 +172,7 @@ public class UserController extends BaseController {
 			return mv;
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -210,6 +213,7 @@ public class UserController extends BaseController {
 			return mv;
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}

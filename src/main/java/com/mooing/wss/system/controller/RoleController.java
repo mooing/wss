@@ -45,7 +45,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("toaddrole")
 	public ModelAndView toAddRole(HttpSession session) {
-		ModelAndView mv = new ModelAndView("role/roldAdd");
+		ModelAndView mv = new ModelAndView("role/roleAdd");
 		User loginUser = getLoginUser(session);
 		try {
 			mv.addObject("role", new Role());
@@ -57,6 +57,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -81,6 +82,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -106,6 +108,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -130,6 +133,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
@@ -153,6 +157,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
+			log.error(e.getMessage(),e);
 		}
 		return mv;
 	}
