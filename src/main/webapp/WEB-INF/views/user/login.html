@@ -1,70 +1,68 @@
-#parse("/WEB-INF/views/common/head.html")
-	<div class="qn_header autowidth">
-			<div class="inner">
-				<h1></h1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台管理系统</title>
+<link href="/css/themes/css/login.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="login">
+		<div id="login_header">
+			<h1 class="login_logo">
+				<a href="/"><img src="/css/themes/default/images/login_logo.gif" /></a>
+			</h1>
+			<div class="login_headerContent">
+				<div class="navList">
+					
+				</div>
+				<h2 class="login_title"><img src="/css/themes/default/images/login_title.png" /></h2>
 			</div>
 		</div>
-		<div class="qn_page">
-			<div class="qn_usercenter">
-				<div class="win winLogin">
-					<div class="hd"></div>
-					<div class="ct">
-					 #if($!errorMsg)
-						<div class="errorExplanation">
+		<div id="login_content">
+			<div class="loginForm">
+				<form action="../system/login" name="loginform" id="loginform" class="form" method="post">
+					<p>
+						<label>用户名：</label>
+						<input class="textbox" id="username" name="username" type="text" value="admin"/>
+					</p>
+					<p>
+						<label>密码：</label>
+						<input class="textbox" id="password" name="password" type="password"  value='123456'/>
+					</p>
+					<p>
+						<label>验证码：</label>
+						<input class="textbox_new textbox"  id="validCodeTxt" name="validCode" type="text" value="" size="5" style="vertical-align:middle;"/>
+						<span style="display:inline-block;zoom:1;*display:inline;vertical-align:middle;"><img id="imgVcode"  src="" width="75" height="24"  onclick="getValidCode()" style="cursor:pointer;"/></span>
+					</p>
+					<div class="login_bar">
+						<input class="button sub" name="commit" type="submit" value="" />
+					</div>
+					#if($!errorMsg)
+						<div class="errorExplanation" style="color:red;">
 							<p>错误信息</p>
 							<ul>
 								<li>$!errorMsg </li>
 							</ul>
 						</div>
-						#end
-						<form action="../system/login" name="loginform" id="loginform" class="form" method="post">
-							<p>
-								<label>用户名</label>
-								<input class="textbox" id="username" name="username" type="text" value="admin"/>
-							</p>
-							<p>
-								<label>密码</label>
-								<input class="textbox" id="password" name="password" type="password"  value='123456'/>
-							</p>
-							<p>
-								<label>验证码</label>
-								<input class="textbox_new textbox"  id="validCodeTxt" name="validCode" onchange="checkValidCode()" type="text" maxlength="10" value=""/>
-								<img id="imgVcode"  src=""/>
-								<a href="javascript:void(0)" onclick="getValidCode()">换一换</a>
-							<p>		
-							</p>
-							<p class="r">
-								<input class="button" name="commit" type="submit" value="登录" />
-								<input type="reset" value="重置" class="button"/>
-							</p>
-							<div class="clr"></div>
-						</form>
-					</div>
-					<div class="ft">
-						<div class="b2"></div>	<div class="b1"></div>
-					</div>
-				</div>			
-			</div>						
-		</div>
-		<div class="qn_footer">
-			<div class="inner">
-				<div class="cr">
-				</div>
+					#end
+				</form>
+			</div>
+			<div class="login_banner"><img src="/css/themes/default/images/login_banner.jpg" /></div>
+			<div class="login_main">
+				
 			</div>
 		</div>
-
-	<script  type="text/javascript">
-		//获取验证码
-		$(function(){
-			getValidCode();
-		});
+		<div id="login_footer">
+			Copyright &copy; 2013. All Rights Reserved.
+		</div>
+	</div>
+<script  type="text/javascript">
+	getValidCode();
 		
-		   function getValidCode(){
-				$("#imgVcode").attr("src", "../system/validcode?st="+new Date());
-		   }
-		   
-		   function checkValidCode(){
-			   var validCode=$("#validCodeTxt").val();
-		   }
-		</script>
-#parse("/WEB-INF/views/common/footer.html")
+	function getValidCode(){
+		document.getElementById("imgVcode").src = "../system/validcode?st="+new Date();
+	}
+</script>
+</body>
+</html>
