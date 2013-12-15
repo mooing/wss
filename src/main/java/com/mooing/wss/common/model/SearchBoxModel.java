@@ -13,7 +13,7 @@ package com.mooing.wss.common.model;
 public class SearchBoxModel {
 
 	int pnum = 0;
-	int psize = 2;
+	int psize = 10;
 
 	public SearchBoxModel() {
 		super();
