@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50130
 File Encoding         : 65001
 
-Date: 2013-12-06 09:37:00
+Date: 2013-12-15 16:24:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,11 +41,12 @@ CREATE TABLE `hos_doctor` (
   `status` tinyint(4) DEFAULT '1' COMMENT '状态  0:无效；1：有效 默认有效',
   `remark` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='医生表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='医生表';
 
 -- ----------------------------
 -- Records of hos_doctor
 -- ----------------------------
+INSERT INTO hos_doctor VALUES ('1', '12', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '1', null);
 
 -- ----------------------------
 -- Table structure for `hos_hospital`
@@ -27832,11 +27833,16 @@ CREATE TABLE `sys_role` (
   `rolename` varchar(30) NOT NULL COMMENT '角色名称',
   PRIMARY KEY (`id`),
   KEY `Index_role_name` (`rolename`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
+INSERT INTO sys_role VALUES ('5', 'test');
+INSERT INTO sys_role VALUES ('3', '乡镇');
+INSERT INTO sys_role VALUES ('4', '县区');
+INSERT INTO sys_role VALUES ('2', '地市');
+INSERT INTO sys_role VALUES ('1', '系统管理员');
 
 -- ----------------------------
 -- Table structure for `sys_role_module`
@@ -27862,11 +27868,14 @@ CREATE TABLE `sys_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `typename` varchar(30) NOT NULL COMMENT '角色名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色类型表';
 
 -- ----------------------------
 -- Records of sys_type
 -- ----------------------------
+INSERT INTO sys_type VALUES ('1', '管理员');
+INSERT INTO sys_type VALUES ('2', '医生');
+INSERT INTO sys_type VALUES ('3', '领导');
 
 -- ----------------------------
 -- Table structure for `sys_user`
@@ -27885,12 +27894,13 @@ CREATE TABLE `sys_user` (
   `status` tinyint(4) DEFAULT '1' COMMENT '用户状态  0：无效；1：有效 默认有效',
   PRIMARY KEY (`id`),
   KEY `Index_user_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO sys_user VALUES ('1', 'admin', '', '7bb081dd65e675210697ee2c799ac92f636ac5', '1', '2013-12-06 09:30:57', '2013-12-06 09:30:57', null, 'SVymOOiCKovMdsEI9YG2', '1');
+INSERT INTO sys_user VALUES ('12', 'mooing', '张三', 'dcfd276fb09e01d4e0325f189ac8f4d26180b3', '2', '2013-12-15 14:49:42', '2013-12-15 14:49:42', null, 'miL0bdLHgU9zWDruxLsT', '1');
 
 -- ----------------------------
 -- Table structure for `sys_user_role`
@@ -27901,8 +27911,9 @@ CREATE TABLE `sys_user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
+INSERT INTO sys_user_role VALUES ('2', '12', '3');
