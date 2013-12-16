@@ -48,13 +48,13 @@ public class UserService extends SystemBaseService {
 	 * @return
 	 */
 	public Pagination<User> pageList(SearchBoxModel searchBox, Map<String, Object> search) {
-		search.put("startrecord", searchBox.getPnum());
-		search.put("recordsize", searchBox.getPsize());
 		Integer count = wssBaseDao.executeForObject("User.findUserCount", search, Integer.class);
 		Pagination<User> page = null;
 		List<User> userList = new ArrayList<User>();
 		if (count != null && count != 0) {
-			page = new Pagination<User>(count, searchBox.getPnum(), searchBox.getPsize());
+			page = new Pagination<User>(count, searchBox.getPageNum(), searchBox.getNumPerPage());
+			search.put("startrecord", page.getStartPosition());
+			search.put("recordsize", searchBox.getNumPerPage());
 			userList = wssBaseDao.executeForObjectList("User.findAllUser", search);
 			if (!CollectionUtils.isEmpty(userList)) {
 				// 设置医院名称和地址
@@ -198,6 +198,10 @@ public class UserService extends SystemBaseService {
 	public void del(User loginUser, int userid) throws UserException {
 		// 是否有其他控制
 		userAuthorityCheck(loginUser);
+		//admin 不能删除
+		if(userid==1){
+			throw new UserException(UserException.USER_TYPE_NOT_AUTHORITY);
+		}
 		wssBaseDao.execute("User.delUserById", userid);
 		// 设置医生为无效
 		wssBaseDao.execute("Doctor.delDoctorByUserId", userid);

@@ -17,7 +17,13 @@
             <label>用户类型：</label>
              #foreach($!role in $!roleList )
              <span class="checkbox-wrap">
-                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
+             #foreach($!roleId in $!user.roleIds )
+	             #if($!roleId==$!role.id)
+	                <input type="checkbox" name="roleIds" checked="checked" value="$!role.id">$!role.rolename
+	              #else
+	                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
+	              #end
+              #end
              </span>
              #end        
         </p>

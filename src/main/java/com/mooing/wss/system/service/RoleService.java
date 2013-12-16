@@ -32,13 +32,13 @@ public class RoleService extends SystemBaseService {
 	}
 
 	public Pagination<Role> pageList(SearchBoxModel searchBox, Map<String, Object> search) {
-		search.put("startrecord", searchBox.getPnum());
-		search.put("recordsize", searchBox.getPsize());
 		Integer count = wssBaseDao.executeForObject("Role.findAllRoleCount", search, Integer.class);
 		Pagination<Role> page = null;
 		List<Role> userList = new ArrayList<Role>();
 		if (count != null && count != 0) {
-			page = new Pagination<Role>(count, searchBox.getPnum(), searchBox.getPsize());
+			page = new Pagination<Role>(count, searchBox.getPageNum(), searchBox.getNumPerPage());
+			search.put("startrecord", page.getStartPosition());
+			search.put("recordsize", searchBox.getNumPerPage());
 			userList = wssBaseDao.executeForObjectList("Role.findAllRolePage", search);
 			page.bindData(userList);
 		}

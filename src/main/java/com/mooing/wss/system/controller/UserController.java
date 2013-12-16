@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
+import com.mooing.wss.common.util.CommonJson;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.system.enums.UserType;
 import com.mooing.wss.system.model.Role;
@@ -72,23 +73,27 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping("add")
-	public ModelAndView add(@ModelAttribute("user") User user, HttpSession session) {
+	public @ResponseBody String  add(@ModelAttribute("user") User user, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			User loginUser = getLoginUser(session);
 			userService.add(loginUser, user);
-			mv.setViewName("redirect:/user/list/");
+			String json=CommonJson.success();
+			log.info("-=-=-=-={}",json);
+			return json;
+//			mv.setViewName("redirect:/user/list/");
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// 用户名已存在,安表示页面显示
 			if (UserException.USER_NAME_ISEXIST.equals(e.getMessage())) {
 				mv.addObject("error", "1");
 			}
+			return CommonJson.fail("用户名已存在！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(),e);
+			return CommonJson.fail("系统异常,请重试！");
 		}
-		return mv;
 	}
 
 	/**

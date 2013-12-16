@@ -31,13 +31,13 @@ public class HospitalService {
 	private UnitCache unitCache;
 
 	public Pagination<Hospital> pageList(SearchBoxModel searchBox, Map<String, Object> search) {
-		search.put("startrecord", searchBox.getPnum());
-		search.put("recordsize", searchBox.getPsize());
 		Integer count = wssBaseDao.executeForObject("Hospital.findAllHospitalCount", search, Integer.class);
 		Pagination<Hospital> page = null;
 		List<Hospital> list = new ArrayList<Hospital>();
 		if (count != null && count != 0) {
-			page = new Pagination<Hospital>(count, searchBox.getPnum(), searchBox.getPsize());
+			page = new Pagination<Hospital>(count, searchBox.getPageNum(), searchBox.getNumPerPage());
+			search.put("startrecord", page.getStartPosition());
+			search.put("recordsize", searchBox.getNumPerPage());
 			list = wssBaseDao.executeForObjectList("Hospital.findAllHospitalPage", search);
 			page.bindData(list);
 		}

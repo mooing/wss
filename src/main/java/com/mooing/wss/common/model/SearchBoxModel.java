@@ -12,27 +12,23 @@ package com.mooing.wss.common.model;
  */
 public class SearchBoxModel {
 
-	int pnum = 0;
-	int psize = 10;
+	int pageNum = 1;
+	int numPerPage = 10;
 
-	public SearchBoxModel() {
-		super();
+	public int getPageNum() {
+		return pageNum;
 	}
 
-	public int getPnum() {
-		return pnum;
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
 
-	public void setPnum(int pnum) {
-		this.pnum = pnum;
+	public int getNumPerPage() {
+		return numPerPage;
 	}
 
-	public int getPsize() {
-		return psize;
-	}
-
-	public void setPsize(int psize) {
-		this.psize = psize;
+	public void setNumPerPage(int numPerPage) {
+		this.numPerPage = numPerPage;
 	}
 
 }

@@ -1,6 +1,6 @@
 <form id="pagerForm" method="post" action="/user/list">
-	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="" />
+	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
+	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
 </form>
 <div class="pageContent">
 	<div class="panelBar">
