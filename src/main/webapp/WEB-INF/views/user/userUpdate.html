@@ -14,8 +14,8 @@
             <input type="text" name="realname" value="$!user.realname"/>
         </p>
         <p>
-            <label>用户类型：</label>
-             #foreach($!role in $!roleList )
+            <label>角色类型：</label>
+             #foreach($!role in $!user.roleList )
              <span class="checkbox-wrap">
              #foreach($!roleId in $!user.roleIds )
 	             #if($!roleId==$!role.id)
@@ -28,11 +28,15 @@
              #end        
         </p>
         <p>
-            <label>角色类型：</label>
+            <label>用户类型：</label>
              <select class="combox" name="usertype">
                  <option value="0">--请选择--</option>
                  #foreach($!type in $!userTypeList )
-                 <option value="$!type.type">$!type.name</option>
+                	 #if($!type.type==$!user.usertype)
+                 <option value="$!type.type" selected="selected">$!type.name</option>
+	                 #else
+	                  <option value="$!type.type" >$!type.name</option>
+	                 #end
                  #end
              </select>        
         </p>

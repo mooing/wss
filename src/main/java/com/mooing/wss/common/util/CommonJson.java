@@ -25,10 +25,10 @@ public class CommonJson {
 	 */
 	public static String success() {
 		Map<String, String> msg = new HashMap<String, String>();
-		msg.put("message", "操作成功");
+		msg.put("message", "success");
 //		msg.put("navTabId", "");
 //		msg.put("rel", "");
-//		msg.put("callbackType", "");
+		msg.put("callbackType", "closeCurrent");
 		msg.put("forwardUrl", "");
 //		msg.put("confirmMsg", "");
 		msg.put("statusCode", "200");

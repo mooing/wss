@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.service.BaseService;
 import com.mooing.wss.system.enums.UserType;
@@ -58,7 +60,15 @@ public class SystemBaseService extends BaseService {
 	 * 
 	 * @param userid
 	 */
-	void delUserRole(int userid) {
-		wssBaseDao.execute("Role.delRoleByUserId", userid);
+	void delUserRole(int id) {
+		wssBaseDao.execute("Role.delRoleByUserId", id);
+	}
+	/**
+	 * 根据用户id删除用户对应角色
+	 * 
+	 * @param userid
+	 */
+	void delUserRole(String ids) {
+		wssBaseDao.execute("Role.delRoleByUserIds", Lists.newArrayList(Splitter.on(",").split(ids)));
 	}
 }

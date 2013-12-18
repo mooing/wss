@@ -18,4 +18,12 @@
 			status=0
 		where user_id=#{userid};
 	</update>
+	<update id="delDoctorByUserIds" parameterType="int">
+		update hos_doctor set
+			status=0
+		where user_id  in
+		<foreach collection="list" item="userid" separator="," open="(" close=")">
+			#{userid}
+		</foreach>
+	</update>
 </mapper>

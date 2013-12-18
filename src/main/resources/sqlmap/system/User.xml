@@ -96,6 +96,14 @@
 		status=0
 		where id=#{userid}
 	</update>
+	<update id="delUserByIds" parameterType="int">
+		update sys_user set
+		status=0
+		where id!=1 and id in
+		<foreach collection="list" item="userid" separator="," open="(" close=")">
+			#{userid}
+		</foreach>
+	</update>
 
 	<select id="getSQLPassword" parameterType="java.lang.String"
 		resultType="java.lang.String">

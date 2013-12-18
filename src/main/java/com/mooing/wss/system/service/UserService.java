@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.exception.SystemException;
@@ -190,23 +192,19 @@ public class UserService extends SystemBaseService {
 	 * 
 	 * @param loginUser
 	 *            当前登录用户
-	 * @param userid
+	 * @param ids
 	 *            要删除的用户id
 	 * @throws UserException
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void del(User loginUser, int userid) throws UserException {
+	public void del(User loginUser, String ids) throws UserException {
 		// 是否有其他控制
 		userAuthorityCheck(loginUser);
-		//admin 不能删除
-		if(userid==1){
-			throw new UserException(UserException.USER_TYPE_NOT_AUTHORITY);
-		}
-		wssBaseDao.execute("User.delUserById", userid);
+		wssBaseDao.execute("User.delUserByIds", Lists.newArrayList(Splitter.on(",").split(ids)));
 		// 设置医生为无效
-		wssBaseDao.execute("Doctor.delDoctorByUserId", userid);
+		wssBaseDao.execute("Doctor.delDoctorByUserIds", Lists.newArrayList(Splitter.on(",").split(ids)));
 		// 删除对应角色
-		delUserRole(userid);
+		delUserRole(ids);
 	}
 
 	/**

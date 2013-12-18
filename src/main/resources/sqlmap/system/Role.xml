@@ -101,4 +101,11 @@
 		delete from
 		sys_user_role where user_id=#{userid}
 	</delete>
+	<delete id="delRoleByUserIds" parameterType="int">
+		delete from
+		sys_user_role where user_id  in
+		<foreach collection="list" item="userid" separator="," open="(" close=")">
+			#{userid}
+		</foreach>
+	</delete>
 </mapper>

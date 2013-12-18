@@ -78,9 +78,7 @@ public class UserController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			userService.add(loginUser, user);
-			String json=CommonJson.success();
-			log.info("-=-=-=-={}",json);
-			return json;
+			return CommonJson.success();
 //			mv.setViewName("redirect:/user/list/");
 		} catch (UserException e) {
 			mv.addObject("user", new User());
@@ -124,8 +122,8 @@ public class UserController extends BaseController {
 		try {
 			User user = new User();
 			User loginUser = getLoginUser(session);
-			mv.addObject("user", user);
 			user = userService.toUpdate(loginUser, userid);
+			mv.addObject("user", user);
 			mv.addObject("userTypeList", UserType.getAllUserType());
 		} catch (UserException e) {
 			// 用户没有权限
@@ -144,42 +142,44 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping("update")
-	public ModelAndView update(@ModelAttribute("user") User user, HttpSession session) {
+	public @ResponseBody String update(@ModelAttribute("user") User user, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		User loginUser = getLoginUser(session);
 		try {
 			userService.update(loginUser, user);
-			mv.setViewName("redirect:/user/list/");
+			return CommonJson.success();
+//			mv.setViewName("redirect:/user/list/");
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
 				mv.addObject("error", "1");
 			}
+			return CommonJson.fail("error");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(),e);
+			return CommonJson.fail("error");
 		}
-		return mv;
 	}
 
 	@RequestMapping("del")
-	public ModelAndView del(@RequestParam(value = "userid") int userid, HttpSession session) {
+	public @ResponseBody String del(@RequestParam(value = "ids") String ids, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		User loginUser = getLoginUser(session);
 		try {
-			userService.del(loginUser, userid);
-			mv.setViewName("redirect:/user/list/");
+			userService.del(loginUser, ids);
+			return CommonJson.success();
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
 				mv.addObject("error", "1");
 			}
-			return mv;
+			return CommonJson.fail("error");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(),e);
+			return CommonJson.fail("error");
 		}
-		return mv;
 	}
 
 	/**

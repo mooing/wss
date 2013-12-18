@@ -13,7 +13,7 @@
             <input type="text" name="realname" />
         </p>
         <p>
-            <label>用户类型：</label>
+            <label>角色类型：</label>
              #foreach($!role in $!roleList )
              <span class="checkbox-wrap required">
                 <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
@@ -21,7 +21,7 @@
              #end        
         </p>
         <p>
-            <label>角色类型：</label>
+            <label>用户类型：</label>
              <select class="combox required" name="usertype" >
                  <option value="0">--请选择--</option>
                  #foreach($!type in $!userTypeList )
