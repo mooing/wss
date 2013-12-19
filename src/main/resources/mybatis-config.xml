@@ -23,22 +23,32 @@
 		<setting name="defaultStatementTimeout" value="600" />
 	</settings>
 	<typeAliases>
-	<!-- 系统模块 -->
+		<!-- 系统模块 -->
 		<typeAlias alias="User" type="com.mooing.wss.system.model.User" />
 		<typeAlias alias="Role" type="com.mooing.wss.system.model.Role" />
 		<typeAlias alias="UserRole" type="com.mooing.wss.system.model.UserRole" />
 		<typeAlias alias="Module" type="com.mooing.wss.system.model.Module" />
 		<typeAlias alias="Doctor" type="com.mooing.wss.hos.model.Doctor" />
 		<typeAlias alias="Hospital" type="com.mooing.wss.hos.model.Hospital" />
+		<!-- 出生证模块 -->
+		<typeAlias alias="CertIssueInfo" type="com.mooing.wss.cert.model.CertIssueInfo" />
+		<!-- 字典模块 -->
+		<typeAlias alias="Region" type="com.mooing.wss.dic.model.Region" />
+		<typeAlias alias="DicSystem" type="com.mooing.wss.dic.model.DicSystem" />
 	</typeAliases>
 
 	<mappers>
-	<!-- 系统模块 -->
+		<!-- 系统模块 -->
 		<mapper resource="sqlmap/system/User.xml" />
 		<mapper resource="sqlmap/system/Role.xml" />
 		<mapper resource="sqlmap/system/Module.xml" />
 		<mapper resource="sqlmap/unit/Doctor.xml" />
 		<mapper resource="sqlmap/unit/Hospital.xml" />
+		<!-- 出生证模块 -->
+		<mapper resource="sqlmap/cert/CertIssueInfo.xml" />
+		<!-- 字典模块 -->
+		<typeAlias resource="sqlmap/dic/Region.xml" />
+		<typeAlias resource="sqlmap/dic/DicSystem.xml" />
 	</mappers>
 
 </configuration>

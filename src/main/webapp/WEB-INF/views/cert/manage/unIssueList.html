@@ -1,0 +1,57 @@
+<form id="pagerForm" method="post" action="/cert/unissue">
+	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
+	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
+</form>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/cert/toadd" target="dialog"><span>添加</span></a></li>
+			<li><a class="edit" href="/user/toupdate?userid={uid}" target="dialog" warn="请选择一个用户"><span>修改</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="/user/del" class="delete"><span>删除</span></a></li>
+		</ul>
+	</div>
+	<div id="w_list_print">
+		<table class="list" width="98%" targetType="navTab" layoutH="53">
+			<thead>
+				<tr>
+					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="120">姓名</th>
+					<th width="150">住院号</th>
+					<th width="150">性别</th>
+					<th width="200">生日</th>
+					<th width="150">母亲姓名</th>
+					<th width="150">母亲身份证</th>
+					<th width="150">接生人</th>
+					<th width="150">家庭住址</th>
+					<th width="150">联系电话</th>
+					<th width="150">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($!unIssue in $!page.data )
+				<tr target="uid" rel="$!{unIssue.id}">
+					<td><input name="ids" value="$!{unIssue.id}" type="checkbox"></td>
+					<td>$!unIssue.childName</td>
+					<td>$!unIssue.admissionNumber</td>
+					<td>#if($!{unIssue.sex}==1)男#end #if($!{unIssue.sex}==2)女#end</td>
+					<td>$dateTool.format("yyyy-MM-dd HH:mm:ss", $!unIssue.birthday)</td>
+					<td>$!unIssue.mName</td>
+					<td>$!unIssue.mIdcard</td>
+					<td>$!unIssue.deliver</td>
+					<td>$!unIssue.address</td>
+					<td>$!unIssue.phone</td>
+					<td>
+						<a href="javascript:void(0);">操作</a>
+					</td>
+				</tr>
+				#end
+				#if($!${page.data} == 0 )
+				<tr>
+					<td colspan="5">没有找到记录</td>
+				</tr>
+				#end
+			</tbody>
+		</table>
+	</div>
+	#parse("/WEB-INF/views/common/pager.html")
+</div>

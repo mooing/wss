@@ -54,7 +54,6 @@ public class UserController extends BaseController {
 	public ModelAndView toAdd(HttpSession session) {
 		ModelAndView mv = new ModelAndView("user/userAdd");
 		try {
-			mv.addObject("user", new User());
 			User loginUser = getLoginUser(session);
 			List<Role> roleList = new ArrayList<Role>();
 			roleList = userService.toAdd(loginUser);

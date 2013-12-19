@@ -13,7 +13,7 @@ import com.mooing.wss.system.model.Module;
 import com.mooing.wss.system.model.Role;
 
 /**
- * 系统相关缓存
+ * 系统模块相关缓存
  * 
  * @author kaiming.chi
  * 

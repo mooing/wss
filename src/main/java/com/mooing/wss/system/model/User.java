@@ -54,7 +54,7 @@ public class User extends BaseModel {
 	// 医院id
 	private int hospitalId;
 	// 所属地区code
-	private int regionCode;
+	private String regionCode;
 	// 医院名称
 	private String hospitalName;
 	// 医院地址
@@ -116,7 +116,6 @@ public class User extends BaseModel {
 		this.ip = ip;
 	}
 
-
 	public String getRandom() {
 		return random;
 	}
@@ -147,14 +146,6 @@ public class User extends BaseModel {
 
 	public void setHospitalId(int hospitalId) {
 		this.hospitalId = hospitalId;
-	}
-
-	public int getRegionCode() {
-		return regionCode;
-	}
-
-	public void setRegionCode(int regionCode) {
-		this.regionCode = regionCode;
 	}
 
 	public String getHospitalName() {
@@ -195,6 +186,14 @@ public class User extends BaseModel {
 
 	public void setUsertype(Integer usertype) {
 		this.usertype = usertype;
+	}
+
+	public String getRegionCode() {
+		return regionCode;
+	}
+
+	public void setRegionCode(String regionCode) {
+		this.regionCode = regionCode;
 	}
 
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 系统共用字典 -->
+<mapper namespace="DicSystem">
+
+<!-- 根据大类和小类id，查询字典数据 -->
+	<select id="getDicByType" resultType="DicSystem" parameterType="map">
+		select
+		id,
+		text,
+		code
+		from
+		dic_system where status=1 and big_type_id=#{bigTypeId} and child_type_id=#{childTypeId}
+	</select>
+</mapper>
