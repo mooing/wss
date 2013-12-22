@@ -53,6 +53,11 @@
 				initEnv();
 			}
 		});
+		window.finishAjaxDone = function(json){
+			navTabAjaxDone(json);
+			json.callbackType = "closeCurrent";
+			dialogAjaxDone(json);
+		}
 	});
 
 	</script>

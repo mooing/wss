@@ -2,7 +2,7 @@
 #if( $!error == '1' )
 <span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
-<form method="post" action="/cert/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+<form method="post" action="/cert/add" class="pageForm required-validate" onsubmit="return validateCallback(this,finishAjaxDone)">
     <div class="pageFormContent" layoutH="56">
         <p>
             <label>出生证编号：</label>
