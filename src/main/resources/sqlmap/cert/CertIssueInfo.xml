@@ -33,4 +33,10 @@
 		where issue_status=1
 		limit #{startrecord} , #{recordsize}
 	</select>
+	
+	<!-- check cert code status -->
+	<select id="checkCertCodeStatus" parameterType="int" resultType="int">
+	 select count(*) from cert_stock
+	 where cert_code=#{certCode} and status=#{status}
+	</select>
 </mapper>

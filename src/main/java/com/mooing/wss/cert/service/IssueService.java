@@ -14,6 +14,7 @@ import com.mooing.wss.common.cache.base.DicSystemCache;
 import com.mooing.wss.common.cache.base.RegionCache;
 import com.mooing.wss.common.model.SearchBoxModel;
 import com.mooing.wss.common.service.BaseService;
+import com.mooing.wss.common.util.CommonJson;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.dic.model.DicSystem;
 import com.mooing.wss.dic.model.Region;
@@ -66,6 +67,23 @@ public class IssueService extends BaseService {
 		infoQuery.setNationList(nationList);
 		infoQuery.setCitizenList(citizenList);
 		return infoQuery;
+	}
+
+	public String add(CertIssueQuery issueQuery) {
+		//check cert status
+		CertIssueInfo certIssueInfo = issueQuery.getCertIssueInfo();
+		if(certIssueInfo==null){
+			return CommonJson.fail("error");
+		}
+		Integer certCount=wssBaseDao.executeForObject("CertIssueInfo.checkCertCodeStatus", certIssueInfo.getIssueStatus(), Integer.class);
+		if(certCount==null||certCount==0){
+			return CommonJson.fail("code invalid");
+		}
+		//save certinfo
+		wssBaseDao.execute("CertIssueInfo.saveIssueInfo", certIssueInfo);
+		//save  certdetail
+		wssBaseDao.execute("CertIssueInfo.saveIssueInfo", issueQuery.getCertIsseDetail());
+		return CommonJson.success();
 	}
 
 }

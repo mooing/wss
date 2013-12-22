@@ -47,8 +47,8 @@
 		<!-- 出生证模块 -->
 		<mapper resource="sqlmap/cert/CertIssueInfo.xml" />
 		<!-- 字典模块 -->
-		<typeAlias resource="sqlmap/dic/Region.xml" />
-		<typeAlias resource="sqlmap/dic/DicSystem.xml" />
+		<mapper resource="sqlmap/dic/Region.xml" />
+		<mapper resource="sqlmap/dic/DicSystem.xml" />
 	</mappers>
 
 </configuration>

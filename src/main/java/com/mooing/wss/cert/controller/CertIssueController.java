@@ -82,6 +82,7 @@ public class CertIssueController extends BaseController {
 	public @ResponseBody
 	String add(@ModelAttribute("issueQuery") CertIssueQuery issueQuery, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		issueService.add(issueQuery);
 		return "";
 	}
 }

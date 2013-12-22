@@ -5,29 +5,34 @@
 <form method="post" action="/cert/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
     <div class="pageFormContent" layoutH="56">
         <p>
-            <label>用户名：</label>
-            <input type="text" name="username" class="required" />        
+            <label>出生证编号：</label>
+            <input type="text" name="certCode" class="required" />        
+            <label>住院号：</label>
+            <input type="text" name="admissionNumber" class="required" />        
         </p>
          <p>
-            <label>真实姓名：</label>
-            <input type="text" name="realname" />
+            <label>新生儿姓名：</label>
+            <input type="text" name="childName" class="required"/>
+            <label>性别：</label>
+            <input type="text" name="sex" class="required"/>
+            <label>出生日期：</label>
+            	
+			<input type="text" name="applyStartDateStr" id="applyStartDateStr" readonly="readonly" value="<fmt:formatDate value='${search.applyStartDate }' pattern="yyyy-MM-dd HH:mm:ss" />" class="Wdate" onclick="WdatePicker()"/>
+					
+             <input readonly="readonly"  name="birthday" type="text" class="Wdate" id="d412" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+        </p>
+         <p>
+            <label>出生地：</label>
+            <input type="text" name="proCode" class="required"/>省
+            <input type="text" name="cityCode" class="required"/>市
+            <input type="text" name="controyCode" class="required"/>县区
+            <input type="text" name="address" class="required"/>乡
+            <label>出生孕周：</label>
+            <input type="text" name="birthday" class="required"/>周
         </p>
         <p>
-            <label>角色类型：</label>
-             #foreach($!role in $!roleList )
-             <span class="checkbox-wrap required">
-                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
-             </span>
-             #end        
         </p>
         <p>
-            <label>用户类型：</label>
-             <select class="combox required" name="usertype" >
-                 <option value="0">--请选择--</option>
-                 #foreach($!type in $!userTypeList )
-                 <option value="$!type.type">$!type.name</option>
-                 #end
-             </select>        
         </p>
         <p>
             <label>初始密码:</label>
@@ -55,3 +60,13 @@
 </form>
 #end
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#applyStartDateStr').focus(function() {
+            WdatePicker({
+                isShowClear : false,
+                dateFmt: 'yyyy-MM-dd HH:mm:ss'
+            });
+        });
+    });
