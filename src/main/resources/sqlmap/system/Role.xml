@@ -58,9 +58,12 @@
 		rolename=#{rolename}
 		where id=#{id}
 	</update>
-	<delete id="delRoleById" parameterType="int">
+	<delete id="delRoleByIds" parameterType="int">
 		delete from sys_role
-		where id=#{id}
+		where id  in
+		<foreach collection="list" item="roleid" separator="," open="(" close=")">
+			#{roleid}
+		</foreach>
 	</delete>
 
 

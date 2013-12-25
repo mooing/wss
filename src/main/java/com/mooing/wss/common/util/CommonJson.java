@@ -23,15 +23,16 @@ public class CommonJson {
 	 * 
 	 * @return
 	 */
-	public static String success() {
+	public static String success(String navTabId) {
 		Map<String, String> msg = new HashMap<String, String>();
 		msg.put("message", "success");
-//		msg.put("navTabId", "");
-//		msg.put("rel", "");
+		msg.put("navTabId", navTabId);
+//		msg.put("rel", "systemUser");
 		msg.put("callbackType", "closeCurrent");
 		msg.put("forwardUrl", "");
 //		msg.put("confirmMsg", "");
 		msg.put("statusCode", "200");
+		msg.put("status", "1");
 		return JSON.toJSONString(msg);
 	}
 

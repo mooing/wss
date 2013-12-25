@@ -19,6 +19,7 @@ import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
 import com.mooing.wss.common.util.CommonJson;
+import com.mooing.wss.common.util.Constants;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.system.enums.UserType;
 import com.mooing.wss.system.model.Role;
@@ -77,7 +78,7 @@ public class UserController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			userService.add(loginUser, user);
-			return CommonJson.success();
+			return CommonJson.success(Constants.navTabId_USER);
 //			mv.setViewName("redirect:/user/list/");
 		} catch (UserException e) {
 			mv.addObject("user", new User());
@@ -146,7 +147,7 @@ public class UserController extends BaseController {
 		User loginUser = getLoginUser(session);
 		try {
 			userService.update(loginUser, user);
-			return CommonJson.success();
+			return CommonJson.success(Constants.navTabId_USER);
 //			mv.setViewName("redirect:/user/list/");
 		} catch (UserException e) {
 			// 用户没有权限
@@ -167,7 +168,7 @@ public class UserController extends BaseController {
 		User loginUser = getLoginUser(session);
 		try {
 			userService.del(loginUser, ids);
-			return CommonJson.success();
+			return CommonJson.success(Constants.navTabId_USER);
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {

@@ -11,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
+import com.mooing.wss.common.util.CommonJson;
+import com.mooing.wss.common.util.Constants;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.system.model.Role;
 import com.mooing.wss.system.model.User;
@@ -57,7 +60,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		}
 		return mv;
 	}
@@ -70,21 +73,23 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("addrole")
-	public ModelAndView addRole(@ModelAttribute("role") Role role, HttpSession session) {
+	public @ResponseBody
+	String addRole(@ModelAttribute("role") Role role, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			roleService.addRole(role);
-			mv.setViewName("redirect:/role/list");
+			return CommonJson.success(Constants.navTabId_ROLE);
 		} catch (UserException e) {
 			// 角色名已存在
 			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
 				mv.addObject("error", "1");
 			}
+			return CommonJson.fail("fail！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
+			return CommonJson.fail("fail！");
 		}
-		return mv;
 	}
 
 	/**
@@ -108,7 +113,7 @@ public class RoleController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		}
 		return mv;
 	}
@@ -121,21 +126,23 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("updaterole")
-	public ModelAndView updateRole(@ModelAttribute("role") Role role, HttpSession session) {
+	public @ResponseBody
+	String updateRole(@ModelAttribute("role") Role role, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			roleService.updateRole(role);
-			mv.setViewName("redirect:/role/list");
+			return CommonJson.success(Constants.navTabId_ROLE);
 		} catch (UserException e) {
 			// 角色名已存在
 			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
 				mv.addObject("error", "1");
 			}
+			return CommonJson.fail("fail！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
+			return CommonJson.fail("fail！");
 		}
-		return mv;
 	}
 
 	/**
@@ -144,22 +151,24 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("delrole")
-	public ModelAndView delRole(@RequestParam(value = "roleid") int roleid, HttpSession session) {
+	public @ResponseBody
+	String delRole(@RequestParam(value = "ids") String ids, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			User loginUser = getLoginUser(session);
-			roleService.delRole(loginUser, roleid);
-			mv.setViewName("redirect:/role/list");
+			roleService.delRole(loginUser, ids);
+			return CommonJson.success(Constants.navTabId_ROLE);
 		} catch (UserException e) {
 			// 没有权限
 			if (UserException.USER_TYPE_NOT_AUTHORITY == e.getMessage()) {
 				mv.addObject("error", "1");
 			}
+			return CommonJson.fail("fail！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
+			return CommonJson.fail("fail！");
 		}
-		return mv;
 	}
 
 	/************ 以下是用户列表配置权限 ***************************************************/
