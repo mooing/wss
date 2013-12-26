@@ -1,7 +1,7 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="" target="navTab"><span>添加</span></a></li>
+			<li><a class="add" href="module/toaddmodule?moduleid={mid}" target="navTab"><span>添加</span></a></li>
 			<li><a class="edit" href="module/toupdate?moduleid={mid}" target="dialog" warn="请选择一个模块"><span>修改</span></a></li>
 			<li><a class="delete" href="module/del?moduleid={mid}" target="ajaxTodo" title="确定要删除吗？" warn="请选择一个模块"><span>删除</span></a></li>
 		</ul>
@@ -21,7 +21,7 @@
         }
         for(var i in data){
             if(data[i].pId == pId){
-                tree += "<li><a href='javascript:void(0);' target='navTab' rel='main'>"+data[i].name+"</a>";
+                tree += "<li  target='mid'  rel='"+data[i].id+"'><a href='javascript:void(0);'>"+data[i].name+"</a>";
                 tree += getTree(data,data[i].id);
                 tree += "</li>";
             }
@@ -36,9 +36,11 @@
     
     
     function loadTree(){
-    	jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
-    		$("#left").html(getTree(data,0).replaceAll("<ul></ul>",""));
-    	});
+        //jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
+            data=[{"id":1,"leaf":false,"name":"12","pId":0,"sort":0,"status":1},{"id":2,"leaf":true,"name":"33","pId":1,"sort":0,"status":1}];
+            $("#left").html(getTree(data,0).replaceAll("<ul></ul>",""));
+        //});
     }
+
     //var data = [{"id":1,"pId":0,"name":"aaa"},{"id":2,"pId":1,"name":"bbb"},{"id":3,"pId":2,"name":"ccc"},{"id":4,"pId":3,"name":"ddd"},{"id":5,"pId":2,"name":"eee"},{"id":6,"pId":5,"name":"fff"}] 
 </script>
