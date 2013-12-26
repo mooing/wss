@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,7 +44,7 @@ public class ModuleController extends BaseController {
 	 */
 	@RequestMapping("totree")
 	public ModelAndView moduleList(HttpSession session) {
-		ModelAndView mv = new ModelAndView("module/listmodule");
+		ModelAndView mv = new ModelAndView("module/moduleList");
 		return mv;
 	}
 
@@ -68,13 +67,14 @@ public class ModuleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("alltree")
-	public void findAllModule(HttpServletResponse response,HttpSession session) {
+	public @ResponseBody String findAllModule(HttpServletResponse response,HttpSession session) {
 		String jsonString = moduleService.findAllModule();
-		try {
-			response.getWriter().print(jsonString);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return jsonString;
+//		try {
+//			response.getWriter().print(jsonString);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**

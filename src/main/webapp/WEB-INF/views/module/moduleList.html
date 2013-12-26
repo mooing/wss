@@ -1,0 +1,44 @@
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="" target="navTab"><span>添加</span></a></li>
+			<li><a class="edit" href="module/toupdate?moduleid={mid}" target="dialog" warn="请选择一个模块"><span>修改</span></a></li>
+			<li><a class="delete" href="module/del?moduleid={mid}" target="ajaxTodo" title="确定要删除吗？" warn="请选择一个模块"><span>删除</span></a></li>
+		</ul>
+	</div>
+	
+	<div class="accordionContent" id="left">
+    </div>
+</div>
+
+<script>
+    function getTree(data,pId){
+        var tree;
+        if(pId==0){
+            tree = '<ul class="tree treeFolder collapse">';
+        }else{
+            tree = '<ul>';
+        }
+        for(var i in data){
+            if(data[i].pId == pId){
+                tree += "<li><a href='javascript:void(0);' target='navTab' rel='main'>"+data[i].name+"</a>";
+                tree += getTree(data,data[i].id);
+                tree += "</li>";
+            }
+        }
+        return tree+"</ul>";
+    };
+    
+   
+    $(function(){
+    	loadTree();
+	});
+    
+    
+    function loadTree(){
+    	jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
+    		$("#left").html(getTree(data,0).replaceAll("<ul></ul>",""));
+    	});
+    }
+    //var data = [{"id":1,"pId":0,"name":"aaa"},{"id":2,"pId":1,"name":"bbb"},{"id":3,"pId":2,"name":"ccc"},{"id":4,"pId":3,"name":"ddd"},{"id":5,"pId":2,"name":"eee"},{"id":6,"pId":5,"name":"fff"}] 
+</script>
