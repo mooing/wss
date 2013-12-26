@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.system.model.Module;
+import com.mooing.wss.system.model.Role;
 import com.mooing.wss.system.model.User;
 import com.mooing.wss.system.service.ModuleService;
 
@@ -75,6 +76,20 @@ public class ModuleController extends BaseController {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+	}
+	
+	/**
+	 * 去新增角色
+	 * 
+	 * 系统管理员\地市\县区\乡镇
+	 * 
+	 * @return
+	 */
+	@RequestMapping("toaddmodule")
+	public ModelAndView toAddRole(HttpSession session) {
+		ModelAndView mv = new ModelAndView("module/moduleAdd");
+		User loginUser = getLoginUser(session);
+		return mv;
 	}
 
 	/**

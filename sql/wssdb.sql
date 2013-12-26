@@ -10,10 +10,123 @@ Target Server Type    : MYSQL
 Target Server Version : 50130
 File Encoding         : 65001
 
-Date: 2013-12-15 16:24:58
+Date: 2013-12-27 00:04:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `cert_issue_detail`
+-- ----------------------------
+DROP TABLE IF EXISTS `cert_issue_detail`;
+CREATE TABLE `cert_issue_detail` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `info_id` varchar(20) DEFAULT NULL COMMENT '儿童id',
+  `bir_pro_code` varchar(20) DEFAULT NULL COMMENT '孕妇id',
+  `bir_ciry_code` varchar(20) DEFAULT NULL COMMENT '出生证id，关联出生证库存表cert_stock',
+  `bir_con_code` varchar(20) DEFAULT NULL COMMENT '医生id',
+  `bir_address` varchar(50) DEFAULT NULL COMMENT '出生证编号',
+  `week` datetime DEFAULT NULL COMMENT '办证时间',
+  `health_status` int(11) DEFAULT NULL COMMENT '状态',
+  `weight` float(6,2) DEFAULT NULL,
+  `height` float(6,2) DEFAULT NULL,
+  `nation` varchar(20) DEFAULT NULL,
+  `m_age` int(11) DEFAULT NULL,
+  `m_idcard` varchar(30) DEFAULT NULL,
+  `f_name` varchar(30) DEFAULT NULL,
+  `f_age` int(11) DEFAULT NULL,
+  `f_nationality` varchar(30) DEFAULT NULL,
+  `f_nation` varchar(20) DEFAULT NULL,
+  `f_card_type` int(11) DEFAULT NULL,
+  `f_card` varchar(30) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='儿童出生证--详情';
+
+-- ----------------------------
+-- Records of cert_issue_detail
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `cert_issue_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `cert_issue_info`;
+CREATE TABLE `cert_issue_info` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `unit_id` int(11) DEFAULT NULL COMMENT '单位id',
+  `child_name` varchar(30) DEFAULT NULL COMMENT '儿童姓名',
+  `sex` int(11) DEFAULT NULL COMMENT '性别 1男 2女',
+  `birthday` datetime DEFAULT NULL COMMENT '出生日期',
+  `m_name` varchar(30) DEFAULT NULL COMMENT '母亲姓名',
+  `m_idcard` varchar(30) DEFAULT NULL COMMENT '母亲身份证',
+  `deliver` varchar(30) DEFAULT NULL COMMENT '接生人',
+  `pro_code` varchar(20) DEFAULT NULL COMMENT '家庭住址省code',
+  `city_code` varchar(20) DEFAULT NULL COMMENT '家庭住址市code',
+  `con_code` varchar(20) DEFAULT NULL COMMENT '家庭住址县code',
+  `address` varchar(50) DEFAULT NULL COMMENT '详细地址',
+  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `issue_status` int(11) DEFAULT NULL COMMENT '签发状态',
+  `print_status` int(11) DEFAULT NULL COMMENT '打印状态',
+  `issue_time` datetime DEFAULT NULL COMMENT '签发日期',
+  `admission_number` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='儿童出生证签发信息';
+
+-- ----------------------------
+-- Records of cert_issue_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `dic_big_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `dic_big_type`;
+CREATE TABLE `dic_big_type` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` varchar(50) DEFAULT NULL COMMENT '名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统共用字典大类表';
+
+-- ----------------------------
+-- Records of dic_big_type
+-- ----------------------------
+INSERT INTO dic_big_type VALUES ('1', '公共');
+
+-- ----------------------------
+-- Table structure for `dic_child_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `dic_child_type`;
+CREATE TABLE `dic_child_type` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` varchar(50) DEFAULT NULL COMMENT '名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统共用字典小类表';
+
+-- ----------------------------
+-- Records of dic_child_type
+-- ----------------------------
+INSERT INTO dic_child_type VALUES ('1', '民族');
+INSERT INTO dic_child_type VALUES ('2', '国籍');
+
+-- ----------------------------
+-- Table structure for `dic_system`
+-- ----------------------------
+DROP TABLE IF EXISTS `dic_system`;
+CREATE TABLE `dic_system` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `big_type` int(11) DEFAULT NULL COMMENT '大类编号',
+  `type` int(11) DEFAULT NULL COMMENT '小类',
+  `text` varchar(50) DEFAULT NULL COMMENT '名称',
+  `code` int(11) DEFAULT NULL COMMENT '编号',
+  `status` int(11) DEFAULT NULL COMMENT '状态',
+  `encoding` varchar(20) DEFAULT NULL COMMENT '编码',
+  `scn` varchar(50) DEFAULT NULL COMMENT '英文名',
+  `remark` varchar(50) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统共用字典';
+
+-- ----------------------------
+-- Records of dic_system
+-- ----------------------------
+
 -- ----------------------------
 -- Table structure for `hos_doctor`
 -- ----------------------------
@@ -41,12 +154,21 @@ CREATE TABLE `hos_doctor` (
   `status` tinyint(4) DEFAULT '1' COMMENT '状态  0:无效；1：有效 默认有效',
   `remark` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='医生表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='医生表';
 
 -- ----------------------------
 -- Records of hos_doctor
 -- ----------------------------
 INSERT INTO hos_doctor VALUES ('1', '12', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '1', null);
+INSERT INTO hos_doctor VALUES ('2', '13', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
+INSERT INTO hos_doctor VALUES ('3', '14', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
+INSERT INTO hos_doctor VALUES ('4', '16', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '1', null);
+INSERT INTO hos_doctor VALUES ('5', '22', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '1', null);
+INSERT INTO hos_doctor VALUES ('6', '28', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
+INSERT INTO hos_doctor VALUES ('7', '29', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
+INSERT INTO hos_doctor VALUES ('8', '31', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '1', null);
+INSERT INTO hos_doctor VALUES ('9', '35', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '1', null);
+INSERT INTO hos_doctor VALUES ('10', '36', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
 
 -- ----------------------------
 -- Table structure for `hos_hospital`
@@ -91,11 +213,13 @@ CREATE TABLE `sys_module` (
   `sort` int(11) DEFAULT NULL COMMENT '序号',
   `status` tinyint(4) DEFAULT '1' COMMENT '状态:0:不可用；1：可用 默认可用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='系统模块表';
 
 -- ----------------------------
 -- Records of sys_module
 -- ----------------------------
+INSERT INTO sys_module VALUES ('1', '12', '', '0', null, null, '1');
+INSERT INTO sys_module VALUES ('2', '33', '', '1', null, null, '1');
 
 -- ----------------------------
 -- Table structure for `sys_region`
@@ -27833,12 +27957,11 @@ CREATE TABLE `sys_role` (
   `rolename` varchar(30) NOT NULL COMMENT '角色名称',
   PRIMARY KEY (`id`),
   KEY `Index_role_name` (`rolename`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO sys_role VALUES ('5', 'test');
 INSERT INTO sys_role VALUES ('3', '乡镇');
 INSERT INTO sys_role VALUES ('4', '县区');
 INSERT INTO sys_role VALUES ('2', '地市');
@@ -27894,13 +28017,38 @@ CREATE TABLE `sys_user` (
   `status` tinyint(4) DEFAULT '1' COMMENT '用户状态  0：无效；1：有效 默认有效',
   PRIMARY KEY (`id`),
   KEY `Index_user_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO sys_user VALUES ('1', 'admin', '', '7bb081dd65e675210697ee2c799ac92f636ac5', '1', '2013-12-06 09:30:57', '2013-12-06 09:30:57', null, 'SVymOOiCKovMdsEI9YG2', '1');
 INSERT INTO sys_user VALUES ('12', 'mooing', '张三', 'dcfd276fb09e01d4e0325f189ac8f4d26180b3', '2', '2013-12-15 14:49:42', '2013-12-15 14:49:42', null, 'miL0bdLHgU9zWDruxLsT', '1');
+INSERT INTO sys_user VALUES ('13', 'test', '11', '08d2b8a6cf61d2748136bf2494bef49ecb5193', '2', '2013-12-15 16:41:09', '2013-12-15 16:41:09', null, 'WeGSrSOlz01pxuIZvAth', '0');
+INSERT INTO sys_user VALUES ('14', 'test11', '11', 'd3c415ae3c75d4aee1fe751a4ab9e6c0759849', '2', '2013-12-15 16:42:02', '2013-12-15 16:42:02', null, 'dsYGGSnUQgUCKRCxAZct', '0');
+INSERT INTO sys_user VALUES ('15', 'mooing1', '11', '1b396d06d94bfe3e5cb91a1cdb6c319bf01c4a', '0', '2013-12-15 16:52:24', '2013-12-15 16:52:24', null, '44mgN5Azaa2d0ulQJ34v', '1');
+INSERT INTO sys_user VALUES ('16', 'mooing3', 'dd', '6e49304487c1d649fd9b01ebfc07a771c7d534', '2', '2013-12-15 16:53:18', '2013-12-15 16:53:18', null, 'FX2waAITtqoM0Qikhv67', '1');
+INSERT INTO sys_user VALUES ('17', 'mooing4', 'dd', '548a6a5a09ecf52ba6a884c8bc5f46e989575d', '3', '2013-12-15 16:53:56', '2013-12-15 16:53:56', null, 'ki0oIFsRdDCe8b13S6gi', '0');
+INSERT INTO sys_user VALUES ('18', 'mooing5', 'dd', '66f5e34da3f11efcd75187f3da093ec7f848dd', '3', '2013-12-15 16:55:02', '2013-12-15 16:55:02', null, 'ZYKIE1WwKn2gLafqTaR4', '0');
+INSERT INTO sys_user VALUES ('19', '1384703..', '11', 'f0b6568e61efc9e55878c4ec5a7d60f457b53c', '3', '2013-12-15 20:41:29', '2013-12-15 20:41:29', null, 'KekuifwUv9ec6vMEI7MR', '0');
+INSERT INTO sys_user VALUES ('20', '111', '11', '1a100ff7311396fb509e067a5445462d08db2a', '0', '2013-12-15 23:03:06', '2013-12-15 23:03:06', null, 'XggPMJvjqyKB842GQXnI', '0');
+INSERT INTO sys_user VALUES ('21', '111e', '11', '27bfd56fafeca512da1c10311d95c60ee79119', '0', '2013-12-15 23:03:54', '2013-12-15 23:03:54', null, 'p9mxQ3vNs7uXpubF5ZUW', '1');
+INSERT INTO sys_user VALUES ('22', 'ww', '', 'a584758c8eef92c6583e912c415d8d5b815755', '2', '2013-12-15 23:05:15', '2013-12-15 23:05:15', null, 'VRyB7lYLhjMpP5K0aaa6', '1');
+INSERT INTO sys_user VALUES ('23', 'qq', 'q', '821579be4f5d6d60f5ad8eecb575546e101922', '0', '2013-12-16 09:28:42', '2013-12-16 09:28:42', null, 'vvU4Jg35cGslPFocgMrQ', '1');
+INSERT INTO sys_user VALUES ('24', 'qq1', 'q', '9194bff1cce20a04bff0c143db232e97be0cc0', '3', '2013-12-16 09:31:06', '2013-12-16 09:31:06', null, '2GdELVook4iCEdapGuGw', '1');
+INSERT INTO sys_user VALUES ('25', '111eqq', '', 'd167d0253515add6c08ff756d279727c4d247e', '3', '2013-12-16 09:32:53', '2013-12-16 09:32:53', null, '1zF3mL93goPfUZSbFCIR', '1');
+INSERT INTO sys_user VALUES ('26', '111eqqss', '', '0fd004049cb54e82e97af7bdfc358864ddb99f', '3', '2013-12-16 09:34:15', '2013-12-16 09:34:15', null, 'IubETl0bchyDI9XHnAjj', '0');
+INSERT INTO sys_user VALUES ('27', '111eqqaa', '', '78a2fe1e58f25ae9587f796601e77c9b616e14', '3', '2013-12-16 09:35:48', '2013-12-16 09:35:48', null, 'soFZQs562ZpSj8Flpeua', '0');
+INSERT INTO sys_user VALUES ('28', 'qq1a', '', '838d155797f20900534ed9b30b0e819cd890eb', '2', '2013-12-16 22:00:42', '2013-12-16 22:00:42', null, 'K2KRmQT3ewRiTpzvWQc8', '0');
+INSERT INTO sys_user VALUES ('29', 'asazz', '', 'bed616d3056c6b5c6caa2721eb231235f7b977', '2', '2013-12-16 22:07:07', '2013-12-16 22:07:07', null, 'sLepp4D4lRC0N4nFeWH5', '0');
+INSERT INTO sys_user VALUES ('30', '1aaqq', '', '6c9ab5cc66bb1e4b3807d9718076f8067d30c6', '3', '2013-12-16 22:08:43', '2013-12-16 22:08:43', null, 'SIEjup8i8TAIxCF9ySNn', '1');
+INSERT INTO sys_user VALUES ('31', '111aaaa', '', 'd36327973afa32b673b822b43d06fb74e82b51', '2', '2013-12-16 22:11:36', '2013-12-16 22:11:36', null, 'd9jdLTEMYFptv7Z4JWE3', '1');
+INSERT INTO sys_user VALUES ('32', '111eqq22', '', '085fb30f5c44043d8c32a233acf317e35c2f3c', '3', '2013-12-16 22:13:10', '2013-12-16 22:13:10', null, 'ULwoXzF2Pd0KT6sALx0y', '1');
+INSERT INTO sys_user VALUES ('33', '111eqq22111', '', '43f566fb382b7efa87c08e2fe074927f6f027e', '3', '2013-12-16 22:13:40', '2013-12-16 22:13:40', null, 'gfSoUfzueznP1Apt5T0b', '1');
+INSERT INTO sys_user VALUES ('34', '11ffgg', '', 'e13e27762e46c655d424eab425e90bd0d599a8', '3', '2013-12-17 08:41:18', '2013-12-17 08:41:18', null, 'DhECYpuHWDZejU1bztfY', '1');
+INSERT INTO sys_user VALUES ('35', 'aa11', '1', '5d46b85ad5df8e21e4965401fad6e330e15fba', '2', '2013-12-18 22:33:01', '2013-12-18 22:33:01', null, 'hHXUjxSQoDy5gBxBE2pK', '1');
+INSERT INTO sys_user VALUES ('36', '1212', '12', '25367000d0b6e6b31494245696d4e8c1d3cae4', '2', '2013-12-25 23:55:43', '2013-12-25 23:55:43', null, 'ixg8HDgIyGLM5fCpqCIC', '0');
+INSERT INTO sys_user VALUES ('37', 'dd1212', '', '614558d495acf04c8a5a6955ea5d9b0d4d3ab3', '1', '2013-12-26 00:33:15', '2013-12-26 00:33:15', null, 'd1drwjAgth4MMouIJRzm', '0');
 
 -- ----------------------------
 -- Table structure for `sys_user_role`
@@ -27911,9 +28059,34 @@ CREATE TABLE `sys_user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO sys_user_role VALUES ('2', '12', '3');
+INSERT INTO sys_user_role VALUES ('5', '15', '5');
+INSERT INTO sys_user_role VALUES ('11', '21', '6');
+INSERT INTO sys_user_role VALUES ('12', '22', '5');
+INSERT INTO sys_user_role VALUES ('13', '23', '4');
+INSERT INTO sys_user_role VALUES ('14', '24', '3');
+INSERT INTO sys_user_role VALUES ('15', '25', '5');
+INSERT INTO sys_user_role VALUES ('20', '30', '3');
+INSERT INTO sys_user_role VALUES ('21', '31', '3');
+INSERT INTO sys_user_role VALUES ('22', '32', '3');
+INSERT INTO sys_user_role VALUES ('23', '33', '3');
+INSERT INTO sys_user_role VALUES ('24', '34', '3');
+INSERT INTO sys_user_role VALUES ('30', '35', '3');
+INSERT INTO sys_user_role VALUES ('31', '16', '2');
+
+-- ----------------------------
+-- Table structure for `test`
+-- ----------------------------
+DROP TABLE IF EXISTS `test`;
+CREATE TABLE `test` (
+  `a` char(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of test
+-- ----------------------------
