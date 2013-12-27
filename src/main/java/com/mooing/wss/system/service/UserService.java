@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.cache.base.UnitCache;
@@ -156,9 +155,12 @@ public class UserService extends SystemBaseService {
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void update(User loginUser, User user) throws UserException {
 		userAuthorityCheck(loginUser);
-		// 如果基本信息为空，返回
-		if (user == null || CollectionUtils.isEmpty(user.getRoleIds())) {
+		if (user == null  ) {
 			throw new UserException(UserException.USER_DEFAULT_EXCEPTION);
+		}
+		// 如果基本信息为空，返回
+		if (CollectionUtils.isEmpty(user.getRoleIds())) {
+			throw new UserException(UserException.USER_ROLE_TYPE_EMPTY);
 		}
 		// 1.保存用户
 		wssBaseDao.execute("User.updateUserById", user);
@@ -192,19 +194,19 @@ public class UserService extends SystemBaseService {
 	 * 
 	 * @param loginUser
 	 *            当前登录用户
-	 * @param ids
+	 * @param userid
 	 *            要删除的用户id
 	 * @throws UserException
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void del(User loginUser, String ids) throws UserException {
+	public void del(User loginUser, int userid) throws UserException {
 		// 是否有其他控制
 		userAuthorityCheck(loginUser);
-		wssBaseDao.execute("User.delUserByIds", Lists.newArrayList(Splitter.on(",").split(ids)));
+		wssBaseDao.execute("User.delUserByIds", Lists.newArrayList(userid));
 		// 设置医生为无效
-		wssBaseDao.execute("Doctor.delDoctorByUserIds", Lists.newArrayList(Splitter.on(",").split(ids)));
+		wssBaseDao.execute("Doctor.delDoctorByUserIds", Lists.newArrayList(userid));
 		// 删除对应角色
-		delUserRole(ids);
+		delUserRole(userid);
 	}
 
 	/**

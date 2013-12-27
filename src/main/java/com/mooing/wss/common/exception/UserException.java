@@ -12,6 +12,7 @@ public class UserException extends Exception {
 	 * 默认异常
 	 */
 	public static final String USER_DEFAULT_EXCEPTION = "0";
+	
 	/**
 	 * 用户未找到异常
 	 */
@@ -28,6 +29,11 @@ public class UserException extends Exception {
 	 * 当前用户类型没有操作权限
 	 */
 	public static final String USER_TYPE_NOT_AUTHORITY = "4";
+	
+	/**
+	 * 未选择用户角色类型
+	 */
+	public static final String USER_ROLE_TYPE_EMPTY= "5";
 
 	public UserException(Throwable cause) {
 		super(cause);

@@ -3,6 +3,7 @@ encoding//src/main/java=UTF-8
 encoding//src/main/profiles/dev=UTF-8
 encoding//src/main/profiles/local=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/WEB-INF/messages/messages_zh.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/views/cert/manage/firstIssue.html=UTF-8
 encoding//src/main/webapp/WEB-INF/views/cert/manage/unIssueList.html=UTF-8
 encoding//src/main/webapp/WEB-INF/views/common/head.html=UTF-8
