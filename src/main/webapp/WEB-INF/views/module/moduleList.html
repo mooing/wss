@@ -37,10 +37,11 @@
     
     function loadTree(){
 
-        //jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
-            data=[{"id":1,"leaf":false,"name":"12","pId":0,"sort":0,"status":1},{"id":2,"leaf":true,"name":"33","pId":1,"sort":0,"status":1}];
+        jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
+        	alert(data);
+            //data=[{"id":1,"leaf":false,"name":"12","pId":0,"sort":0,"status":1},{"id":2,"leaf":true,"name":"33","pId":1,"sort":0,"status":1}];
             $("#left").html(getTree(data,0).replaceAll("<ul></ul>",""));
-        //});
+        });
     }
 
     //var data = [{"id":1,"pId":0,"name":"aaa"},{"id":2,"pId":1,"name":"bbb"},{"id":3,"pId":2,"name":"ccc"},{"id":4,"pId":3,"name":"ddd"},{"id":5,"pId":2,"name":"eee"},{"id":6,"pId":5,"name":"fff"}] 

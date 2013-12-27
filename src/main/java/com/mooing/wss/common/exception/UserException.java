@@ -18,7 +18,7 @@ public class UserException extends Exception {
 	 */
 	public static final String USER_IS_NOT_EXIST = "1";
 	/**
-	 * 角色名稱已存在
+	 * 角色名已存在
 	 */
 	public static final String ROLE_NAME_ISEXIST = "2";
 	/**

@@ -1,8 +1,5 @@
 package com.mooing.wss.system.controller;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,10 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
-import com.mooing.wss.common.util.CommonJson;
-import com.mooing.wss.common.util.Constants;
 import com.mooing.wss.system.model.Module;
-import com.mooing.wss.system.model.Role;
 import com.mooing.wss.system.model.User;
 import com.mooing.wss.system.service.ModuleService;
 
@@ -72,17 +66,17 @@ public class ModuleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("alltree")
-	public @ResponseBody String findAllModule(HttpServletResponse response,HttpSession session) {
+	public @ResponseBody
+	String findAllModule(HttpServletResponse response, HttpSession session) {
 		String jsonString = moduleService.findAllModule();
-		URLEncoder.encode(jsonString);
 		return jsonString;
-//		try {
-//			response.getWriter().print(jsonString);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// response.getWriter().print(jsonString);
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 	}
-	
+
 	/**
 	 * 去新增角色
 	 * 
@@ -91,7 +85,7 @@ public class ModuleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("toaddmodule")
-	public ModelAndView toAddRole(@RequestParam int moduleid,HttpSession session) {
+	public ModelAndView toAddRole(@RequestParam int moduleid, HttpSession session) {
 		ModelAndView mv = new ModelAndView("module/moduleAdd");
 		User loginUser = getLoginUser(session);
 		mv.addObject("moduleid", moduleid);
@@ -105,28 +99,31 @@ public class ModuleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("addnode")
-	@ResponseBody
-	public String addNode(@ModelAttribute("module") @Valid Module module, HttpSession session) {
+	public ModelAndView addNode(@ModelAttribute("module") @Valid Module module, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String errormsg = "error";
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.addNode(loginUser, module);
-			return CommonJson.success(Constants.navTabId_MODULE);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
 				mv.addObject("error", "1");
+				errormsg = "当前用户类型没有操作权限！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 		}
-		return JSON.toJSONString("yes");
+		return ajaxDoneError(errormsg);
 	}
+
 	/**
 	 * delete节点
 	 * 
-	 * @param id 节点id
+	 * @param id
+	 *            节点id
 	 * @param session
 	 * @return
 	 */
@@ -148,10 +145,12 @@ public class ModuleController extends BaseController {
 		}
 		return JSON.toJSONString("yes");
 	}
+
 	/**
 	 * delete节点
 	 * 
-	 * @param id 节点id
+	 * @param id
+	 *            节点id
 	 * @param session
 	 * @return
 	 */

@@ -72,6 +72,9 @@ public abstract class BaseController {
 	protected ModelAndView ajaxDoneSuccess(String message) {
 		return ajaxDone(200, message, "", "", "", "");
 	}
+	protected ModelAndView ajaxDialogDoneSuccess(String message) {
+		return ajaxDone(200, message, "", "", "", "closeCurrent");
+	}
 	protected ModelAndView ajaxDoneSuccess(String message,String callbackType) {
 		return ajaxDone(200, message, "", "", "", callbackType);
 	}

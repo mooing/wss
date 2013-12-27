@@ -11,14 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
-import com.mooing.wss.common.util.CommonJson;
-import com.mooing.wss.common.util.Constants;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.system.model.Role;
 import com.mooing.wss.system.model.User;
@@ -73,23 +70,23 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("addrole")
-	public @ResponseBody
-	String addRole(@ModelAttribute("role") Role role, HttpSession session) {
+	public ModelAndView addRole(@ModelAttribute("role") Role role, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String errormsg = "error";
 		try {
 			roleService.addRole(role);
-			return CommonJson.success(Constants.navTabId_ROLE);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 角色名已存在
 			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
 				mv.addObject("error", "1");
+				errormsg = "角色名已存在！";
 			}
-			return CommonJson.fail("fail！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
-			return CommonJson.fail("fail！");
 		}
+		return ajaxDoneError(errormsg);
 	}
 
 	/**
@@ -126,23 +123,23 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("updaterole")
-	public @ResponseBody
-	String updateRole(@ModelAttribute("role") Role role, HttpSession session) {
+	public ModelAndView updateRole(@ModelAttribute("role") Role role, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String errormsg = "error";
 		try {
 			roleService.updateRole(role);
-			return CommonJson.success(Constants.navTabId_ROLE);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 角色名已存在
 			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
 				mv.addObject("error", "1");
+				errormsg = "角色名已存在！";
 			}
-			return CommonJson.fail("fail！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
-			return CommonJson.fail("fail！");
 		}
+		return ajaxDoneError(errormsg);
 	}
 
 	/**
@@ -151,24 +148,24 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("delrole")
-	public @ResponseBody
-	String delRole(@RequestParam(value = "ids") String ids, HttpSession session) {
+	public ModelAndView delRole(@RequestParam(value = "ids") String ids, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String errormsg = "error";
 		try {
 			User loginUser = getLoginUser(session);
 			roleService.delRole(loginUser, ids);
-			return CommonJson.success(Constants.navTabId_ROLE);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 没有权限
 			if (UserException.USER_TYPE_NOT_AUTHORITY == e.getMessage()) {
 				mv.addObject("error", "1");
+				errormsg = "当前用户类型没有操作权限！";
 			}
-			return CommonJson.fail("fail！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
-			return CommonJson.fail("fail！");
 		}
+		return ajaxDoneError(errormsg);
 	}
 
 	/************ 以下是用户列表配置权限 ***************************************************/

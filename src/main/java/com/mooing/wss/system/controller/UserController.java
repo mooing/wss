@@ -77,7 +77,7 @@ public class UserController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			userService.add(loginUser, user);
-			return ajaxDoneSuccess(getMessage("msg.operation.success"), "closeCurrent");
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// 用户名已存在,安表示页面显示
@@ -146,7 +146,7 @@ public class UserController extends BaseController {
 		String errormsg="error";
 		try {
 			userService.update(loginUser, user);
-			return ajaxDoneSuccess(getMessage("msg.operation.success"), "closeCurrent");
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} 
 		catch (UserException e) {
 			// 用户没有权限
@@ -170,7 +170,7 @@ public class UserController extends BaseController {
 		User loginUser = getLoginUser(session);
 		try {
 			userService.del(loginUser, userid);
-			return ajaxDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
