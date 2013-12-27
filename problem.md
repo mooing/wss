@@ -15,16 +15,6 @@
 		"confirmMsg": ""
 	}
 
-如需要刷新列表，navTabId为必须返回，目前已有：
-/user/list - systemUser
-/role/list - systemRole
-/module/totree -systemModule
-需要刷新的页面都对应一个navTabId, 例如/user/list列表页增删改返回navTabId:"systemUser",则该列表页会刷新。
-navTabId也需要写入layout.html模板的菜单链接的rel属性中，如 
-
-	<a href="/user/list" target="navTab" rel="systemUser">用户管理</a> 
-
-表示用户管理的navTabId为systemUser
 
 ####失败返回:
 
