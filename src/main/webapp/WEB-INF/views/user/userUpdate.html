@@ -2,7 +2,7 @@
 #if( $!error != '' )
 <span>数据异常，您选择的用户不存在或无效！</span>
 #else
-<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this,finishAjaxDone)">
+<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
     <div class="pageFormContent" layoutH="56">
         <input type="hidden" name="id" value="$!user.id "/>
         <p>
@@ -19,9 +19,9 @@
              <span class="checkbox-wrap">
              #foreach($!roleId in $!user.roleIds )
 	             #if($!roleId==$!role.id)
-	                <input type="checkbox" name="roleIds" checked="checked" value="$!role.id">$!role.rolename
+	                <input type="checkbox" class="required"  name="roleIds" checked="checked" value="$!role.id">$!role.rolename
 	              #else
-	                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
+	                <input type="checkbox" class="required" name="roleIds" value="$!role.id">$!role.rolename
 	              #end
               #end
              </span>
@@ -29,7 +29,7 @@
         </p>
         <p>
             <label>用户类型：</label>
-             <select class="combox" name="usertype">
+             <select class="combox required" name="usertype">
                  <option value="0">--请选择--</option>
                  #foreach($!type in $!userTypeList )
                 	 #if($!type.type==$!user.usertype)

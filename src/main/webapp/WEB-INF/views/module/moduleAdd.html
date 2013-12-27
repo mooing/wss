@@ -1,12 +1,13 @@
-#if( $!error != '' )
-<span>数据异常，您选择的用户不存在或无效！</span>
+<div class="pageContent">
+#if( $!error == '1' )
+<span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
-<form method="post" action="/role/updaterole" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-    <div class="pageFormContent nowrap" layoutH="56">
-    	<input type="hidden" name="id" value="$!role.id "/>
+<form method="post" action="/module/addnode" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    <div class="pageFormContent" layoutH="56">
         <p>
-            <label>角色名:</label>
-            <input type="text" name="rolename" class="required" value="$!role.rolename"/>
+            <label>模块名称:</label>
+            <input type="text" name="name" class="required" />
+            <input type="hidden" name="pId" value="${moduleid}"  />
         </p>
     </div>
     <div class="formBar">
@@ -29,3 +30,4 @@
     </div>
 </form>
 #end
+</div>

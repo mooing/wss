@@ -1,0 +1,10 @@
+{
+	"statusCode":"$!{statusCode}", 
+	"message":#if($!{param.callbackType}!='forwardConfirm') $!{message} #end , 
+	"confirmMsg":#if($!{param.callbackType}=='forwardConfirm') $!{message} #end ,
+	"navTabId":"${param.navTabId}", 
+	"rel":"${param.rel}",
+	"callbackType":"${param.callbackType}",
+	"forwardUrl":#if($!{forwardUrl}=='') $!{param.forwardUrl} #else $!{forwardUrl} #end
+}
+

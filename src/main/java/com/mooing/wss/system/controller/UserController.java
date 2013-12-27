@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
-import com.mooing.wss.common.util.CommonJson;
-import com.mooing.wss.common.util.Constants;
 import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.system.enums.UserType;
 import com.mooing.wss.system.model.Role;
@@ -67,30 +66,29 @@ public class UserController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		}
 		return mv;
 	}
 
 	@RequestMapping("add")
-	public @ResponseBody String  add(@ModelAttribute("user") User user, HttpSession session) {
+	public ModelAndView add(@ModelAttribute("user") User user, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			User loginUser = getLoginUser(session);
 			userService.add(loginUser, user);
-			return CommonJson.success(Constants.navTabId_USER);
-//			mv.setViewName("redirect:/user/list/");
+			return ajaxDoneSuccess(getMessage("msg.operation.success"), "closeCurrent");
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// 用户名已存在,安表示页面显示
 			if (UserException.USER_NAME_ISEXIST.equals(e.getMessage())) {
 				mv.addObject("error", "1");
 			}
-			return CommonJson.fail("用户名已存在！");
+			return ajaxDoneError("用户名已存在！");
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
-			return CommonJson.fail("系统异常,请重试！");
+			log.error(e.getMessage(), e);
+			return ajaxDoneError("error");
 		}
 	}
 
@@ -136,49 +134,53 @@ public class UserController extends BaseController {
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		}
 		return mv;
 	}
 
 	@RequestMapping("update")
-	public @ResponseBody String update(@ModelAttribute("user") User user, HttpSession session) {
+	public ModelAndView update(@ModelAttribute("user") User user, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		User loginUser = getLoginUser(session);
+		String errormsg="error";
 		try {
 			userService.update(loginUser, user);
-			return CommonJson.success(Constants.navTabId_USER);
-//			mv.setViewName("redirect:/user/list/");
-		} catch (UserException e) {
+			return ajaxDoneSuccess(getMessage("msg.operation.success"), "closeCurrent");
+		} 
+		catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
-				mv.addObject("error", "1");
+				errormsg="用户没有权限！";
 			}
-			return CommonJson.fail("error");
-		} catch (Exception e) {
+			if (e.getMessage().equals(UserException.USER_ROLE_TYPE_EMPTY)) {
+				errormsg="请选择用户角色类型！";
+			}
+		} 
+		catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
-			return CommonJson.fail("error");
+			log.error(e.getMessage(), e);
 		}
+		return ajaxDoneError(errormsg);
 	}
 
-	@RequestMapping("del")
-	public @ResponseBody String del(@RequestParam(value = "ids") String ids, HttpSession session) {
+	@RequestMapping("del/{userid}")
+	public ModelAndView del(@PathVariable("userid") int userid, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		User loginUser = getLoginUser(session);
 		try {
-			userService.del(loginUser, ids);
-			return CommonJson.success(Constants.navTabId_USER);
+			userService.del(loginUser, userid);
+			return ajaxDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
 				mv.addObject("error", "1");
 			}
-			return CommonJson.fail("error");
+			return ajaxDoneError(e.getMessage());
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
-			return CommonJson.fail("error");
+			log.error(e.getMessage(), e);
+			return ajaxDoneError("error");
 		}
 	}
 
@@ -218,7 +220,7 @@ public class UserController extends BaseController {
 			return mv;
 		} catch (Exception e) {
 			mv.addObject("error", 0);
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 		}
 		return mv;
 	}

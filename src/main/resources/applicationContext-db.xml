@@ -22,7 +22,6 @@
 		<property name="maxIdleTime" value="600" />
 		<property name="maxStatements" value="0" />
 		<property name="idleConnectionTestPeriod" value="60" />
-		<property name="automaticTestTable" value="Test" />
 		<property name="autoCommitOnClose" value="true" />
 	</bean>
 

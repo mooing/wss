@@ -7,7 +7,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="/user/toadd" target="dialog"><span>添加</span></a></li>
 			<li><a class="edit" href="/user/toupdate?userid={uid}" target="dialog" warn="请选择一个用户"><span>修改</span></a></li>
-			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="/user/del" class="delete"><span>删除</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="ajaxTodo"    href="/user/del/{uid}" class="delete"><span>删除</span></a></li>
 		</ul>
 	</div>
 	<div id="w_list_print">
@@ -39,7 +39,7 @@
 					</td>
 				</tr>
 				#end
-				#if($!${page.data} == 0 )
+				#if($!{page.data} == 0 )
 				<tr>
 					<td colspan="5">没有找到记录</td>
 				</tr>

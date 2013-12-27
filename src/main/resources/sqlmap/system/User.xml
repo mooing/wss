@@ -5,7 +5,7 @@
 	<!-- 获取有效用户列表 -->
 	<select id="findUserCount" resultType="int">
 		select count(*) from
-		sys_user 
+		sys_user  where status=1
 	</select>
 	<select id="findAllUser" resultType="User" parameterType="map">
 		select
@@ -21,7 +21,7 @@
 		hos.region_code regionCode
 		from
 		sys_user user left join hos_doctor doc on user.id=doc.user_id 
-		left join hos_hospital hos on doc.hospital_id=hos.id 
+		left join hos_hospital hos on doc.hospital_id=hos.id and user.status=1
 		limit #{startrecord} , #{recordsize}
 	</select>
 	<!-- 根据id获取用户 -->
