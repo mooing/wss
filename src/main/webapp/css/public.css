@@ -9,3 +9,5 @@
 .pageFormContent p{
 	height: auto;
 }
+#header{height:85px}
+#leftside, #container, #splitBar, #splitBarProxy{top:90px}

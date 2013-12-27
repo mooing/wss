@@ -5,6 +5,20 @@
         <div class="headerNav">
             <a class="logo" href="/">标志</a>
         </div>
+        <div id="navMenu">
+            <ul>
+                <li class="selected">
+                    <a href="javascript:void(0)" rel="system">
+                        <span>系统管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" rel="cert">
+                        <span>出生证明</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <!-- sidebar -->
@@ -18,18 +32,18 @@
         </div>
         <div id="sidebar">
             <div class="toggleCollapse">
-                <h2>主菜单</h2>
+                <h2>系统管理</h2>
                 <div>收缩</div>
             </div>
 
             <div class="accordion" fillSpace="sidebar">
-                <div class="accordionHeader">
+                <!-- <div class="accordionHeader">
                     <h2>
                         <span>Folder</span>
                         系统管理
                     </h2>
-                </div>
-                <div class="accordionContent">
+                </div> -->
+                <div class="accordionContent" rel="system">
                     <ul class="tree">
                         <li>
                             <a href="/user/list" target="navTab" rel="systemUser">用户管理</a>
@@ -49,13 +63,13 @@
                     </ul>
                 </div>
                 
-                <div class="accordionHeader">
+                <!-- <div class="accordionHeader">
                     <h2>
                         <span>Folder</span>
                         出生证明
                     </h2>
-                </div>
-                <div class="accordionContent">
+                </div> -->
+                <div class="accordionContent" rel="cert" style="display: none;">
                     <ul class="tree treeFolder">
                         <li>
                             <a>证件管理</a>
