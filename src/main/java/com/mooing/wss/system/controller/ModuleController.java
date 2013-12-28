@@ -34,6 +34,7 @@ import com.mooing.wss.system.service.ModuleService;
 public class ModuleController extends BaseController {
 	@Autowired
 	private ModuleService moduleService;
+	public static String navTabId = "systemModule";
 
 	/**
 	 * 跳转到模块list 树
@@ -105,7 +106,7 @@ public class ModuleController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.addNode(loginUser, module);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// not authority
@@ -134,7 +135,7 @@ public class ModuleController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.delNode(loginUser, id);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (UserException e) {
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
@@ -193,7 +194,7 @@ public class ModuleController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.updateNode(loginUser, module);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (UserException e) {
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
