@@ -23,7 +23,7 @@ import com.mooing.wss.hos.model.Hospital;
 import com.mooing.wss.system.model.User;
 
 @Service
-public class HospitalService {
+public class UnitService {
 	@Autowired
 	@Qualifier("baseDao")
 	public GenericBaseDAO wssBaseDao;
@@ -49,7 +49,9 @@ public class HospitalService {
 	 * 
 	 * @param loginUser
 	 */
-	public void toAddHospital(User loginUser) {
+	public void toAddUnit(User loginUser) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -60,7 +62,7 @@ public class HospitalService {
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
-	public void addHospital(Hospital hospital) throws UserException {
+	public void addUnit(Hospital hospital) throws UserException {
 		// 判断角色名是否存在
 		// Integer roleCount =
 		// wssBaseDao.executeForObject("Role.findRoleByName",
@@ -78,7 +80,7 @@ public class HospitalService {
 	 * @param hospitalid
 	 * @throws UserException
 	 */
-	public Hospital toUpdateHospital(User loginUser, int hospitalId) throws UserException {
+	public Hospital toUpdateUnit(User loginUser, int hospitalId) throws UserException {
 		// userAuthorityCheck(loginUser);
 		Hospital hospital = wssBaseDao.executeForObject("Hospital.findHospitalById", hospitalId, Hospital.class);
 		if (hospital == null) {
@@ -89,7 +91,7 @@ public class HospitalService {
 
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
-	public void updateHospital(Hospital hospital) throws UserException {
+	public void updateUnit(Hospital hospital) throws UserException {
 		// 判断角色名是否存在
 		// Integer roleCount =
 		// wssBaseDao.executeForObject("Hospital.findHospitalByName",
@@ -108,7 +110,8 @@ public class HospitalService {
 	 * @throws UserException
 	 */
 	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
-	public void delHospital(User loginUser, int hospitalid) throws UserException {
+	public void delUnit(User loginUser, int hospitalid) throws UserException {
 		wssBaseDao.execute("Hospital.delHospitalById", hospitalid);
 	}
+
 }
