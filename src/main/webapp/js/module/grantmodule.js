@@ -8,7 +8,7 @@ f.module = {
         }
         for (var i in data) {
             if (data[i].pId == pId) {
-                tree += "<li  target='mid'  rel='" + data[i].id + "'><a href='javascript:void(0);'>" + data[i].name + "</a>";
+                tree += "<li  target='mid'  rel='" + data[i].id + "'><a href='javascript:void(0);' tname='moduleIds' tvalue='"+data[i].id+"'>" + data[i].name + "</a>";
                 tree += arguments.callee(data, data[i].id);
                 tree += "</li>";
             }
