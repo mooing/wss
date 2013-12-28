@@ -35,7 +35,8 @@
 					<td>$dateTool.format("yyyy-MM-dd HH:mm:ss", $!user.regtime)</td>
 					<td>$!user.userStatus</td>
 					<td>
-						<a href="javascript:void(0);">授予角色</a>
+						<a class="edit" href="/user/grantrole?userid=$!{user.id}" target="dialog">授予角色</a>
+						<a class="edit" href="/user/grantmodule?userid=$!{user.id}" target="dialog">授予模块</a>
 					</td>
 				</tr>
 				#end

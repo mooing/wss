@@ -58,6 +58,10 @@
 		rolename=#{rolename}
 		where id=#{id}
 	</update>
+	<delete id="delRoleById" parameterType="int">
+		delete from sys_role
+		where id  =#{roleid}
+	</delete>
 	<delete id="delRoleByIds" parameterType="int">
 		delete from sys_role
 		where id  in
@@ -76,11 +80,12 @@
 		role_id
 		)
 		values
-		<foreach collection="list" item="userrole" index="index" separator=","></foreach>
+		<foreach collection="list" item="userrole" index="index" separator=",">
 		(
 		#{userrole.userid},
 		#{userrole.roleid}
 		)
+		</foreach>
 	</insert>
 	<!-- 按用户id查询，用户对应所有角色 -->
 	<select id="findRolesByUserId" parameterType="int" resultType="Role">

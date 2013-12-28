@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.exception.UserException;
@@ -109,8 +107,8 @@ public class RoleService extends SystemBaseService {
 	 * @throws UserException
 	 */
 	@TriggersRemove(cacheName = "roleCache", removeAll = true)
-	public void delRole(User loginUser, String ids) throws UserException {
+	public void delRole(User loginUser, int rid) throws UserException {
 		userAuthorityCheck(loginUser);
-		wssBaseDao.execute("Role.delRoleByIds", Lists.newArrayList(Splitter.on(",").split(ids)));
+		wssBaseDao.execute("Role.delRoleById", rid);
 	}
 }

@@ -65,8 +65,10 @@ public class User extends BaseModel {
 	private String userTypeName;
 	private String userStatus;
 
+	// 当前用户角色id list
 	private List<Integer> roleIds;
-	private List<Role> roleList;
+	// 当前用户模块id list
+	private List<Integer> moduleIds;
 
 	public String getUsername() {
 		return username;
@@ -132,14 +134,6 @@ public class User extends BaseModel {
 		this.roleIds = roleIds;
 	}
 
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-
 	public int getHospitalId() {
 		return hospitalId;
 	}
@@ -194,6 +188,14 @@ public class User extends BaseModel {
 
 	public void setRegionCode(String regionCode) {
 		this.regionCode = regionCode;
+	}
+
+	public List<Integer> getModuleIds() {
+		return moduleIds;
+	}
+
+	public void setModuleIds(List<Integer> moduleIds) {
+		this.moduleIds = moduleIds;
 	}
 
 }

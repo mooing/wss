@@ -9,19 +9,19 @@
 	</select>
 	<select id="findAllUser" resultType="User" parameterType="map">
 		select
-		user.id,
-		user.username,
-		user.realname,
-		user.usertype,
-		user.reg_time regtime,
-		user.lastlogin_time lastLoginTime,
-		user.ip,
-		user.status,
+		u.id,
+		u.username,
+		u.realname,
+		u.usertype,
+		u.reg_time regtime,
+		u.lastlogin_time lastLoginTime,
+		u.ip,
+		u.status,
 		doc.hospital_id hospitalId,
 		hos.region_code regionCode
 		from
-		sys_user user left join hos_doctor doc on user.id=doc.user_id 
-		left join hos_hospital hos on doc.hospital_id=hos.id and user.status=1
+		sys_user u left join hos_doctor doc on u.id=doc.user_id 
+		left join hos_hospital hos on doc.hospital_id=hos.id where u.status=1
 		limit #{startrecord} , #{recordsize}
 	</select>
 	<!-- 根据id获取用户 -->
@@ -58,6 +58,14 @@
 		sys_user u where
 		u.username=#{username}
 	</select>
+	<!-- 修改时，查询用户名是否重复 -->
+	<select id="getUserCountByNameAndId" resultType="int" parameterType="map">
+		select
+		count(*)
+		from
+		sys_user u where
+		u.username=#{username} and id!=#{id}
+	</select>
 
 	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
 		insert
@@ -85,6 +93,7 @@
 	<!-- 根据id修改用户 -->
 	<update id="updateUserById" parameterType="User">
 		update sys_user set
+		username=#{username},
 		realname=#{realname},
 		usertype=#{usertype}
 		where id=#{id}

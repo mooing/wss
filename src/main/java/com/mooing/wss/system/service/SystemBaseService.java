@@ -37,6 +37,19 @@ public class SystemBaseService extends BaseService {
 	}
 
 	/**
+	 * 验证是否有操作权限,并且是否当前用户操作
+	 * 
+	 * @param loginUser
+	 * @param userid
+	 * @throws UserException
+	 */
+	void userAuthorityCheck(User loginUser, int userid) throws UserException {
+		if (loginUser.getUsertype() != UserType.admin.getType() || userid != loginUser.getId()) {
+			throw new UserException(UserException.USER_TYPE_NOT_AUTHORITY);
+		}
+	}
+
+	/**
 	 * 批量保存用户对应角色
 	 * 
 	 * @param userid
@@ -63,6 +76,7 @@ public class SystemBaseService extends BaseService {
 	void delUserRole(int id) {
 		wssBaseDao.execute("Role.delRoleByUserId", id);
 	}
+
 	/**
 	 * 根据用户id删除用户对应角色
 	 * 

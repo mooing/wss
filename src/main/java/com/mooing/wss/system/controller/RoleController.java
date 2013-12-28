@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -147,13 +148,13 @@ public class RoleController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("delrole")
-	public ModelAndView delRole(@RequestParam(value = "ids") String ids, HttpSession session) {
+	@RequestMapping("delrole/{rid}")
+	public ModelAndView delRole(@PathVariable(value = "rid") int rid, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		String errormsg = "error";
 		try {
 			User loginUser = getLoginUser(session);
-			roleService.delRole(loginUser, ids);
+			roleService.delRole(loginUser, rid);
 			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 没有权限

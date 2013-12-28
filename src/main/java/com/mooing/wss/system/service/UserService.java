@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.exception.SystemException;
@@ -76,23 +77,6 @@ public class UserService extends SystemBaseService {
 	}
 
 	/**
-	 * 配置用户角色
-	 * 
-	 * 根据用户id，获取用户角色，全部角色
-	 * 
-	 * @param userid
-	 * @return
-	 */
-	public User findUserRole(int userid) {
-		User user = new User();
-		user.setId(userid);
-		List<Integer> roleIds = wssBaseDao.executeForObjectList("Role.findRoleIdByUserId", userid);
-		user.setRoleList(systemCache.findAllRole());
-		user.setRoleIds(roleIds);
-		return user;
-	}
-
-	/**
 	 * 去添加用户
 	 * 
 	 * @return
@@ -122,8 +106,8 @@ public class UserService extends SystemBaseService {
 		user.setRandom(random);
 		user.setPassword(realPass);
 		wssBaseDao.execute("User.saveUser", user);
-		// 2.如果是医生类型，同步信息到医生
-		if (UserType.doctor.getType() == user.getUsertype()) {
+		// 2.如果是医生或领导类型，同步信息到医生,维护其单位信息和地区信息
+		if (UserType.doctor.getType() == user.getUsertype() || UserType.lead.getType() == user.getUsertype()) {
 			Doctor doc = new Doctor();
 			doc.setUserid(user.getId());
 			wssBaseDao.execute("Doctor.saveDoctor", doc);
@@ -147,7 +131,6 @@ public class UserService extends SystemBaseService {
 			throw new UserException(UserException.USER_IS_NOT_EXIST);
 		}
 		List<Integer> roleIds = wssBaseDao.executeForObjectList("Role.findRoleIdByUserId", userid);
-		user.setRoleList(systemCache.findAllRole());
 		user.setRoleIds(roleIds);
 		return user;
 	}
@@ -155,12 +138,20 @@ public class UserService extends SystemBaseService {
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void update(User loginUser, User user) throws UserException {
 		userAuthorityCheck(loginUser);
-		if (user == null  ) {
+		if (user == null) {
 			throw new UserException(UserException.USER_DEFAULT_EXCEPTION);
 		}
 		// 如果基本信息为空，返回
 		if (CollectionUtils.isEmpty(user.getRoleIds())) {
 			throw new UserException(UserException.USER_ROLE_TYPE_EMPTY);
+		}
+		// 判断用户名是否存在
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("username", user.getUsername());
+		map.put("id", user.getId());
+		Integer userCount = wssBaseDao.executeForObject("User.getUserCountByNameAndId", map, Integer.class);
+		if (userCount != null && userCount > 0) {
+			throw new UserException(UserException.USER_NAME_ISEXIST);
 		}
 		// 1.保存用户
 		wssBaseDao.execute("User.updateUserById", user);
@@ -210,26 +201,83 @@ public class UserService extends SystemBaseService {
 	}
 
 	/**
-	 * 用户列表，配置用户角色
+	 * 去修改用户角色信息
+	 * 
+	 * @param userid
+	 * @return
+	 * @throws UserException
+	 */
+	public User grantRole(User loginUser, int userid) throws UserException {
+		userAuthorityCheck(loginUser);
+		User user = wssBaseDao.executeForObject("User.findUserById", userid, User.class);
+		if (user == null) {
+			log.error("UserService | grantRole ,user is null;userid:{}", userid);
+			throw new UserException(UserException.USER_IS_NOT_EXIST);
+		}
+		List<Integer> roleIds = wssBaseDao.executeForObjectList("Role.findRoleIdByUserId", userid);
+		user.setRoleIds(roleIds);
+		return user;
+	}
+
+	/**
 	 * 
 	 * @param loginUser
 	 *            当前登录用户
-	 * @param userid
-	 *            要配置的的用户id
-	 * @param roleIds
-	 *            对应角色表的角色id
+	 * @param user
+	 *            修改权限用户信息
 	 * @throws UserException
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void configUserRole(User loginUser, int userid, List<Integer> roleIds) throws UserException {
-		// 是否有其他控制
+	public void updateRole(User loginUser, User user) throws UserException {
 		userAuthorityCheck(loginUser);
-		if (userid < 0 || CollectionUtils.isEmpty(roleIds)) {
+		if (user == null) {
 			throw new UserException(UserException.USER_DEFAULT_EXCEPTION);
 		}
-		// 删除原用户角色
-		delUserRole(userid);
+		// 如果基本信息为空，返回
+		if (CollectionUtils.isEmpty(user.getRoleIds())) {
+			throw new UserException(UserException.USER_ROLE_TYPE_EMPTY);
+		}
+		// 删除用户角色
+		delUserRole(user.getId());
 		// 2.保存用户角色
-		saveUserRoles(userid, roleIds);
+		saveUserRoles(user.getId(), user.getRoleIds());
+	}
+
+	/**
+	 * 授予用户模块权限
+	 * 
+	 * @param loginUser
+	 * @param userid
+	 * @return
+	 * @throws UserException
+	 */
+	public Map<String, Object> grantModule(User loginUser, int userid) throws UserException {
+		// userAuthorityCheck(loginUser, userid);
+		List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByUserId", userid);
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("moduleIds", moduleIds);
+		map.put("moduleList", systemCache.findAllModule());
+		return map;
+	}
+
+	/**
+	 * 保存用户模块 权限
+	 * 
+	 * @param loginUser
+	 * @param user
+	 * @throws UserException
+	 */
+	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void saveGrantModule(User loginUser, User user) throws UserException {
+		if (user == null || user.getId() == 0 || CollectionUtils.isEmpty(user.getModuleIds())) {
+			throw new UserException(UserException.USER_DEFAULT_EXCEPTION);
+		}
+		// 删除原用户模块权限
+		wssBaseDao.execute("Module.delSysModulesByUserid", user.getId());
+		// 新增用户模块权限
+		Map<String, Object> moduleMap = Maps.newHashMap();
+		moduleMap.put("userid", user.getId());
+		moduleMap.put("moduleIds", user.getModuleIds());
+		wssBaseDao.execute("Module.addSysModulesByUserid", moduleMap);
 	}
 }

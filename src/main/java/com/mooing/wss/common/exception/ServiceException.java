@@ -5,6 +5,13 @@ package com.mooing.wss.common.exception;
  */
 public class ServiceException extends Exception {
 	private static final long serialVersionUID = 1L;
+	
+
+	/**
+	 * 删除根节点异常
+	 */
+	public static final String ROOT_NOT_DEL = "0";
+	
 
 	public ServiceException(Throwable cause) {
 		super(cause);

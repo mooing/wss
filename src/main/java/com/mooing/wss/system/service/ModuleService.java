@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.mooing.wss.common.cache.base.SystemCache;
+import com.mooing.wss.common.exception.ServiceException;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.system.model.Module;
 import com.mooing.wss.system.model.User;
@@ -69,8 +70,12 @@ public class ModuleService extends SystemBaseService {
 	}
 
 	@TriggersRemove(cacheName = "moduleCache", removeAll = true)
-	public void delNode(User loginUser, int id) throws UserException {
+	public void delNode(User loginUser, int id) throws UserException, ServiceException {
 		userAuthorityCheck(loginUser);
+		if(id==1){
+			//不能删除根节点
+			throw new ServiceException(ServiceException.ROOT_NOT_DEL);
+		}
 		wssBaseDao.execute("Module.delModule", id);
 	}
 
@@ -80,6 +85,14 @@ public class ModuleService extends SystemBaseService {
 		if (module != null && !StringUtils.isBlank(module.getName())) {
 			wssBaseDao.execute("Module.updateModule", module);
 		}
+	}
+
+	public Module toUpdateNode(User loginUser, int moduleid) throws UserException {
+		userAuthorityCheck(loginUser);
+		if(moduleid!=0){
+			return wssBaseDao.executeForObject("Module.findById", moduleid, Module.class);
+		}
+		return null;
 	}
 
 }

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
@@ -35,6 +35,8 @@ import com.mooing.wss.system.service.UserService;
 public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SystemCache systemCache;
 
 	@RequestMapping("list")
 	public ModelAndView findAllUser(SearchBoxModel searchBox, HttpSession session) {
@@ -93,22 +95,6 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 用户列表，根据用户id异步获取，用户对应的角色列表
-	 * 
-	 * @param userid
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("finduserrole")
-	@ResponseBody
-	public ModelAndView findUserRole(@RequestParam(value = "userid") int userid, HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		User user = userService.findUserRole(userid);
-		mv.addObject("user", user);
-		return mv;
-	}
-
-	/**
 	 * 去修改用户信息
 	 * 
 	 * @param userid
@@ -122,6 +108,7 @@ public class UserController extends BaseController {
 			User loginUser = getLoginUser(session);
 			user = userService.toUpdate(loginUser, userid);
 			mv.addObject("user", user);
+			mv.addObject("roleList", systemCache.findAllRole());
 			mv.addObject("userTypeList", UserType.getAllUserType());
 		} catch (UserException e) {
 			// 用户没有权限
@@ -143,21 +130,22 @@ public class UserController extends BaseController {
 	public ModelAndView update(@ModelAttribute("user") User user, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		User loginUser = getLoginUser(session);
-		String errormsg="error";
+		String errormsg = "error";
 		try {
 			userService.update(loginUser, user);
 			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
-		} 
-		catch (UserException e) {
+		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
-				errormsg="用户没有权限！";
+				errormsg = "用户没有权限！";
+			} else if (e.getMessage().equals(UserException.USER_ROLE_TYPE_EMPTY)) {
+				errormsg = "请选择用户角色类型！";
 			}
-			if (e.getMessage().equals(UserException.USER_ROLE_TYPE_EMPTY)) {
-				errormsg="请选择用户角色类型！";
+			// 用户名已存在,安表示页面显示
+			else if (UserException.USER_NAME_ISEXIST.equals(e.getMessage())) {
+				errormsg = "用户名已存在！";
 			}
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
 		}
@@ -197,31 +185,96 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 用户列表，配置用户角色
+	 * 用户列表，授予角色
 	 * 
 	 * @param userid
-	 * @param roleIds
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping("grantrole")
-	public ModelAndView configUserRole(@RequestParam(value = "userid") int userid, @RequestParam(value = "roleIds") List<Integer> roleIds,
-			HttpSession session) {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView grantRole(@RequestParam(value = "userid") int userid, HttpSession session) {
+		ModelAndView mv = new ModelAndView("user/userGrantRole");
 		User loginUser = getLoginUser(session);
 		try {
-			userService.configUserRole(loginUser, userid, roleIds);
-			mv.setViewName("redirect:/user/list/");
+			User user = userService.grantRole(loginUser, userid);
+			mv.addObject("user", user);
+			mv.addObject("roleList", systemCache.findAllRole());
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
 				mv.addObject("error", "1");
 			}
-			return mv;
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
 		}
 		return mv;
 	}
+
+	@RequestMapping("updaterole")
+	public ModelAndView updateRole(@ModelAttribute("user") User user, HttpSession session) {
+		ModelAndView mv = new ModelAndView("user/userGrantRole");
+		User loginUser = getLoginUser(session);
+		String errorMsg = "error";
+		try {
+			userService.updateRole(loginUser, user);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+		} catch (UserException e) {
+			// 用户没有权限
+			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
+				errorMsg = "用户没有权限";
+			}
+		} catch (Exception e) {
+			mv.addObject("error", 0);
+			log.error(e.getMessage(), e);
+		}
+		return ajaxDoneError(errorMsg);
+	}
+
+	/**
+	 * 用户列表，授予模块权限
+	 * 
+	 * @param userid
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("grantmodule")
+	public ModelAndView grantModule(@RequestParam(value = "userid") int userid, HttpSession session) {
+		ModelAndView mv = new ModelAndView("user/userGrantModule");
+		User loginUser = getLoginUser(session);
+		try {
+			Map<String, Object> moduleMap = userService.grantModule(loginUser, userid);
+			moduleMap.put("userid", userid);
+			mv.addObject("moduleMap", moduleMap);
+		} catch (UserException e) {
+			// 用户没有权限
+			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
+				mv.addObject("error", "1");
+			}
+		} catch (Exception e) {
+			mv.addObject("error", 0);
+			log.error(e.getMessage(), e);
+		}
+		return mv;
+	}
+	@RequestMapping("saveGrantModule")
+	public ModelAndView saveGrantModule(@ModelAttribute("user") User user, HttpSession session) {
+		ModelAndView mv = new ModelAndView("user/userGrantModule");
+		User loginUser = getLoginUser(session);
+		String errormsg = "error";
+		try {
+			userService.saveGrantModule(loginUser, user);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+		} catch (UserException e) {
+			// 用户没有权限
+			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
+				errormsg = "用户没有权限！";
+			}
+		} catch (Exception e) {
+			mv.addObject("error", 0);
+			log.error(e.getMessage(), e);
+		}
+		return ajaxDoneError(errormsg);
+	}
+
 }

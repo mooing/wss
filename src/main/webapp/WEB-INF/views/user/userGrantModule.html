@@ -1,0 +1,74 @@
+<div class="pageContent">
+	
+	<form method="post" action="/user/saveGrantModule" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+	<input type="hidden" value="$!{moduleMap.userid}" name="id">
+	<div class="accordionContent" id="left">
+    </div>
+    
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+</div>
+<script>
+    function getTree(data,pId){
+        var tree;
+        if(pId==0){
+            tree = '<ul class="tree treeFolder treeCheck expand" oncheck="">';
+        }else{
+            tree = '<ul>';
+        }
+        for(var i in data){
+            if(data[i].pId == pId){
+                tree += "<li  target='mid'  rel='"+data[i].id+"'><a href='javascript:void(0);' tname='moduleIds' tvalue='"+data[i].id+"'>"+data[i].name+"</a>";
+                tree += getTree(data,data[i].id);
+                tree += "</li>";
+            }
+        }
+        return tree+"</ul>";
+    };
+    
+   
+    $(function(){
+    	loadTree();
+    	checkModule();
+	});
+    
+    
+    function loadTree(){
+
+        //jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
+            data=[{"id":1,"leaf":false,"name":"妇幼系统","pId":0,"sort":0,"status":1},{"id":2,"leaf":false,"name":"系统管理","pId":1,"sort":0,"status":1},{"id":3,"leaf":false,"name":"出生证明","pId":1,"sort":0,"status":1},{"id":4,"leaf":false,"name":"用户管理","pId":2,"sort":0,"status":1},{"id":5,"leaf":false,"name":"角色管理","pId":2,"sort":0,"status":1}];
+            $("#left").html(getTree(data,0).replaceAll("<ul></ul>",""));
+       //});
+    }
+    
+	function checkModule(){
+		 $('input[type="checkbox"]').each(
+				 function() {
+					 var moduleIds=${moduleMap.moduleIds};
+    				 for(var i=0;i<moduleIds.length;i++){
+    					 if($(this).val()==moduleIds[i]){
+    						 $(this).attr("checked", true); 
+    					 }
+    				 }
+				 }
+	       );
+	};
+
+</script>

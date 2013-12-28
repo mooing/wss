@@ -15,13 +15,23 @@
 	 from
 		sys_module  
 	</select>
+	<!-- 根据父id，查询模块 -->
 	<select id="findModuleByPid" resultType="Module" parameterType="int">
 		select 
 		id,
-		modname ,
+		modname name,
 		pid 
 	 from
 		sys_module  where pid=#{pid}
+	</select>
+	<!-- 根据id，查询模块 -->
+	<select id="findById" resultType="Module" parameterType="int">
+		select 
+		id,
+		modname name,
+		pid 
+	 from
+		sys_module  where id=#{id}
 	</select>
 	
 	<!-- 增加模块 -->
@@ -42,4 +52,34 @@
 	<update id="updateModule" parameterType="Module">
 		update sys_module set modname=#{name} where id=#{id} 
 	</update>
+	
+	<!-- 用户列表,授予模块权限,根据用户id查找其所有模块 -->
+	<select id="findModulesByUserId" resultType="int" parameterType="int">
+		select 
+		module_id
+	 from
+		sys_role_module  where obj_id=#{userid} and type=2
+	</select>
+	<!-- 根据用户id，删除对应的模块角色 -->
+	<delete id="delSysModulesByUserid" parameterType="int">
+		delete from sys_role_module  where obj_id=#{userid} and type=2
+	</delete>
+	
+	<insert id="addSysModulesByUserid" parameterType="map">
+		insert into 
+		sys_role_module(
+			obj_id,
+			module_id,
+			type
+		)
+		values 
+		<foreach collection="moduleIds" item="moduleId" index="index" separator=",">
+		(
+		#{userid},
+		#{moduleId},
+		2
+		)
+		</foreach>
+	</insert>
+	
 </mapper>

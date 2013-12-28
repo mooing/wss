@@ -3,7 +3,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="/module/toaddmodule?moduleid={mid}" target="dialog" warn="请选择一个模块"><span>添加</span></a></li>
 			<li><a class="edit" href="/module/toupdate?moduleid={mid}" target="dialog" warn="请选择一个模块"><span>修改</span></a></li>
-			<li><a class="delete" href="/module/del?moduleid={mid}" target="ajaxTodo" title="确定要删除吗？" warn="请选择一个模块"><span>删除</span></a></li>
+			<li><a class="delete" href="/module/delnode/{mid}" target="ajaxTodo" title="确定要删除吗？" warn="请选择一个模块"><span>删除</span></a></li>
 		</ul>
 	</div>
 	
@@ -37,11 +37,10 @@
     
     function loadTree(){
 
-        jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
-        	alert(data);
-            //data=[{"id":1,"leaf":false,"name":"12","pId":0,"sort":0,"status":1},{"id":2,"leaf":true,"name":"33","pId":1,"sort":0,"status":1}];
+        //jQuery.getJSON("/module/alltree?guid="+new Date().getTime(),function(data){
+            data=[{"id":1,"leaf":false,"name":"妇幼系统","pId":0,"sort":0,"status":1},{"id":2,"leaf":false,"name":"系统管理","pId":1,"sort":0,"status":1},{"id":3,"leaf":false,"name":"出生证明","pId":1,"sort":0,"status":1},{"id":4,"leaf":false,"name":"用户管理","pId":2,"sort":0,"status":1},{"id":5,"leaf":false,"name":"角色管理","pId":2,"sort":0,"status":1}];
             $("#left").html(getTree(data,0).replaceAll("<ul></ul>",""));
-        });
+       //});
     }
 
     //var data = [{"id":1,"pId":0,"name":"aaa"},{"id":2,"pId":1,"name":"bbb"},{"id":3,"pId":2,"name":"ccc"},{"id":4,"pId":3,"name":"ddd"},{"id":5,"pId":2,"name":"eee"},{"id":6,"pId":5,"name":"fff"}] 

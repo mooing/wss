@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
 import com.mooing.wss.common.controller.BaseController;
+import com.mooing.wss.common.exception.ServiceException;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.system.model.Module;
 import com.mooing.wss.system.model.User;
@@ -128,12 +128,44 @@ public class ModuleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("delnode/{id}")
-	@ResponseBody
-	public String delNode(@PathVariable("id") int id, HttpSession session) {
+	public ModelAndView delNode(@PathVariable("id") int id, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String errormsg = "error";
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.delNode(loginUser, id);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+		} catch (UserException e) {
+			// not authority
+			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
+				errormsg = "当前用户类型没有操作权限！";
+			}
+		} catch (ServiceException e) {
+			// not authority
+			if (ServiceException.ROOT_NOT_DEL.equals(e.getMessage())) {
+				errormsg = "不能删除根节点！";
+			}
+		} catch (Exception e) {
+			mv.addObject("error", 0);
+		}
+		return ajaxDoneError(errormsg);
+	}
+
+	/**
+	 * toupdate节点
+	 * 
+	 * @param id
+	 *            节点id
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("toupdate")
+	public ModelAndView toUpdateRole(@RequestParam int moduleid, HttpSession session) {
+		ModelAndView mv = new ModelAndView("module/moduleUpdate");
+		try {
+			User loginUser = getLoginUser(session);
+			Module module = moduleService.toUpdateNode(loginUser, moduleid);
+			mv.addObject("module", module);
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// not authority
@@ -143,7 +175,7 @@ public class ModuleController extends BaseController {
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 		}
-		return JSON.toJSONString("yes");
+		return mv;
 	}
 
 	/**
@@ -155,21 +187,21 @@ public class ModuleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("updatenode")
-	@ResponseBody
-	public String updateNode(@ModelAttribute("module") @Valid Module module, HttpSession session) {
+	public ModelAndView updateNode(@ModelAttribute("module") @Valid Module module, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String errormsg = "error";
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.updateNode(loginUser, module);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
-			mv.addObject("user", new User());
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
-				mv.addObject("error", "1");
+				errormsg = "当前用户类型没有操作权限！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 		}
-		return JSON.toJSONString("yes");
+		return ajaxDoneError(errormsg);
 	}
 }
