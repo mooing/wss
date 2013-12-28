@@ -1,0 +1,40 @@
+<!-- 办证查询统计 -->
+<form id="pagerForm" method="post" action="">
+	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
+	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
+</form>
+#parse("/WEB-INF/views/cert/query/_query.html")
+<div class="pageContent">
+	<div id="w_list_print">
+		<table class="list" width="98%" targetType="navTab" layoutH="87">
+			<thead>
+				<tr>
+					<th>地市</th>
+					<th>县区</th>
+					<th>乡镇</th>
+					<th>单位</th>
+					<th>时间</th>
+					<th>男</th>
+					<th>女</th>
+					<th>合计</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr target="id" rel="1">
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>8</td>
+				</tr>
+				<tr>
+					<td colspan="8">没有找到记录</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	#parse("/WEB-INF/views/common/pager.html")
+</div>

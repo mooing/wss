@@ -1,0 +1,59 @@
+<!-- 证件补发 -->
+<div class="pageContent">
+<form method="post" action="" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    <div class="pageFormContent" layoutH="56">
+        <p>
+            <label>姓名：</label>
+            <input type="text" name="" class="required" />        
+        </p>
+         <p>
+            <label>原出生证编号</label>
+            <input type="text" name="" readonly/>
+        </p>
+         <p>
+            <label>新出生证编号</label>
+            <input type="text" name="" readonly/>
+        </p>
+        <p>
+            <label>补发原因：</label>
+            <select name="">
+                <option value="">选项</option>
+            </select>     
+        </p>
+        <p>
+            <label>签发时间：</label>
+            <input type="text" name="" readonly/>       
+        </p>
+        <p>
+             <label>签发单位：</label>
+            <input type="text" name="" />     
+        </p>
+        <p>
+            <label>签发用户:</label>
+            <input type="text" name="" />     
+        </p>
+        <p>
+            <label>备注:</label>
+            <input type="text" name="" />     
+        </p>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+</div>
