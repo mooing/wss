@@ -1,32 +1,34 @@
+<!-- 特殊签发列表 -->
 <form id="pagerForm" method="post" action="">
 	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
 	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
 </form>
+#parse("/WEB-INF/views/cert/handle/_query.html")
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="url?id={cid}" target="dialog"><span>特殊签发</span></a></li>
+			<li><a class="add" href="/test/ajax?id={id}" target="dialog"><span>特殊签发</span></a></li>
 		</ul>
 	</div>
 	<div id="w_list_print">
-		<table class="list" width="98%" targetType="navTab" layoutH="53">
+		<table class="list" width="98%" targetType="navTab" layoutH="165">
 			<thead>
 				<tr>
-					<th width="22"></th>
-					<th width="120">姓名</th>
-					<th width="150">父亲</th>
-					<th width="150">母亲</th>
-					<th width="150">联系方式</th>
-					<th width="150">性别</th>
-					<th width="200">出生日期</th>
-					<th width="150">年龄</th>
-					<th width="150">建档人</th>
-					<th width="150">建档单位</th>
-					<th width="200">建档时间</th>
+					<th></th>
+					<th>姓名</th>
+					<th>父亲</th>
+					<th>母亲</th>
+					<th>联系方式</th>
+					<th>性别</th>
+					<th>出生日期</th>
+					<th>年龄</th>
+					<th>建档人</th>
+					<th>建档单位</th>
+					<th>建档时间</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr target="cid" rel="">
+				<tr target="id" rel="1">
 					<td>1</td>
 					<td>2</td>
 					<td>3</td>
@@ -40,7 +42,7 @@
 					<td>11</td>
 				</tr>
 				<tr>
-					<td colspan="5">没有找到记录</td>
+					<td colspan="11">没有找到记录</td>
 				</tr>
 			</tbody>
 		</table>

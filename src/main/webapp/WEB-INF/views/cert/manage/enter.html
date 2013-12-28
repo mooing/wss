@@ -1,4 +1,4 @@
-<!-- 证件召回 -->
+<!-- 证件入库 -->
 <form id="pagerForm" method="post" action="">
 	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
 	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
@@ -7,7 +7,8 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="/test/ajax?id={ids}" target="dialog"><span>证件召回</span></a></li>
+			<li><a class="add" href="/test/ajax?id={ids}" target="dialog"><span>证件入库</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="ajaxTodo"    href="/test/ajax?id={ids}" class="delete"><span>手工作废</span></a></li>
 		</ul>
 	</div>
 	<div id="w_list_print">
@@ -17,10 +18,10 @@
 					<th><input type="checkbox" group="ids" class="checkboxCtrl"></th>
 					<th>起始编号</th>
 					<th>终止编号</th>
-					<th>召回数量</th>
-					<th>召回单位</th>
-					<th>召回人姓名</th>
-					<th>召回日期</th>
+					<th>入库单位</th>
+					<th>入库人姓名</th>
+					<th>入库数量</th>
+					<th>入库日期</th>
 					<th>备注</th>
 					<th>当前状态</th>
 				</tr>
@@ -35,6 +36,7 @@
 					<td>5</td>
 					<td>6</td>
 					<td>7</td>
+					<td>8</td>
 				</tr>
 				<tr>
 					<td colspan="9">没有找到记录</td>

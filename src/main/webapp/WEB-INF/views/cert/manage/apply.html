@@ -1,0 +1,58 @@
+<!-- 证件申请 -->
+<form id="pagerForm" method="post" action="">
+	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
+	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
+</form>
+#parse("/WEB-INF/views/cert/manage/_query.html")
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/test/ajax?id={ids}" target="dialog"><span>申请证件</span></a></li>
+			<li><a class="add" href="/test/ajax?id={ids}" target="dialog"><span>证件下发</span></a></li>
+			<li><a class="add" href="/test/ajax?id={ids}" target="dialog"><span>证件驳回</span></a></li>
+			<li><a class="add" href="/test/ajax?id={ids}" target="dialog"><span>接收</span></a></li>
+			<li><a class="edit" href="/test/ajax?id={ids}" target="dialog"><span>修改</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="ajaxTodo"  href="/test/ajax?id={ids}" class="delete"><span>删除</span></a></li>
+		</ul>
+	</div>
+	<div id="w_list_print">
+		<table class="list" width="98%" targetType="navTab" layoutH="115">
+			<thead>
+				<tr>
+					<th><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th>当前状态</th>
+					<th>起始编号</th>
+					<th>终止编号</th>
+					<th>申请数量</th>
+					<th>申请单位</th>
+					<th>申请人姓名</th>
+					<th>申请日期</th>
+					<th>发证单位</th>
+					<th>发证人姓名</th>
+					<th>发证日期</th>
+					<th>备注</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr target="id" rel="1">
+					<td><input name="ids" value="1" type="checkbox"></td>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+				</tr>
+				<tr>
+					<td colspan="12">没有找到记录</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	#parse("/WEB-INF/views/common/pager.html")
+</div>

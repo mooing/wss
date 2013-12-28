@@ -1,0 +1,102 @@
+<!-- 单证追踪 -->
+<form id="pagerForm" method="post" action="">
+	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
+	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tbody>
+					<tr>
+						<td>
+							证件归属单位:
+							<input type="text" name="" value="" class="textInput">
+						</td>
+						<td>
+							当前状态:
+							<input type="text" name="" value="" class="textInput">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li>
+						<div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">检索</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panel" defH="200">
+		<h1>证件流程</h1>
+		<div>
+			<table width="98%" class="list">
+				<thead>
+					<tr>
+						<th>时间</th>
+						<th>类型</th>
+						<th>申请单位</th>
+						<th>申请人</th>
+						<th>发放单位</th>
+						<th>发放人</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="">
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="panel" defH="200">
+		<h1>证件明细</h1>
+		<div>
+			<table width="98%" class="list">
+				<thead>
+					<tr>
+						<th>证件编号</th>
+						<th>新生儿姓名</th>
+						<th>生日</th>
+						<th>母亲姓名</th>
+						<th>母亲身份证号</th>
+						<th>父亲姓名</th>
+						<th>父亲身份证号</th>
+						<th>接生人</th>
+						<th>接生机构</th>
+						<th>办证时间</th>
+						<th>办证单位</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="">
+						<td>1</td>
+						<td>2</td>
+						<td>1</td>
+						<td>2</td>
+						<td>1</td>
+						<td>2</td>
+						<td>1</td>
+						<td>2</td>
+						<td>1</td>
+						<td>2</td>
+						<td>1</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
