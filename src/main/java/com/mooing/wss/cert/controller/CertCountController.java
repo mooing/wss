@@ -7,7 +7,7 @@ import com.mooing.wss.common.controller.BaseController;
 
 /**
  * 
- * 出生证管理 入库 召回
+ * 出生证統計
  * 
  * 
  * @author kaiming.chi
@@ -15,7 +15,7 @@ import com.mooing.wss.common.controller.BaseController;
  * @date 2013-12-26 下午11:40:01
  */
 @Controller
-@RequestMapping("/certstock")
-public class CertStockController extends BaseController {
+@RequestMapping("/certcount")
+public class CertCountController extends BaseController {
 
 }

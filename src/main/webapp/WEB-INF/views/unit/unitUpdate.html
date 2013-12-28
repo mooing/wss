@@ -1,0 +1,76 @@
+<div class="pageContent">
+#if( $!error != '' )
+<span>数据异常，您选择的用户不存在或无效！</span>
+#else
+<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    <div class="pageFormContent" layoutH="56">
+        <input type="hidden" name="id" value="$!user.id "/>
+        <p>
+            <label>用户名：</label>
+            <input type="text" name="username" class="required" value="$!user.username"/>        
+        </p>
+         <p>
+            <label>真实姓名：</label>
+            <input type="text" name="realname" value="$!user.realname"/>
+        </p>
+        <p>
+            <label>角色类型：</label>
+             #foreach($!role in $!roleList )
+             <span class="checkbox-wrap">
+	                <input type="checkbox" class="required" name="roleIds" value="$!role.id">$!role.rolename
+             </span>
+             #end        
+        </p>
+        <p>
+            <label>用户类型：</label>
+             <select class="combox required" name="usertype">
+                 <option value="0">--请选择--</option>
+                 #foreach($!type in $!userTypeList )
+                	 #if($!type.type==$!user.usertype)
+                 <option value="$!type.type" selected="selected">$!type.name</option>
+	                 #else
+	                  <option value="$!type.type" >$!type.name</option>
+	                 #end
+                 #end
+             </select>        
+        </p>
+        <p>
+            <label>初始密码:</label>
+            <input type="text" name="password" class="required" value="123456"/>
+        </p>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+#end
+</div>
+  <script>
+    	$(function(){
+    		 $('input[type="checkbox"][name="roleIds"]').each(
+    				 function() {
+    					 var roleIds=${user.roleIds};
+	    				 for(var i=0;i<roleIds.length;i++){
+	    					 if($(this).val()==roleIds[i]){
+	    						 $(this).attr("checked", true); 
+	    					 }
+	    				 }
+    				 }
+    	       );
+    	});
+    </script>

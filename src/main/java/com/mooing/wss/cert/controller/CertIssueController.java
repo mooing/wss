@@ -22,9 +22,8 @@ import com.mooing.wss.system.model.User;
 
 /**
  * 
- * 签发controller
+ * 证件办理controller
  * 
- * Title: IssueController
  * 
  * @author kaiming.chi
  * 
