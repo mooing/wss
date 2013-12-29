@@ -7,10 +7,13 @@
 		</ul>
 	</div>
 	
-	<div class="accordionContent" id="left">
+	<div class="accordionContent" id="unit-tree">
     </div>
 </div>
-<script src="/js/module/region.tree.js"></script>
-$(function() {
-    f.module.loadTree();
-});
+<script src="/js/module/region.js"></script>
+<script>
+	$(function() {
+		console.log(f.region)
+	    f.region.loadTree();
+	});
+</script>

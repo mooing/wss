@@ -1,4 +1,4 @@
-f.module = {
+f.region = {
     getTree:function(data, pId, option){
         var tree;
         if (pId == 0) {
@@ -22,7 +22,7 @@ f.module = {
             option.ids = $(option.container).attr("ids").split(",");
         }
         $.ajax({
-            url:"/module/alltree",
+            url:"/unit/alltree",
             data:{"guid":new Date().getTime()},
             async:false,
             dataType:"json",
@@ -35,7 +35,7 @@ f.module = {
         collapse:"collapse",
         treeCheck:"",
         oncheck:$.noop,
-        container:"#module-tree",
+        container:"#region-tree",
         ids:[]
     }
 }
