@@ -1,0 +1,45 @@
+<form id="pagerForm" method="post" action="/user/list">
+	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
+	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
+</form>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/doctor/toadd" target="dialog"><span>添加</span></a></li>
+			<li><a class="edit" href="/doctor/toupdate?userid={uid}" target="dialog" warn="请选择一条记录"><span>修改</span></a></li>
+			<li><a title="确实要删除该条记录吗?" target="ajaxTodo"    href="/user/doctor/{uid}" class="delete"><span>删除</span></a></li>
+		</ul>
+	</div>
+	<div id="w_list_print">
+		<table class="list" width="100%" targetType="navTab" layoutH="53">
+			<thead>
+				<tr>
+					<th>用户名</th>
+					<th>用户类型</th>
+					<th>所在单位</th>
+					<th>单位所在地区</th>
+					<th>注册时间</th>
+					<th>状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($!user in $!page.data )
+				<tr target="uid" rel="$!{user.id}">
+					<td>$!user.username</td>
+					<td>$!user.userTypeName</td>
+					<td>$!user.hospitalName</td>
+					<td>$!user.hospitalAddress</td>
+					<td>$dateTool.format("yyyy-MM-dd HH:mm:ss", $!user.regtime)</td>
+					<td>$!user.userStatus</td>
+				</tr>
+				#end
+				#if($!{page.data} == 0 )
+				<tr>
+					<td colspan="6">没有找到记录</td>
+				</tr>
+				#end
+			</tbody>
+		</table>
+	</div>
+	#parse("/WEB-INF/views/common/pager.html")
+</div>

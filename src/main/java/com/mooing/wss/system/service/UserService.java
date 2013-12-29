@@ -1,5 +1,6 @@
 package com.mooing.wss.system.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,12 @@ import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.exception.SystemException;
 import com.mooing.wss.common.exception.UserException;
+import com.mooing.wss.common.model.SearchBoxModel;
+import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.common.util.Sha1Util;
 import com.mooing.wss.hos.model.Doctor;
+import com.mooing.wss.hos.model.Hospital;
+import com.mooing.wss.system.enums.UserStatus;
 import com.mooing.wss.system.enums.UserType;
 import com.mooing.wss.system.model.Role;
 import com.mooing.wss.system.model.User;
@@ -44,35 +49,32 @@ public class UserService extends SystemBaseService {
 	 *            查询条件map
 	 * @return
 	 */
-	// public Pagination<User> pageList(SearchBoxModel searchBox, Map<String,
-	// Object> search) {
-	// Integer count = wssBaseDao.executeForObject("User.findUserCount", search,
-	// Integer.class);
-	// Pagination<User> page = null;
-	// List<User> userList = new ArrayList<User>();
-	// if (count != null && count != 0) {
-	// page = new Pagination<User>(count, searchBox.getPageNum(),
-	// searchBox.getNumPerPage());
-	// search.put("startrecord", page.getStartPosition());
-	// search.put("recordsize", searchBox.getNumPerPage());
-	// userList = wssBaseDao.executeForObjectList("User.findAllUser", search);
-	// if (!CollectionUtils.isEmpty(userList)) {
-	// // 设置医院名称和地址
-	// Map<Integer, Hospital> hospitalAllCache = unitCache.hospitalAllCache();
-	// for (User user : userList) {
-	// Hospital hospital = hospitalAllCache.get(user.getHospitalId());
-	// if (hospital != null) {
-	// user.setHospitalName(hospital.getName());
-	// user.setHospitalAddress(hospital.getRegionName());
-	// }
-	// user.setUserTypeName(UserType.getNameByType(user.getUsertype()));
-	// user.setUserStatus(UserStatus.getNameByStatus(user.getStatus()));
-	// }
-	// }
-	// page.bindData(userList);
-	// }
-	// return page;
-	// }
+	public Pagination<User> pageList(SearchBoxModel searchBox, Map<String, Object> search) {
+		Integer count = wssBaseDao.executeForObject("User.findUserCount", search, Integer.class);
+		Pagination<User> page = null;
+		List<User> userList = new ArrayList<User>();
+		if (count != null && count != 0) {
+			page = new Pagination<User>(count, searchBox.getPageNum(), searchBox.getNumPerPage());
+			search.put("startrecord", page.getStartPosition());
+			search.put("recordsize", searchBox.getNumPerPage());
+			userList = wssBaseDao.executeForObjectList("User.findAllUser", search);
+			if (!CollectionUtils.isEmpty(userList)) {
+				// 设置医院名称和地址
+				Map<Integer, Hospital> hospitalAllCache = unitCache.hospitalAndRegionCache();
+				for (User user : userList) {
+					Hospital hospital = hospitalAllCache.get(user.getHospitalId());
+					if (hospital != null) {
+						user.setHospitalName(hospital.getName());
+						user.setHospitalAddress(hospital.getRegionName());
+					}
+					user.setUserTypeName(UserType.getNameByType(user.getUsertype()));
+					user.setUserStatus(UserStatus.getNameByStatus(user.getStatus()));
+				}
+			}
+			page.bindData(userList);
+		}
+		return page;
+	}
 
 	/**
 	 * 去添加用户

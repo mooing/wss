@@ -42,8 +42,8 @@
 		<mapper resource="sqlmap/system/User.xml" />
 		<mapper resource="sqlmap/system/Role.xml" />
 		<mapper resource="sqlmap/system/Module.xml" />
-		<mapper resource="sqlmap/unit/Doctor.xml" />
-		<mapper resource="sqlmap/unit/Hospital.xml" />
+		<mapper resource="sqlmap/hospital/Doctor.xml" />
+		<mapper resource="sqlmap/hospital/Hospital.xml" />
 		<!-- 出生证模块 -->
 		<mapper resource="sqlmap/cert/CertIssueInfo.xml" />
 		<!-- 字典模块 -->

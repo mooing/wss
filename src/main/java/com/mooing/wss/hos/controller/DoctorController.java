@@ -1,6 +1,8 @@
 package com.mooing.wss.hos.controller;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,65 +11,51 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
-import com.mooing.wss.hos.model.Hospital;
-import com.mooing.wss.hos.service.UnitService;
+import com.mooing.wss.common.model.SearchBoxModel;
+import com.mooing.wss.common.util.Pagination;
+import com.mooing.wss.hos.model.Doctor;
+import com.mooing.wss.hos.service.DoctorService;
 import com.mooing.wss.system.model.User;
 
 /**
- * 单位管理
+ * 医生管理
  * 
  * 
  * @author kaiming.chi
  * 
- * @date 2013-12-28 下午5:23:44
+ * @date 2013-12-29 下午11:18:10
  */
 @Controller
-@RequestMapping("unit")
-public class UnitController extends BaseController {
+@RequestMapping("doctor")
+public class DoctorController extends BaseController {
 	@Autowired
-	private UnitService unitService;
+	private DoctorService doctorService;
 
-	/**
-	 * 跳转到模块list 树
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("totree")
-	public ModelAndView unitList(HttpSession session) {
-		ModelAndView mv = new ModelAndView("unit/unitList");
+	@RequestMapping("list")
+	public ModelAndView findAllDoctor(SearchBoxModel searchBox, HttpSession session) {
+		ModelAndView mv = new ModelAndView("doctor/doctorList");
+		Map<String, Object> search = new HashMap<String, Object>();
+		Pagination<Doctor> page = doctorService.pageList(searchBox, search);
+		mv.addObject("page", page);
 		return mv;
 	}
 
 	/**
-	 * 获取所有树节点
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("alltree")
-	public @ResponseBody
-	String findAllUnit(HttpServletResponse response, HttpSession session) {
-		return unitService.findAllUnitTree();
-	}
-
-	/**
-	 * 去新增 
+	 * 去新增
 	 * 
 	 * 
 	 * @return
 	 */
-	@RequestMapping("toaddunit")
-	public ModelAndView toAddUnit(HttpSession session) {
-		ModelAndView mv = new ModelAndView("unit/unitAdd");
+	@RequestMapping("toadd")
+	public ModelAndView toAddRole(HttpSession session) {
+		ModelAndView mv = new ModelAndView("doctor/doctorAdd");
 		User loginUser = getLoginUser(session);
 		try {
-			unitService.toAddUnit(loginUser);
+			doctorService.toAddDoctor(loginUser);
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
@@ -81,18 +69,15 @@ public class UnitController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("addunit")
-	public ModelAndView addUnit(@ModelAttribute("hospital") Hospital hospital, HttpSession session) {
+	@RequestMapping("add")
+	public ModelAndView addDoctor(@ModelAttribute("doctor") Doctor doctor, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		String errormsg = "error";
 		try {
-			unitService.addUnit(hospital);
+			doctorService.addDoctor(doctor);
 			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
-			// 角色名已存在
 			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
-				mv.addObject("error", "1");
-				errormsg = "角色名已存在！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
@@ -107,13 +92,13 @@ public class UnitController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("toupdateunit")
-	public ModelAndView toUpdateUnit(@RequestParam(value = "unitid") int unitid, HttpSession session) {
-		ModelAndView mv = new ModelAndView("role/roleUpdate");
+	@RequestMapping("toupdate")
+	public ModelAndView toUpdateDoctor(@RequestParam(value = "doctorId") int doctorId, HttpSession session) {
+		ModelAndView mv = new ModelAndView("doctor/doctorUpdate");
 		User loginUser = getLoginUser(session);
 		try {
-			Hospital hospital = unitService.toUpdateUnit(loginUser, unitid);
-			mv.addObject("hospital", hospital);
+			Doctor doctor = doctorService.toUpdateDoctor(loginUser, doctorId);
+			mv.addObject("doctor", doctor);
 		} catch (UserException e) {
 			// 用户没有权限
 			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
@@ -132,18 +117,15 @@ public class UnitController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("updateunit")
-	public ModelAndView updateUnit(@ModelAttribute("hospital") Hospital hospital, HttpSession session) {
+	@RequestMapping("update")
+	public ModelAndView updateDoctor(@ModelAttribute("doctor") Doctor doctor, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		String errormsg = "error";
 		try {
-			unitService.updateUnit(hospital);
+			doctorService.updateDoctor(doctor);
 			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
-			// 角色名已存在
 			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
-				mv.addObject("error", "1");
-				errormsg = "角色名已存在！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
@@ -153,17 +135,17 @@ public class UnitController extends BaseController {
 	}
 
 	/**
-	 * 删除
+	 * 删除角色
 	 * 
 	 * @return
 	 */
-	@RequestMapping("delunit/{unitid}")
-	public ModelAndView delUnit(@PathVariable(value = "unitid") int unitid, HttpSession session) {
+	@RequestMapping("del/{unitid}")
+	public ModelAndView delDoctor(@PathVariable(value = "doctorId") int doctorId, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		String errormsg = "error";
 		try {
 			User loginUser = getLoginUser(session);
-			unitService.delUnit(loginUser, unitid);
+			doctorService.delDoctor(loginUser, doctorId);
 			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
 		} catch (UserException e) {
 			// 没有权限

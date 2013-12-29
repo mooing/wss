@@ -1,0 +1,57 @@
+<div class="pageContent">
+#if( $!error == '1' )
+<span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
+#else
+<form method="post" action="/doctor/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    <div class="pageFormContent" layoutH="56">
+        <p>
+            <label>用户名：</label>
+            <input type="text" name="username" class="required" />        
+        </p>
+         <p>
+            <label>真实姓名：</label>
+            <input type="text" name="realname" />
+        </p>
+        <p>
+            <label>角色类型：</label>
+             #foreach($!role in $!roleList )
+             <span class="checkbox-wrap required">
+                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
+             </span>
+             #end        
+        </p>
+        <p>
+            <label>用户类型：</label>
+             <select class="combox required" name="usertype" >
+                 <option value="0">--请选择--</option>
+                 #foreach($!type in $!userTypeList )
+                 <option value="$!type.type">$!type.name</option>
+                 #end
+             </select>        
+        </p>
+        <p>
+            <label>初始密码:</label>
+            <input type="text" name="password" class="required" value="123456"/>
+        </p>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+#end
+</div>

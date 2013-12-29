@@ -2,6 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Doctor">
 
+	<!-- 获取 列表 -->
+	<select id="findDoctorCount" resultType="int">
+		select count(*) from
+		hos_doctor  where status=1
+	</select>
+	<select id="findAllDoctor" resultType="Doctor" parameterType="map">
+		select
+		id,
+		user_id userId,
+		name,
+		birthday,
+		sex,
+		hospital_id hospitalId,
+		card_type cardType,
+		card_code cardCode,
+		isdoctor,
+		isdeliver,
+		office_code officeCode,
+		offer_title offerTitle,
+		phone,
+		email,
+		ca_name caName,
+		ca_expire caExpire,
+		ca_code caCode,
+		readcard_type readcardType,
+		readcard_code readcardCode,
+		status,
+		remark
+		from
+		hos_doctor   where status=1
+		limit #{startrecord} , #{recordsize}
+	</select>
+
 	<!-- 保存医生信息 -->
 	<insert id="saveDoctor" parameterType="Doctor">
 		insert into hos_doctor(
