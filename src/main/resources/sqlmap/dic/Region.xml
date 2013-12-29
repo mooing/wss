@@ -11,17 +11,31 @@
 		name,
 		pcode
 		from
-		sys_region where status=1 and pcode=#{pcode}
+		sys_region where  
+		pcode=#{pcode}
+	</select>
+	<!-- 根据leve，查询所有地区 -->
+	<select id="findRegionByLevel" resultType="Region"
+		parameterType="int">
+		select
+		id,
+		code,
+		level,
+		name,
+		pcode
+		from
+		sys_region where
+		 level=#{level}
 	</select>
 
 	<!-- 获取所有地区信息，按tree格式 -->
 	<select id="findAllRegion" resultType="Region">
 		select
-		code id,
+		code,
 		name,
-		pcode pId,
+		pcode,
 		level
 		from
-		sys_module
+		sys_region
 	</select>
 </mapper>

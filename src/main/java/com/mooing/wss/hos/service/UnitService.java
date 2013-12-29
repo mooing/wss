@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.googlecode.ehcache.annotations.TriggersRemove;
-import com.mooing.wss.common.cache.base.RegionCache;
+import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.dao.GenericBaseDAO;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
@@ -31,7 +31,7 @@ public class UnitService {
 	@Qualifier("baseDao")
 	public GenericBaseDAO wssBaseDao;
 	@Resource
-	private RegionCache regionCache;
+	private UnitCache unitCache;
 
 	private static final Logger log = LoggerFactory.getLogger(UnitService.class);
 
@@ -125,7 +125,7 @@ public class UnitService {
 	 * @return
 	 */
 	public String findAllUnitTree() {
-		String jsonString = JSON.toJSONString(regionCache.findAllRegion());
+		String jsonString = JSON.toJSONString(unitCache.hospitalAllCache());
 		log.info("UnitSerivce| findAllUnitTree ,json:{}", jsonString);
 		return jsonString;
 	}

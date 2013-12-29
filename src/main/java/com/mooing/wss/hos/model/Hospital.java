@@ -41,6 +41,7 @@ public class Hospital extends NamedModel {
 	 * 是否是妇幼保健院 0:不是；1 ：是
 	 */
 	private int isbjy;
+	private int pid;
 	/**
 	 * 联系人
 	 */
@@ -210,5 +211,13 @@ public class Hospital extends NamedModel {
 
 	public void setRegionName(String regionName) {
 		this.regionName = regionName;
+	}
+
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 }

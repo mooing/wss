@@ -5,6 +5,7 @@
 	<!-- 保存医生信息 -->
 	<insert id="saveHospital" parameterType="Hospital">
 		insert into hos_hospital(
+	pid,
 	name,
 	hos_code,
 	org_code,
@@ -24,6 +25,7 @@
 	remark
 		)
 		values(
+		#{pid},
 		#{name},
 		#{hosCode},
 		#{orgCode},
@@ -47,7 +49,8 @@
 	<!-- 根据id  ,update-->
 	<update id="updateHospitalById" parameterType="int">
 		update hos_hospital set
-			name,
+		pid=#{pid}
+			name=#{name},
 		hos_code=#{hosCode},
 		org_code=#{orgCode},
 		region_code=#{regionCode},
@@ -71,10 +74,30 @@
 		delete from hos_hospital where id=#{id}
 	</delete>
 	
+	<!-- 查询所有医院  -->
+	<select id="findAllHospital" resultType="Hospital">
+		select 
+		hos.id,
+		hos.pid,
+		hos.name,
+		hos.region_code regionCode,
+		hos.ext_address extAddress,
+		hos.sort,
+		hos.isbjy,
+		hos.contacts,
+		hos.phone,
+		hos.zipcode,
+		hos.hos_property hosProperty,
+		hos.level,
+		hos.classify_code classifyCode,
+		hos.status
+	from hos_hospital hos    
+	</select>
 	<!-- 查询所有医院 及对应地址信息-->
 	<select id="findHospitalAndRegion" resultType="Hospital">
 		select 
 		hos.id,
+		hos.pid,
 		hos.name,
 		hos.region_code regionCode,
 		region.name regionName,

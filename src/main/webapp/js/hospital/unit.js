@@ -7,8 +7,8 @@ f.region = {
             tree = '<ul>';
         }
         for (var i in data) {
-            if (data[i].pId == pId) {
-                tree += "<li  target='mid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"'>" + data[i].name + "</a>";
+            if (data[i].pid == pId) {
+                tree += "<li  target='uid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='uIds' tvalue='"+data[i].id+"'>" + data[i].name + "</a>";
                 tree += arguments.callee(data, data[i].id,option);
                 tree += "</li>";
             }
@@ -22,11 +22,12 @@ f.region = {
             option.ids = $(option.container).attr("ids").split(",");
         }
         $.ajax({
-            url:"/region/findProvince",
+            url:"/unit/alltree",
             data:{"guid":new Date().getTime()},
             async:false,
             dataType:"json",
             success:function( data ){
+            	alert(data);
                  $(option.container).html(that.getTree(data,0,option).replaceAll("<ul></ul>",""));
             }
         });
@@ -35,7 +36,7 @@ f.region = {
         collapse:"collapse",
         treeCheck:"",
         oncheck:$.noop,
-        container:"#region-tree",
+        container:"#unit-tree",
         ids:[]
     }
 }

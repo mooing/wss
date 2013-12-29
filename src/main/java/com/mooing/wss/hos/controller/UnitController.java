@@ -1,8 +1,5 @@
 package com.mooing.wss.hos.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -17,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.exception.UserException;
-import com.mooing.wss.common.model.SearchBoxModel;
-import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.hos.model.Hospital;
 import com.mooing.wss.hos.service.UnitService;
 import com.mooing.wss.system.model.User;
@@ -36,7 +31,6 @@ import com.mooing.wss.system.model.User;
 public class UnitController extends BaseController {
 	@Autowired
 	private UnitService unitService;
-	
 
 	/**
 	 * 跳转到模块list 树
@@ -49,7 +43,7 @@ public class UnitController extends BaseController {
 		ModelAndView mv = new ModelAndView("unit/unitList");
 		return mv;
 	}
-	
+
 	/**
 	 * 获取所有树节点
 	 * 
@@ -59,9 +53,8 @@ public class UnitController extends BaseController {
 	@RequestMapping("alltree")
 	public @ResponseBody
 	String findAllUnit(HttpServletResponse response, HttpSession session) {
-		return  unitService.findAllUnitTree();
+		return unitService.findAllUnitTree();
 	}
-
 
 	/**
 	 * 去新增角色

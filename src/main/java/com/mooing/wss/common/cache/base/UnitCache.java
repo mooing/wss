@@ -36,7 +36,18 @@ public class UnitCache {
 	 * @return
 	 */
 	@Cacheable(cacheName = "hospitalAllCache")
-	public Map<Integer, Hospital> hospitalAllCache() {
+	public List<Hospital> hospitalAllCache() {
+		List<Hospital> list = new ArrayList<Hospital>();
+		list = wssBaseDao.executeForObjectList("Hospital.findAllHospital", null);
+		return list;
+	}
+	/**
+	 * 查询所有Hospital 和地区
+	 * 
+	 * @return
+	 */
+	@Cacheable(cacheName = "hospitalAndRegionCache")
+	public Map<Integer, Hospital> hospitalAndRegionCache() {
 		List<Hospital> list = new ArrayList<Hospital>();
 		Map<Integer, Hospital> hosMap = Maps.newHashMap();
 		list = wssBaseDao.executeForObjectList("Hospital.findHospitalAndRegion", null);
@@ -44,7 +55,6 @@ public class UnitCache {
 			for (Hospital hospital : list) {
 				hosMap.put(hospital.getId(), hospital);
 			}
-
 		}
 		return hosMap;
 	}

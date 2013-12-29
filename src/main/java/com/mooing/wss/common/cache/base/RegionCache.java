@@ -49,4 +49,16 @@ public class RegionCache {
 		return list;
 	}
 
+	/**
+	 * 根据层级获取地区信息
+	 * 
+	 * @param level
+	 * @return
+	 */
+	public List<Region> findRegionByLevel(int level) {
+		List<Region> list = new ArrayList<Region>();
+		list = wssBaseDao.executeForObjectList("Region.findRegionByLevel", level);
+		return list;
+	}
+
 }
