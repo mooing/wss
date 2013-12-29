@@ -76,7 +76,7 @@ public abstract class BaseController {
 		return ajaxDone(200, message, "", navTabId, "", "");
 	}
 	protected ModelAndView ajaxDialogDoneSuccess(String message) {
-		return ajaxDone(200, message, "", "", "", "");
+		return ajaxDone(200, message, "", "", "", "closeCurrent");
 	}
 	protected ModelAndView ajaxDoneSuccess(String message,String callbackType) {
 		return ajaxDone(200, message, "", "", "", callbackType);

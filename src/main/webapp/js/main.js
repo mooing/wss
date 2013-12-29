@@ -27,8 +27,8 @@ $(function() {
     });
 
     // test
-    setTimeout(function(){
-        $(".accordionContent[rel=cert] a[href]").eq(0).click();
-    },500)
+    // setTimeout(function(){
+    //     $(".accordionContent[rel=cert] a[href]").eq(0).click();
+    // },500)
 
 });

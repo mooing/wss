@@ -11,17 +11,15 @@
 		</ul>
 	</div>
 	<div id="w_list_print">
-		<table class="list" width="98%" targetType="navTab" layoutH="53">
+		<table class="list" width="100%" targetType="navTab" layoutH="53">
 			<thead>
 				<tr>
-					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
-					<th width="120">角色名称</th>
+					<th>角色名称</th>
 				</tr>
 			</thead>
 			<tbody>
 				#foreach($!role in $!page.data )
 				<tr target="rid"  rel="$!{role.id}">
-					<td><input name="ids" value="$!{role.id}" type="checkbox"></td>
 					<td>$!role.rolename</td>
 				</tr>
 				#end

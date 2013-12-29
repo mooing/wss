@@ -2,7 +2,7 @@
 	
 	<form method="post" action="/user/saveGrantModule" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
 	<input type="hidden" value="$!{moduleMap.userid}" name="id">
-	<div class="accordionContent" id="left">
+	<div class="accordionContent" id="module-tree-grant" layoutH="35" ids="${moduleMap.moduleIds}">
     </div>
     
     <div class="formBar">
@@ -26,23 +26,9 @@
 </form>
 </div>
 
-<script src="/js/module/grantmodule.js"></script>
+<script src="/js/module/module.js"></script>
 <script>
-
-function checkModule(){
-	 $('input[type="checkbox"]').each(
-			 function() {
-				 var moduleIds=${moduleMap.moduleIds};
-				 for(var i=0;i<moduleIds.length;i++){
-					 if($(this).val()==moduleIds[i]){
-						 $(this).attr("checked", true); 
-					 }
-				 }
-			 }
-      );
-};
-
 $(function() {
-    f.module.loadTree();
+    f.module.loadTree({container:"#module-tree-grant",collapse:"expand",treeCheck:"treeCheck"});
 });    
 </script>
