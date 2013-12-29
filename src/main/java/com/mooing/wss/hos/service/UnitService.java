@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.googlecode.ehcache.annotations.TriggersRemove;
-import com.mooing.wss.common.cache.base.UnitCache;
+import com.mooing.wss.common.cache.base.RegionCache;
 import com.mooing.wss.common.dao.GenericBaseDAO;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
@@ -28,7 +31,9 @@ public class UnitService {
 	@Qualifier("baseDao")
 	public GenericBaseDAO wssBaseDao;
 	@Resource
-	private UnitCache unitCache;
+	private RegionCache regionCache;
+
+	private static final Logger log = LoggerFactory.getLogger(UnitService.class);
 
 	public Pagination<Hospital> pageList(SearchBoxModel searchBox, Map<String, Object> search) {
 		Integer count = wssBaseDao.executeForObject("Hospital.findAllHospitalCount", search, Integer.class);
@@ -112,6 +117,17 @@ public class UnitService {
 	@TriggersRemove(cacheName = "hospitalAllCache", removeAll = true)
 	public void delUnit(User loginUser, int hospitalid) throws UserException {
 		wssBaseDao.execute("Hospital.delHospitalById", hospitalid);
+	}
+
+	/**
+	 * 获取所有树数据
+	 * 
+	 * @return
+	 */
+	public String findAllUnitTree() {
+		String jsonString = JSON.toJSONString(regionCache.findAllRegion());
+		log.info("UnitSerivce| findAllUnitTree ,json:{}", jsonString);
+		return jsonString;
 	}
 
 }

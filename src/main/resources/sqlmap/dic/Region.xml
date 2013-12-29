@@ -4,13 +4,24 @@
 
 	<!-- 按父code，查询下级所有地区 -->
 	<select id="findByPcode" resultType="Region" parameterType="string">
-		select 
+		select
 		id,
 		code,
 		level,
 		name,
 		pcode
- 		from
+		from
 		sys_region where status=1 and pcode=#{pcode}
+	</select>
+
+	<!-- 获取所有地区信息，按tree格式 -->
+	<select id="findAllRegion" resultType="Region">
+		select
+		code id,
+		name,
+		pcode pId,
+		level
+		from
+		sys_module
 	</select>
 </mapper>

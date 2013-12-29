@@ -3,6 +3,7 @@ package com.mooing.wss.hos.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mooing.wss.common.controller.BaseController;
@@ -34,15 +36,32 @@ import com.mooing.wss.system.model.User;
 public class UnitController extends BaseController {
 	@Autowired
 	private UnitService unitService;
+	
 
-	@RequestMapping("list")
-	public ModelAndView findAllUnit(SearchBoxModel searchBox, HttpSession session) {
+	/**
+	 * 跳转到模块list 树
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("totree")
+	public ModelAndView unitList(HttpSession session) {
 		ModelAndView mv = new ModelAndView("unit/unitList");
-		Map<String, Object> search = new HashMap<String, Object>();
-		Pagination<Hospital> page = unitService.pageList(searchBox, search);
-		mv.addObject("page", page);
 		return mv;
 	}
+	
+	/**
+	 * 获取所有树节点
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("alltree")
+	public @ResponseBody
+	String findAllUnit(HttpServletResponse response, HttpSession session) {
+		return  unitService.findAllUnitTree();
+	}
+
 
 	/**
 	 * 去新增角色

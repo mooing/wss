@@ -71,11 +71,6 @@ public class ModuleController extends BaseController {
 	String findAllModule(HttpServletResponse response, HttpSession session) {
 		String jsonString = moduleService.findAllModule();
 		return jsonString;
-		// try {
-		// response.getWriter().print(jsonString);
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
 	}
 
 	/**

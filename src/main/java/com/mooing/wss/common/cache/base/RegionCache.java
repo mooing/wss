@@ -37,4 +37,16 @@ public class RegionCache {
 		return list;
 	}
 
+	/**
+	 * 查询 所有信息
+	 * 
+	 * @return
+	 */
+	@Cacheable(cacheName = "region.findAllRegion")
+	public List<Region> findAllRegion() {
+		List<Region> list = new ArrayList<Region>();
+		list = wssBaseDao.executeForObjectList("Region.findAllRegion", null);
+		return list;
+	}
+
 }
