@@ -2,18 +2,22 @@
 #if( $!error == '1' )
 <span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
-<form method="post" action="/user/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+<form method="post" action="/unit/addunit" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
     <div class="pageFormContent" layoutH="56">
         <p>
-            <label>用户名：</label>
-            <input type="text" name="username" class="required" />        
+            <label>单位名称：</label>
+            <input type="text" name="name" class="required" />        
         </p>
          <p>
-            <label>真实姓名：</label>
-            <input type="text" name="realname" />
+            <label>单位编码：</label>
+            <input type="text" name="hosCode" />
+        </p>
+         <p>
+            <label>机构编码：</label>
+            <input type="text" name="orgCode" />
         </p>
         <p>
-            <label>角色类型：</label>
+            <label>所在地区：</label>
              #foreach($!role in $!roleList )
              <span class="checkbox-wrap required">
                 <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
@@ -21,17 +25,52 @@
              #end        
         </p>
         <p>
-            <label>用户类型：</label>
-             <select class="combox required" name="usertype" >
-                 <option value="0">--请选择--</option>
-                 #foreach($!type in $!userTypeList )
-                 <option value="$!type.type">$!type.name</option>
-                 #end
-             </select>        
+            <label>补充地区：</label>
+             <input type="text" name="extAddress" />   
         </p>
         <p>
-            <label>初始密码:</label>
-            <input type="text" name="password" class="required" value="123456"/>
+            <label>顺序号：</label>
+             <input type="text" name=sort />   
+        </p>
+        <p>
+            <label>妇幼保健院：</label>
+             <input type="text" name=isbjy />   
+        </p>
+        <p>
+            <label>联系人:</label>
+            <input type="text" name="contacts" class="required"/>
+        </p>
+        <p>
+            <label>联系电话:</label>
+            <input type="text" name="phone" class="required"/>
+        </p>
+        <p>
+            <label>邮政编码:</label>
+            <input type="text" name="zipcode" class="required"/>
+        </p>
+        <p>
+            <label>单位性质:</label>
+            <input type="text" name="hosProperty" class="required"/>
+        </p>
+        <p>
+            <label>医院等级:</label>
+            <input type="text" name="level" class="required"/>
+        </p>
+        <p>
+            <label>单位分类:</label>
+            <input type="text" name="classifyCode" class="required"/>
+        </p>
+        <p>
+            <label>短信账号:</label>
+            <input type="text" name="smsAccount"  />
+        </p>
+        <p>
+            <label>短信编码:</label>
+            <input type="text" name="smsPassword" />
+        </p>
+        <p>
+            <label>备注:</label>
+            <input type="text" name="remark"  />
         </p>
     </div>
     <div class="formBar">

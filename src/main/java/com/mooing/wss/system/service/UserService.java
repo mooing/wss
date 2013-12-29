@@ -255,8 +255,11 @@ public class UserService extends SystemBaseService {
 		// userAuthorityCheck(loginUser, userid);
 		List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByUserId", userid);
 		Map<String, Object> map = Maps.newHashMap();
-		map.put("moduleIds", moduleIds);
 		map.put("moduleList", systemCache.findAllModule());
+		if(!CollectionUtils.isEmpty(moduleIds)){
+			String mids=moduleIds.toString();
+			map.put("moduleIds", mids.substring(1,mids.length()-1));
+		}
 		return map;
 	}
 
