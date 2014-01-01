@@ -34,6 +34,7 @@ import com.mooing.wss.system.model.User;
 public class DoctorController extends BaseController {
 	@Autowired
 	private DoctorService doctorService;
+	public static String navTabId = "hospitalUnit";
 
 	@RequestMapping("list")
 	public ModelAndView findAllDoctor(SearchBoxModel searchBox, HttpSession session) {
@@ -55,7 +56,8 @@ public class DoctorController extends BaseController {
 		ModelAndView mv = new ModelAndView("doctor/doctorAdd");
 		User loginUser = getLoginUser(session);
 		try {
-			doctorService.toAddDoctor(loginUser);
+			Map<String ,Object> map=doctorService.toAddDoctor(loginUser);
+			mv.addObject("doctorMap", map);
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
@@ -75,9 +77,10 @@ public class DoctorController extends BaseController {
 		String errormsg = "error";
 		try {
 			doctorService.addDoctor(doctor);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (UserException e) {
-			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
+			if (UserException.USER_NAME_ISEXIST == e.getMessage()) {
+				errormsg="输入的用户名:"+doctor.getUsername()+",已经存在,请重新输入！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);

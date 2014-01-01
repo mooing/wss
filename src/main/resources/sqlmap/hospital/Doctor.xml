@@ -9,32 +9,77 @@
 	</select>
 	<select id="findAllDoctor" resultType="Doctor" parameterType="map">
 		select
-		id,
-		user_id userId,
-		name,
-		birthday,
-		sex,
-		hospital_id hospitalId,
-		card_type cardType,
-		card_code cardCode,
-		isdoctor,
-		isdeliver,
-		office_code officeCode,
-		offer_title offerTitle,
-		phone,
-		email,
-		ca_name caName,
-		ca_expire caExpire,
-		ca_code caCode,
-		readcard_type readcardType,
-		readcard_code readcardCode,
-		status,
-		remark
+		doc.id,
+		doc.user_id userid,
+		doc.name,
+		u.username,
+		doc.birthday,
+		doc.sex,
+		doc.hospital_id hospitalId,
+		hos.name hospitalName,
+		doc.isdoctor,
+		doc.isdeliver,
+		doc.office_code officeCode,
+		doc.offer_title offerTitle,
+		doc.phone,
+		doc.email,
+		doc.status,
+		doc.remark
 		from
-		hos_doctor   where status=1
+		hos_doctor doc,sys_user u,hos_hospital hos  where doc.user_id=u.id and doc.hospital_id=hos.id and  doc.status=1
 		limit #{startrecord} , #{recordsize}
 	</select>
 
+	<!-- 医生管理时 ,保存医生信息 -->
+	<insert id="saveDoctorAtDoc" parameterType="Doctor">
+		insert into hos_doctor(
+		user_id,
+		name,
+		birthday,
+		sex,
+		hospital_id,
+		card_type,
+		card_code,
+		isvalid,
+		isdoctor,
+		isdeliver,
+		office_code,
+		offer_title,
+		phone,
+		email,
+		
+		ca_name, 
+		ca_expire, 
+		ca_code, 
+		readcard_type, 
+		readcard_code, 
+		remark
+		)
+		values(
+		#{userid},
+		#{name},
+		#{birthday},
+		#{sex},
+		#{hospitalId},
+		#{cardType},
+		#{cardCode},
+		#{isValid},
+		#{isdoctor},
+		#{isdeliver},
+		#{officeCode},
+		#{offerTitle},
+		#{phone},
+		#{email},
+		
+		#{caName},
+		#{caExpire},
+		#{caCode},
+		#{readcardType},
+		#{readcardCode},
+		
+		#{remark}
+		)
+	</insert>
 	<!-- 保存医生信息 -->
 	<insert id="saveDoctor" parameterType="Doctor">
 		insert into hos_doctor(

@@ -8,7 +8,7 @@ f.region = {
         }
         for (var i in data) {
             if (data[i].pid == pId) {
-                tree += "<li  target='uid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='uIds' tvalue='"+data[i].id+"'>" + data[i].name + "</a>";
+                tree += "<li  target='unitid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='uIds' tvalue='"+data[i].id+"'>" + data[i].name + "</a>";
                 tree += arguments.callee(data, data[i].id,option);
                 tree += "</li>";
             }
@@ -27,7 +27,6 @@ f.region = {
             async:false,
             dataType:"json",
             success:function( data ){
-            	alert(data);
                  $(option.container).html(that.getTree(data,0,option).replaceAll("<ul></ul>",""));
             }
         });

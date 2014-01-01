@@ -2,41 +2,85 @@
 #if( $!error != '' )
 <span>数据异常，您选择的用户不存在或无效！</span>
 #else
-<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-    <div class="pageFormContent" layoutH="56">
-        <input type="hidden" name="id" value="$!user.id "/>
+<form method="post" action="/unit/updateunit" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    
+    <input type="hidden" name="id" value="$!{hospital.id}">
+    <div class="pageFormContent" layoutH="70">
         <p>
-            <label>用户名：</label>
-            <input type="text" name="username" class="required" value="$!user.username"/>        
+            <label>单位名称：</label>
+            <input type="text" name="name" class="required" value="$!{hospital.name}"/>        
         </p>
          <p>
-            <label>真实姓名：</label>
-            <input type="text" name="realname" value="$!user.realname"/>
+            <label>单位编码：</label>
+            <input type="text" name="hosCode" value="$!{hospital.hosCode}"/>
+        </p>
+         <p>
+            <label>机构编码：</label>
+            <input type="text" name="orgCode"  value="$!{hospital.orgCode}"/>
         </p>
         <p>
-            <label>角色类型：</label>
-             #foreach($!role in $!roleList )
-             <span class="checkbox-wrap">
-	                <input type="checkbox" class="required" name="roleIds" value="$!role.id">$!role.rolename
-             </span>
-             #end        
+            <label>所在地区：</label>
+            <input type="text" name="regionCode"  value="$!{hospital.regionCode}"/>
         </p>
         <p>
-            <label>用户类型：</label>
-             <select class="combox required" name="usertype">
-                 <option value="0">--请选择--</option>
-                 #foreach($!type in $!userTypeList )
-                	 #if($!type.type==$!user.usertype)
-                 <option value="$!type.type" selected="selected">$!type.name</option>
-	                 #else
-	                  <option value="$!type.type" >$!type.name</option>
-	                 #end
-                 #end
-             </select>        
+            <label>补充地区：</label>
+             <input type="text" name="extAddress" value="$!{hospital.extAddress}"/>   
         </p>
         <p>
-            <label>初始密码:</label>
-            <input type="text" name="password" class="required" value="123456"/>
+            <label>顺序号：</label>
+             <input type="text" name=sort   value="$!{hospital.sort}"/>   
+        </p>
+        <p>
+            <label>妇幼保健院：</label>
+             <select class="required" name="isbjy">
+             	<option value="">-请选择-</option>
+             	<option value="1" 	#if($!{hospital.isbjy} == 1 ) selected #end>是</option>
+             	<option value="0" #if($!{hospital.isbjy} == 0 ) selected #end>否</option>
+             </select>
+        </p>
+        <p>
+            <label>联系人:</label>
+            <input type="text" name="contacts" class="required"   value="$!{hospital.contacts}"/>
+        </p>
+        <p>
+            <label>联系电话:</label>
+            <input type="text" name="phone" class="required"   value="$!{hospital.phone}"/>
+        </p>
+        <p>
+            <label>邮政编码:</label>
+            <input type="text" name="zipcode" class="required"  value="$!{hospital.zipcode}"/>
+        </p>
+        <p>
+            <label>单位性质:</label>
+             <select class="required" name="hosProperty">
+             	<option value="">-请选择-</option>
+             	<option value="1" #if($!{hospital.hosProperty} == 1 ) selected #end>国企</option>
+             	<option value="2" #if($!{hospital.hosProperty} == 2 ) selected #end>私企</option>
+             </select>
+        </p>
+        <p>
+            <label>医院等级:</label>
+             <select class="required" name="level">
+             	<option value="">-请选择-</option>
+             	<option value="1" #if($!{hospital.level} == 1 ) selected #end>一级甲等</option>
+             	<option value="2" #if($!{hospital.level} == 2 ) selected #end>一级乙等</option>
+             </select>
+        </p>
+        <p>
+            <label>单位分类:</label>
+            <input type="text" name="classifyCode" class="required"   value="$!{hospital.classifyCode}"/>
+        </p>
+        <p>
+            <label>短信账号:</label>
+            <input type="text" name="smsAccount"   value="$!{hospital.smsAccount}"/>
+        </p>
+        <p>
+            <label>短信编码:</label>
+            <input type="text" name="smsPassword"   value="$!{hospital.smsPassword}"/>
+        </p>
+        <p>
+            <label>备注:</label>
+            <input type="text" name="remark"  value="$!{hospital.remark}" />
         </p>
     </div>
     <div class="formBar">
@@ -60,17 +104,3 @@
 </form>
 #end
 </div>
-  <script>
-    	$(function(){
-    		 $('input[type="checkbox"][name="roleIds"]').each(
-    				 function() {
-    					 var roleIds=${user.roleIds};
-	    				 for(var i=0;i<roleIds.length;i++){
-	    					 if($(this).val()==roleIds[i]){
-	    						 $(this).attr("checked", true); 
-	    					 }
-	    				 }
-    				 }
-    	       );
-    	});
-    </script>

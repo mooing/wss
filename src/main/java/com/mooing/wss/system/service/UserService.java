@@ -67,7 +67,9 @@ public class UserService extends SystemBaseService {
 						user.setHospitalName(hospital.getName());
 						user.setHospitalAddress(hospital.getRegionName());
 					}
-					user.setUserTypeName(UserType.getNameByType(user.getUsertype()));
+					if(user.getUsertype()!=null){
+						user.setUserTypeName(UserType.getNameByType(user.getUsertype()));
+					}
 					user.setUserStatus(UserStatus.getNameByStatus(user.getStatus()));
 				}
 			}

@@ -31,6 +31,7 @@ import com.mooing.wss.system.model.User;
 public class UnitController extends BaseController {
 	@Autowired
 	private UnitService unitService;
+	public static String navTabId = "hospitalUnit";
 
 	/**
 	 * 跳转到模块list 树
@@ -63,9 +64,10 @@ public class UnitController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("toaddunit")
-	public ModelAndView toAddUnit(HttpSession session) {
+	public ModelAndView toAddUnit(@RequestParam("pid") int pid,HttpSession session) {
 		ModelAndView mv = new ModelAndView("unit/unitAdd");
 		User loginUser = getLoginUser(session);
+		mv.addObject("pid", pid);
 		try {
 			unitService.toAddUnit(loginUser);
 		} catch (Exception e) {
@@ -87,14 +89,8 @@ public class UnitController extends BaseController {
 		String errormsg = "error";
 		try {
 			unitService.addUnit(hospital);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
-		} catch (UserException e) {
-			// 角色名已存在
-			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
-				mv.addObject("error", "1");
-				errormsg = "角色名已存在！";
-			}
-		} catch (Exception e) {
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
+		}  catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
 		}
@@ -109,7 +105,7 @@ public class UnitController extends BaseController {
 	 */
 	@RequestMapping("toupdateunit")
 	public ModelAndView toUpdateUnit(@RequestParam(value = "unitid") int unitid, HttpSession session) {
-		ModelAndView mv = new ModelAndView("role/roleUpdate");
+		ModelAndView mv = new ModelAndView("unit/unitUpdate");
 		User loginUser = getLoginUser(session);
 		try {
 			Hospital hospital = unitService.toUpdateUnit(loginUser, unitid);
@@ -138,13 +134,7 @@ public class UnitController extends BaseController {
 		String errormsg = "error";
 		try {
 			unitService.updateUnit(hospital);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
-		} catch (UserException e) {
-			// 角色名已存在
-			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
-				mv.addObject("error", "1");
-				errormsg = "角色名已存在！";
-			}
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 			log.error(e.getMessage(), e);
@@ -164,7 +154,7 @@ public class UnitController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			unitService.delUnit(loginUser, unitid);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (UserException e) {
 			// 没有权限
 			if (UserException.USER_TYPE_NOT_AUTHORITY == e.getMessage()) {

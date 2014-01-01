@@ -3,6 +3,8 @@
 <span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
 <form method="post" action="/unit/addunit" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+    
+    <input type="hidden" name="pid" value="${pid}">
     <div class="pageFormContent" layoutH="56">
         <p>
             <label>单位名称：</label>
@@ -18,11 +20,7 @@
         </p>
         <p>
             <label>所在地区：</label>
-             #foreach($!role in $!roleList )
-             <span class="checkbox-wrap required">
-                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
-             </span>
-             #end        
+            <input type="text" name="regionCode" />
         </p>
         <p>
             <label>补充地区：</label>
@@ -34,7 +32,11 @@
         </p>
         <p>
             <label>妇幼保健院：</label>
-             <input type="text" name=isbjy />   
+             <select class="required" name="isbjy">
+             	<option value="">-请选择-</option>
+             	<option value="1">是</option>
+             	<option value="0">否</option>
+             </select>
         </p>
         <p>
             <label>联系人:</label>
@@ -50,11 +52,19 @@
         </p>
         <p>
             <label>单位性质:</label>
-            <input type="text" name="hosProperty" class="required"/>
+             <select class="required" name="hosProperty">
+             	<option value="">-请选择-</option>
+             	<option value="1">国企</option>
+             	<option value="2">私企</option>
+             </select>
         </p>
         <p>
             <label>医院等级:</label>
-            <input type="text" name="level" class="required"/>
+             <select class="required" name="level">
+             	<option value="">-请选择-</option>
+             	<option value="1">一级甲等</option>
+             	<option value="2">一级乙等</option>
+             </select>
         </p>
         <p>
             <label>单位分类:</label>
