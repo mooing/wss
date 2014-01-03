@@ -3,40 +3,116 @@
 <span>数据异常，您选择的用户不存在或无效！</span>
 #else
 <form method="post" action="/doctor/update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-    <div class="pageFormContent" layoutH="56">
-        <input type="hidden" name="id" value="$!user.id "/>
+            <input type="hidden" name="id" value="$!{doctor.id}"/>        
+            <input type="hidden" name="userid" value="$!{doctor.userid}"/>        
+    <div class="pageFormContent" layoutH="70">
         <p>
             <label>用户名：</label>
-            <input type="text" name="username" class="required" value="$!user.username"/>        
-        </p>
-         <p>
-            <label>真实姓名：</label>
-            <input type="text" name="realname" value="$!user.realname"/>
+            <input type="text" name="username" class="required" value="$!{doctor.username}"/>        
         </p>
         <p>
-            <label>角色类型：</label>
-             #foreach($!role in $!roleList )
-             <span class="checkbox-wrap">
-	                <input type="checkbox" class="required" name="roleIds" value="$!role.id">$!role.rolename
-             </span>
-             #end        
+            <label>姓名：</label>
+            <input type="text" name="name" value="$!{doctor.name}"/>
         </p>
         <p>
-            <label>用户类型：</label>
-             <select class="combox required" name="usertype">
-                 <option value="0">--请选择--</option>
-                 #foreach($!type in $!userTypeList )
-                	 #if($!type.type==$!user.usertype)
-                 <option value="$!type.type" selected="selected">$!type.name</option>
-	                 #else
-	                  <option value="$!type.type" >$!type.name</option>
-	                 #end
-                 #end
+            <label>性别：</label>
+             <select class="combox required" name="sex" >
+                 <option value="">--请选择--</option>
+                 <option value="1" #if($!{doctor.id}==1) selected  #end>男</option>
+                 <option value="2"  #if($!{doctor.id}==2) selected  #end>女</option>
              </select>        
         </p>
-        <p>
-            <label>初始密码:</label>
-            <input type="text" name="password" class="required" value="123456"/>
+       <p>
+            <label>工作单位：</label>
+            <input type="text" name="hospitalId" value="1" value="$!{doctor.hospitalId}"/>
+        </p>
+       <p>
+            <label>证件类型：</label>
+             <select class="combox required" name="cardType" >
+                 <option value="">--请选择--</option>
+                 <option value="1" #if($!{doctor.cardType}==1) selected  #end>居民身份证</option>
+                 <option value="2" #if($!{doctor.cardType}==2) selected  #end>港澳居民身份证</option>
+                 <option value="3" #if($!{doctor.cardType}==3) selected  #end>护照</option>
+                 <option value="4" #if($!{doctor.cardType}==4) selected  #end>军官证(士兵证)</option>
+             </select>   
+        </p>
+       <p>
+            <label>证件号码：</label>
+            <input type="text" name="cardCode" value="$!{doctor.cardCode}"/>
+        </p>
+       <p>
+            <label>是否有效：</label>
+             <select class="combox required" name="isValid" >
+                 <option value="">--请选择--</option>
+                 <option value="1" #if($!{doctor.isValid}==1) selected  #end>有效</option>
+                 <option value="0" #if($!{doctor.isValid}==0) selected  #end>无效</option>
+             </select>   
+        </p>
+       <p>
+            <label>是否医生：</label>
+             <select class="combox required" name="isDoctor" >
+                 <option value="">--请选择--</option>
+                 <option value="1" #if($!{doctor.isDoctor}==1) selected  #end>是</option>
+                 <option value="0" #if($!{doctor.isDoctor}==0) selected  #end>否</option>
+             </select>   
+        </p>
+       <p>
+            <label>是否接生人：</label>
+             <select class="combox required" name="isDeliver" >
+                 <option value="">--请选择--</option>
+                 <option value="1" #if($!{doctor.isDeliver}==1) selected  #end>是</option>
+                 <option value="0" #if($!{doctor.isDeliver}==0) selected  #end>否</option>
+             </select>   
+        </p>
+       <p>
+            <label>所在科室：</label>
+             <select class="combox required" name="officeCode" >
+                 <option value="">--请选择--</option>
+                 <option value="1" #if($!{doctor.officeCode}==1) selected  #end>妇科</option>
+                 <option value="2" #if($!{doctor.officeCode}==2) selected  #end>儿科</option>
+             </select>   
+        </p>
+       <p>
+            <label>职称：</label>
+             <input   type="text" name="offerTitle" value="$!{doctor.offerTitle}">
+        </p>
+         <p>
+            <label>出生日期：</label>
+            <input type="text" name="birthday" value="$!{doctor.birthday}"/>
+        </p>
+         <p>
+            <label>电子邮箱：</label>
+            <input type="text" name="email" value="$!{doctor.email}"/>
+        </p>
+         <p>
+            <label>即时通讯方式：</label>
+            <input type="text" name="im" value="$!{doctor.im}"/>
+        </p>
+         <p>
+            <label>CA证书名：</label>
+            <input type="text" name="caName" value="$!{doctor.caName}"/>
+        </p>
+         <p>
+            <label>CA证书有效期：</label>
+            <input type="text" name="caExpire"  value="$!{doctor.caExpire}"/>
+        </p>
+         <p>
+            <label>CA证书编号：</label>
+            <input type="text" name="caCode"  value="$!{doctor.caCode}"/>
+        </p>
+         <p>
+            <label>读卡器类型：</label>
+            <select class="combox" name="readcardType" >
+                 <option value="-1">--请选择--</option>
+             </select>
+        </p>
+         <p>
+            <label>读卡器序号：</label>
+            <input type="text" name="readcardCode"  value="$!{doctor.readcardCode}"/>
+        </p>
+         <p>
+            <label>备注：</label>
+            <input type="text" name="remark"  value="$!{doctor.remark}"/>
         </p>
     </div>
     <div class="formBar">
@@ -60,17 +136,3 @@
 </form>
 #end
 </div>
-  <script>
-    	$(function(){
-    		 $('input[type="checkbox"][name="roleIds"]').each(
-    				 function() {
-    					 var roleIds=${user.roleIds};
-	    				 for(var i=0;i<roleIds.length;i++){
-	    					 if($(this).val()==roleIds[i]){
-	    						 $(this).attr("checked", true); 
-	    					 }
-	    				 }
-    				 }
-    	       );
-    	});
-    </script>

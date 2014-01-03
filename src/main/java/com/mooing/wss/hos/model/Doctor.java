@@ -60,11 +60,11 @@ public class Doctor extends BaseModel {
 	/**
 	 * 是否医生 0:不是；1：是医生
 	 */
-	private int isdoctor;
+	private int isDoctor;
 	/**
 	 * 是否接生人 0:不是；1：是
 	 */
-	private int isdeliver;
+	private int isDeliver;
 	/**
 	 * 所在科室
 	 */
@@ -174,22 +174,6 @@ public class Doctor extends BaseModel {
 
 	public void setCardCode(String cardCode) {
 		this.cardCode = cardCode;
-	}
-
-	public int getIsdoctor() {
-		return isdoctor;
-	}
-
-	public void setIsdoctor(int isdoctor) {
-		this.isdoctor = isdoctor;
-	}
-
-	public int getIsdeliver() {
-		return isdeliver;
-	}
-
-	public void setIsdeliver(int isdeliver) {
-		this.isdeliver = isdeliver;
 	}
 
 	public String getOfficeCode() {
@@ -318,6 +302,22 @@ public class Doctor extends BaseModel {
 
 	public void setIm(String im) {
 		this.im = im;
+	}
+
+	public int getIsDoctor() {
+		return isDoctor;
+	}
+
+	public void setIsDoctor(int isDoctor) {
+		this.isDoctor = isDoctor;
+	}
+
+	public int getIsDeliver() {
+		return isDeliver;
+	}
+
+	public void setIsDeliver(int isDeliver) {
+		this.isDeliver = isDeliver;
 	}
 
 }

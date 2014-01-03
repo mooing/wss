@@ -126,9 +126,10 @@ public class DoctorController extends BaseController {
 		String errormsg = "error";
 		try {
 			doctorService.updateDoctor(doctor);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
 		} catch (UserException e) {
-			if (UserException.ROLE_NAME_ISEXIST == e.getMessage()) {
+			if (UserException.USER_NAME_ISEXIST == e.getMessage()) {
+				errormsg="用户名已存在，请重新输入！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
@@ -142,7 +143,7 @@ public class DoctorController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("del/{unitid}")
+	@RequestMapping("del/{doctorId}")
 	public ModelAndView delDoctor(@PathVariable(value = "doctorId") int doctorId, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		String errormsg = "error";

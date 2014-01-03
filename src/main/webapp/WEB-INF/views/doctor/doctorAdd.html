@@ -3,7 +3,7 @@
 <span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
 <form method="post" action="/doctor/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-    <div class="pageFormContent" layoutH="56">
+    <div class="pageFormContent" layoutH="70">
         <p>
             <label>用户名：</label>
             <input type="text" name="username" class="required" />        
@@ -52,7 +52,7 @@
         </p>
        <p>
             <label>是否医生：</label>
-             <select class="combox required" name="isdoctor" >
+             <select class="combox required" name="isDoctor" >
                  <option value="">--请选择--</option>
                  <option value="1">是</option>
                  <option value="0">否</option>
@@ -60,7 +60,7 @@
         </p>
        <p>
             <label>是否接生人：</label>
-             <select class="combox required" name="isdeliver" >
+             <select class="combox required" name="isDeliver" >
                  <option value="">--请选择--</option>
                  <option value="1">是</option>
                  <option value="0">否</option>

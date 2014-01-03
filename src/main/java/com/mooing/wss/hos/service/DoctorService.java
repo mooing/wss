@@ -116,13 +116,16 @@ public class DoctorService {
 
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateDoctor(Doctor doctor) throws UserException {
-		// 判断角色名是否存在
-		// Integer roleCount =
-		// wssBaseDao.executeForObject("Hospital.findHospitalByName",
-		// role.getRolename(), Integer.class);
-		// if (roleCount != null && roleCount > 0) {
-		// throw new UserException(UserException.ROLE_NAME_ISEXIST);
-		// }
+		// 判断用户名是否存在
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("username", doctor.getUsername());
+		map.put("id", doctor.getUserid());
+		Integer userCount = wssBaseDao.executeForObject("User.getUserCountByNameAndId", map, Integer.class);
+		if (userCount != null && userCount > 0) {
+			throw new UserException(UserException.USER_NAME_ISEXIST);
+		}
+		// 1.保存用户
+		wssBaseDao.execute("User.updateUserByIdFromDoctor", map);
 		wssBaseDao.execute("Doctor.updateDoctorById", doctor);
 	}
 

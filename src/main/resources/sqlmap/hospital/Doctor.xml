@@ -16,19 +16,59 @@
 		doc.birthday,
 		doc.sex,
 		doc.hospital_id hospitalId,
+		doc.card_type cardType,
+		doc.card_code cardCode,
 		hos.name hospitalName,
-		doc.isdoctor,
-		doc.isdeliver,
+		doc.isDoctor,
+		doc.isDeliver,
 		doc.office_code officeCode,
 		doc.offer_title offerTitle,
 		doc.phone,
 		doc.email,
+		
+		doc.im,
+		doc.ca_name caName,
+		doc.ca_expire caExpire, 
+		doc.ca_code caCode, 
+		doc.readcard_type readcardType,
+		doc.readcard_code readcardCode,
+		
 		doc.status,
 		doc.remark
 		from
 		hos_doctor doc,sys_user u,hos_hospital hos  where doc.user_id=u.id and doc.hospital_id=hos.id and  doc.status=1
 		limit #{startrecord} , #{recordsize}
 	</select>
+	<select id="findDoctorById" resultType="Doctor" parameterType="int">
+		select
+		doc.id,
+		doc.user_id userid,
+		doc.name,
+		u.username,
+		doc.birthday,
+		doc.sex,
+		doc.hospital_id hospitalId,
+		doc.card_type cardType,
+		doc.card_code cardCode,
+		doc.isDoctor,
+		doc.isDeliver,
+		doc.office_code officeCode,
+		doc.offer_title offerTitle,
+		doc.phone,
+		doc.email,
+		
+		doc.im,
+		doc.ca_name caName,
+		doc.ca_expire caExpire, 
+		doc.ca_code caCode, 
+		doc.readcard_type readcardType,
+		doc.readcard_code readcardCode,
+		
+		doc.status,
+		doc.remark
+		from
+		hos_doctor doc ,sys_user u where doc.user_id=u.id and doc.id=#{id}
+		</select>
 
 	<!-- 医生管理时 ,保存医生信息 -->
 	<insert id="saveDoctorAtDoc" parameterType="Doctor">
@@ -41,8 +81,8 @@
 		card_type,
 		card_code,
 		isvalid,
-		isdoctor,
-		isdeliver,
+		isDoctor,
+		isDeliver,
 		office_code,
 		offer_title,
 		phone,
@@ -64,8 +104,8 @@
 		#{cardType},
 		#{cardCode},
 		#{isValid},
-		#{isdoctor},
-		#{isdeliver},
+		#{isDoctor},
+		#{isDeliver},
 		#{officeCode},
 		#{offerTitle},
 		#{phone},
@@ -104,4 +144,34 @@
 			#{userid}
 		</foreach>
 	</update>
+	<update id="updateDoctorById" parameterType="Doctor">
+		update hos_doctor set
+		name=#{name},
+		birthday=#{birthday},
+		sex=#{sex},
+		hospital_id=#{hospitalId},
+		card_type=#{cardType},
+		card_code=#{cardCode},
+		isvalid=#{isValid},
+		isDoctor=#{isDoctor},
+		isDeliver=#{isDeliver},
+		office_code=#{officeCode},
+		offer_title=#{offerTitle},
+		phone=#{phone},
+		email=#{email},
+		
+		ca_name=#{caName},
+		ca_expire=#{caExpire}, 
+		ca_code=#{caCode}, 
+		readcard_type=#{readcardType},
+		readcard_code=#{readcardCode},
+		remark=#{remark} 
+		where id=#{id}
+	</update>
+	
+	<!-- 根据id ，删除，改变状态 -->
+	<delete id="delDoctorById" parameterType="int">
+		update  hos_doctor set
+		status=0 where id=#{id}
+	</delete>
 </mapper>
