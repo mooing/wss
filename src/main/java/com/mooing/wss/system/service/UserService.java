@@ -310,36 +310,37 @@ public class UserService extends SystemBaseService {
 			List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByObjId", moduleMap);
 			if(CollectionUtils.isNotEmpty(moduleIds)){
 				for (Integer moduleId : moduleIds) {
-					moduleNames.add(e);
+//					moduleNames.add(e);
 				}
 			}
-			// 查找用户角色具有的模块权限
-			String byRole = "";
-			List _roleAcl = null;
-			List<SysUserRole> roles = sysUserRoleDao.findList("from SysUserRole ur where ur.user.id = ?", userId);
-			for (SysUserRole commUserRole : roles) {
-				SysRole role = commUserRole.getRole();
-				byRole = "select acl.id, acl.sysModuleId from SysACL acl where acl.principalType = ? and acl.principalId = ?";
-				_roleAcl = sysAclDao.findList(byRole, "role", role.getId());
-				for (Object object : _roleAcl) {
-					Object[] arr = (Object[]) object;
-					result.put(arr[1], arr[0]);
-				}
-			}
-			Set coll = result.keySet();
-			List<String> temp = sysModuleDao.findSnListByIds(coll);
-			List<String> acls = new ArrayList();
-			for (String str : temp) {
-				acls.add("'" + str + "'");
-			}
+//			// 查找用户角色具有的模块权限
+//			String byRole = "";
+//			List _roleAcl = null;
+//			List<SysUserRole> roles = sysUserRoleDao.findList("from SysUserRole ur where ur.user.id = ?", userId);
+//			for (SysUserRole commUserRole : roles) {
+//				SysRole role = commUserRole.getRole();
+//				byRole = "select acl.id, acl.sysModuleId from SysACL acl where acl.principalType = ? and acl.principalId = ?";
+//				_roleAcl = sysAclDao.findList(byRole, "role", role.getId());
+//				for (Object object : _roleAcl) {
+//					Object[] arr = (Object[]) object;
+//					result.put(arr[1], arr[0]);
+//				}
+//			}
+//			Set coll = result.keySet();
+//			List<String> temp = sysModuleDao.findSnListByIds(coll);
+//			List<String> acls = new ArrayList();
+//			for (String str : temp) {
+//				acls.add("'" + str + "'");
+//			}
 			// for (Object object : coll) {
 			// int moduleId = (Integer)object;
 			// SysModule m = sysModuleDao.get(SysModule.class, moduleId);
 			// }
-			return acls;
+//			return acls;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+		return null;
 	}
 }
