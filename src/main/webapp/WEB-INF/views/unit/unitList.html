@@ -1,7 +1,7 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="/unit/toaddunit?pid={unitid}" target="dialog" warn="请选择一个单位"><span>添加</span></a></li>
+			<li><a class="add" href="/unit/toaddunit?pid={unitid}" target="dialog" warn="请选择一个单位" rel="unitAddDialog"><span>添加</span></a></li>
 			<li><a class="edit" href="/unit/toupdateunit?unitid={unitid}" target="dialog" warn="请选择一个单位"><span>修改</span></a></li>
 			<li><a class="delete" href="/unit/delunit/{unitid}" target="ajaxTodo" title="确定要删除吗？" warn="请选择一个单位"><span>删除</span></a></li>
 		</ul>
@@ -10,9 +10,9 @@
 	<div class="accordionContent" id="unit-tree">
     </div>
 </div>
-<script src="/js/hospital/unit.js"></script>
+<script src="/js/module/unit.js"></script>
 <script>
 	$(function() {
-	    f.region.loadTree();
+	    f.unit.loadTree();
 	});
 </script>
