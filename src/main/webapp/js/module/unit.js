@@ -1,4 +1,4 @@
-f.region = {
+f.unit = {
     getTree:function(data, pId, option){
         var tree;
         if (pId == 0) {
