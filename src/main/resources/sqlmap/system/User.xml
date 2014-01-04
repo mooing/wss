@@ -98,6 +98,12 @@
 		usertype=#{usertype}
 		where id=#{id}
 	</update>
+	<!-- 根据id修改用户 -->
+	<update id="updateUserByIdFromDoctor" parameterType="map">
+		update sys_user set
+		username=#{username}
+		where id=#{id}
+	</update>
 
 	<!-- del -->
 	<update id="delUserById" parameterType="int">

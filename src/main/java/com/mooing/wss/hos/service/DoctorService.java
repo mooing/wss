@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.dao.GenericBaseDAO;
 import com.mooing.wss.common.exception.UserException;
 import com.mooing.wss.common.model.SearchBoxModel;
 import com.mooing.wss.common.util.Pagination;
+import com.mooing.wss.common.util.Sha1Util;
 import com.mooing.wss.hos.model.Doctor;
 import com.mooing.wss.system.model.User;
 
@@ -61,27 +63,39 @@ public class DoctorService {
 	 * 
 	 * @param loginUser
 	 */
-	public void toAddDoctor(User loginUser) {
-		// TODO Auto-generated method stub
-
+	public Map<String, Object> toAddDoctor(User loginUser) {
+		Map<String, Object> map = Maps.newHashMap();
+		// 查询所有单位信息
+		map.put("hospitalList", unitCache.hospitalAllCache());
+		return map;
 	}
 
 	/**
-	 * 保存Doctor信息
+	 * 医生管理中，保存Doctor信息
 	 * 
 	 * @param role
 	 * @throws UserException
 	 */
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void addDoctor(Doctor doctor) throws UserException {
-		// 判断角色名是否存在
-		// Integer roleCount =
-		// wssBaseDao.executeForObject("Role.findRoleByName",
-		// role.getRolename(), Integer.class);
-		// if (roleCount != null && roleCount > 0) {
-		// throw new UserException(UserException.ROLE_NAME_ISEXIST);
-		// }
-		wssBaseDao.execute("Doctor.saveDoctor", doctor);
+		// 保存用户信息
+		// 判断用户名是否存在
+		Integer userCount = wssBaseDao.executeForObject("User.getUserCountByName", doctor.getUsername(), Integer.class);
+		if (userCount != null && userCount > 0) {
+			throw new UserException(UserException.USER_NAME_ISEXIST);
+		}
+		User user = new User();
+		user.setUsername(doctor.getUsername());
+		// 1.保存用户
+		String sqlPassword = wssBaseDao.executeForObject("User.getSQLPassword", doctor.getPassword(), String.class);
+		String random = Sha1Util.getStr(20);
+		String realPass = Sha1Util.getSha1(user.getUsername(), sqlPassword, random);
+		user.setRandom(random);
+		user.setPassword(realPass);
+		wssBaseDao.execute("User.saveUser", user);
+		doctor.setUserid(user.getId());
+		// 保存医生
+		wssBaseDao.execute("Doctor.saveDoctorAtDoc", doctor);
 	}
 
 	/**
@@ -102,13 +116,16 @@ public class DoctorService {
 
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateDoctor(Doctor doctor) throws UserException {
-		// 判断角色名是否存在
-		// Integer roleCount =
-		// wssBaseDao.executeForObject("Hospital.findHospitalByName",
-		// role.getRolename(), Integer.class);
-		// if (roleCount != null && roleCount > 0) {
-		// throw new UserException(UserException.ROLE_NAME_ISEXIST);
-		// }
+		// 判断用户名是否存在
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("username", doctor.getUsername());
+		map.put("id", doctor.getUserid());
+		Integer userCount = wssBaseDao.executeForObject("User.getUserCountByNameAndId", map, Integer.class);
+		if (userCount != null && userCount > 0) {
+			throw new UserException(UserException.USER_NAME_ISEXIST);
+		}
+		// 1.保存用户
+		wssBaseDao.execute("User.updateUserByIdFromDoctor", map);
 		wssBaseDao.execute("Doctor.updateDoctorById", doctor);
 	}
 

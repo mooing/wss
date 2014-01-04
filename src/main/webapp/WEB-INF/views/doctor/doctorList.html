@@ -1,4 +1,4 @@
-<form id="pagerForm" method="post" action="/user/list">
+<form id="pagerForm" method="post" action="/doctor/list">
 	<input type="hidden" name="pageNum" value="$!page.currentPageNum" />
 	<input type="hidden" name="numPerPage" value="$!page.pageSize" />
 </form>
@@ -6,8 +6,8 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="/doctor/toadd" target="dialog"><span>添加</span></a></li>
-			<li><a class="edit" href="/doctor/toupdate?userid={uid}" target="dialog" warn="请选择一条记录"><span>修改</span></a></li>
-			<li><a title="确实要删除该条记录吗?" target="ajaxTodo"    href="/user/doctor/{uid}" class="delete"><span>删除</span></a></li>
+			<li><a class="edit" href="/doctor/toupdate?doctorId={did}" target="dialog" warn="请选择一条记录"><span>修改</span></a></li>
+			<li><a title="确实要删除该条记录吗?" target="ajaxTodo"    href="/doctor/del/{did}" class="delete"><span>删除</span></a></li>
 		</ul>
 	</div>
 	<div id="w_list_print">
@@ -15,22 +15,28 @@
 			<thead>
 				<tr>
 					<th>用户名</th>
-					<th>用户类型</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>联系电话</th>
+					<th>所在科室</th>
+					<th>职称</th>
 					<th>所在单位</th>
-					<th>单位所在地区</th>
-					<th>注册时间</th>
-					<th>状态</th>
+					<th>是否医生</th>
+					<th>是否停用</th>
 				</tr>
 			</thead>
 			<tbody>
-				#foreach($!user in $!page.data )
-				<tr target="uid" rel="$!{user.id}">
-					<td>$!user.username</td>
-					<td>$!user.userTypeName</td>
-					<td>$!user.hospitalName</td>
-					<td>$!user.hospitalAddress</td>
-					<td>$dateTool.format("yyyy-MM-dd HH:mm:ss", $!user.regtime)</td>
-					<td>$!user.userStatus</td>
+				#foreach($!doctor in $!page.data )
+				<tr target="did" rel="$!{doctor.id}">
+					<td>$!doctor.username</td>
+					<td>$!doctor.name</td>
+					<td>$!doctor.sex</td>
+					<td>$!doctor.phone</td>
+					<td>$!doctor.officeCode</td>
+					<td>$!doctor.offerTitle</td>
+					<td>$!doctor.hospitalName</td>
+					<td>$!doctor.isdoctor</td>
+					<td>$!doctor.status</td>
 				</tr>
 				#end
 				#if($!{page.data} == 0 )

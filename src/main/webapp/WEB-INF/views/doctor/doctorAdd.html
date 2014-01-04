@@ -1,37 +1,120 @@
 <div class="pageContent">
-#if( $!error == '1' )
+#if( $!{error} == '1' )
 <span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
 <form method="post" action="/doctor/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-    <div class="pageFormContent" layoutH="56">
+    <div class="pageFormContent" layoutH="70">
         <p>
             <label>用户名：</label>
             <input type="text" name="username" class="required" />        
         </p>
          <p>
-            <label>真实姓名：</label>
-            <input type="text" name="realname" />
+            <label>初始密码：</label>
+            <input type="text" name="password" value="123456"/>
         </p>
         <p>
-            <label>角色类型：</label>
-             #foreach($!role in $!roleList )
-             <span class="checkbox-wrap required">
-                <input type="checkbox" name="roleIds" value="$!role.id">$!role.rolename
-             </span>
-             #end        
+            <label>姓名：</label>
+            <input type="text" name="name" />
         </p>
         <p>
-            <label>用户类型：</label>
-             <select class="combox required" name="usertype" >
-                 <option value="0">--请选择--</option>
-                 #foreach($!type in $!userTypeList )
-                 <option value="$!type.type">$!type.name</option>
-                 #end
+            <label>性别：</label>
+             <select class="combox required" name="sex" >
+                 <option value="">--请选择--</option>
+                 <option value="1">男</option>
+                 <option value="2">女</option>
              </select>        
         </p>
-        <p>
-            <label>初始密码:</label>
-            <input type="text" name="password" class="required" value="123456"/>
+       <p>
+            <label>工作单位：</label>
+            <input type="text" name="hospitalId" value="1"/>
+        </p>
+       <p>
+            <label>证件类型：</label>
+             <select class="combox required" name="cardType" >
+                 <option value="">--请选择--</option>
+                 <option value="1">居民身份证</option>
+                 <option value="2">港澳居民身份证</option>
+                 <option value="3">护照</option>
+                 <option value="4">军官证(士兵证)</option>
+             </select>   
+        </p>
+       <p>
+            <label>证件号码：</label>
+            <input type="text" name="cardCode" />
+        </p>
+       <p>
+            <label>是否有效：</label>
+             <select class="combox required" name="isValid" >
+                 <option value="">--请选择--</option>
+                 <option value="1">有效</option>
+                 <option value="0">无效</option>
+             </select>   
+        </p>
+       <p>
+            <label>是否医生：</label>
+             <select class="combox required" name="isDoctor" >
+                 <option value="">--请选择--</option>
+                 <option value="1">是</option>
+                 <option value="0">否</option>
+             </select>   
+        </p>
+       <p>
+            <label>是否接生人：</label>
+             <select class="combox required" name="isDeliver" >
+                 <option value="">--请选择--</option>
+                 <option value="1">是</option>
+                 <option value="0">否</option>
+             </select>   
+        </p>
+       <p>
+            <label>所在科室：</label>
+             <select class="combox required" name="officeCode" >
+                 <option value="">--请选择--</option>
+                 <option value="1">妇科</option>
+                 <option value="2">儿科</option>
+             </select>   
+        </p>
+       <p>
+            <label>职称：</label>
+             <input   type="text" name="offerTitle" >
+        </p>
+         <p>
+            <label>出生日期：</label>
+            <input type="text" name="birthday" />
+        </p>
+         <p>
+            <label>电子邮箱：</label>
+            <input type="text" name="email" />
+        </p>
+         <p>
+            <label>即时通讯方式：</label>
+            <input type="text" name="im" />
+        </p>
+         <p>
+            <label>CA证书名：</label>
+            <input type="text" name="caName" />
+        </p>
+         <p>
+            <label>CA证书有效期：</label>
+            <input type="text" name="caExpire" />
+        </p>
+         <p>
+            <label>CA证书编号：</label>
+            <input type="text" name="caCode" />
+        </p>
+         <p>
+            <label>读卡器类型：</label>
+            <select class="combox" name="readcardType" >
+                 <option value="-1">--请选择--</option>
+             </select>
+        </p>
+         <p>
+            <label>读卡器序号：</label>
+            <input type="text" name="readcardCode" />
+        </p>
+         <p>
+            <label>备注：</label>
+            <input type="text" name="remark" />
         </p>
     </div>
     <div class="formBar">
