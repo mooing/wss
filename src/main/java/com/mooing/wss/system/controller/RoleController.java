@@ -1,7 +1,6 @@
 package com.mooing.wss.system.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -170,27 +169,46 @@ public class RoleController extends BaseController {
 	}
 
 	/************ 以下是用户列表配置权限 ***************************************************/
+
 	/**
-	 * 去配置权限
+	 * 授予模块权限
 	 * 
+	 * @param roleid
+	 * @param session
 	 * @return
 	 */
-	@RequestMapping("gotorole")
-	public ModelAndView findAllRole() {
-		ModelAndView mv = new ModelAndView("user/roleList");
-		List<Role> roleList = roleService.findAllRole();
-		mv.addObject("roleList", roleList);
+	@RequestMapping("grantmodule")
+	public ModelAndView grantModule(@RequestParam(value = "roleid") int roleid, HttpSession session) {
+		ModelAndView mv = new ModelAndView("role/roleGrantModule");
+		User loginUser = getLoginUser(session);
+		try {
+			Map<String, Object> moduleMap = roleService.grantModule(loginUser, roleid);
+			moduleMap.put("roleid", roleid);
+			mv.addObject("moduleMap", moduleMap);
+		} catch (UserException e) {
+			// 用户没有权限
+			if (e.getMessage().equals(UserException.USER_TYPE_NOT_AUTHORITY)) {
+				mv.addObject("error", "1");
+			}
+		} catch (Exception e) {
+			mv.addObject("error", 0);
+			log.error(e.getMessage(), e);
+		}
 		return mv;
 	}
 
-	/**
-	 * 保存用户配置权限
-	 * 
-	 * @param user
-	 * @param roleids
-	 */
-	@RequestMapping("configurerole")
-	public void configureRole(@ModelAttribute("user") User user, @RequestParam(value = "roleids") int[] roleids) {
-		// roleService.saveRole(user, roleids);
+	@RequestMapping("saveGrantModule")
+	public ModelAndView saveGrantModule(@ModelAttribute("role") Role role, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		User loginUser = getLoginUser(session);
+		String errormsg = "error";
+		try {
+			roleService.saveGrantModule(loginUser, role);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"));
+		} catch (Exception e) {
+			mv.addObject("error", 0);
+			log.error(e.getMessage(), e);
+		}
+		return ajaxDoneError(errormsg);
 	}
 }

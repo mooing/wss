@@ -97,6 +97,8 @@ public class SystemController extends BaseController {
 			mv.addObject("errorMsg", errorMsg);
 			return mv;
 		}
+		
+		
 
 		UserSession userSession = new UserSession(user);
 		// 设置用户会话信息

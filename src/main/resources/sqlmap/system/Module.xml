@@ -54,18 +54,18 @@
 	</update>
 	
 	<!-- 用户列表,授予模块权限,根据用户id查找其所有模块 -->
-	<select id="findModulesByUserId" resultType="int" parameterType="int">
+	<select id="findModulesByObjId" resultType="int" parameterType="map">
 		select 
 		module_id
 	 from
-		sys_role_module  where obj_id=#{userid} and type=2
+		sys_role_module  where obj_id=#{objId} and type=#{type}
 	</select>
 	<!-- 根据用户id，删除对应的模块角色 -->
-	<delete id="delSysModulesByUserid" parameterType="int">
-		delete from sys_role_module  where obj_id=#{userid} and type=2
+	<delete id="delSysModulesByObjId" parameterType="map">
+		delete from sys_role_module  where obj_id=#{objId} and type=#{type}
 	</delete>
 	
-	<insert id="addSysModulesByUserid" parameterType="map">
+	<insert id="addSysModulesByObjId" parameterType="map">
 		insert into 
 		sys_role_module(
 			obj_id,
@@ -75,9 +75,9 @@
 		values 
 		<foreach collection="moduleIds" item="moduleId" index="index" separator=",">
 		(
-		#{userid},
+		#{objId},
 		#{moduleId},
-		2
+		#{type}
 		)
 		</foreach>
 	</insert>

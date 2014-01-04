@@ -1,11 +1,14 @@
 package com.mooing.wss.system.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -26,6 +28,7 @@ import com.mooing.wss.common.util.Pagination;
 import com.mooing.wss.common.util.Sha1Util;
 import com.mooing.wss.hos.model.Doctor;
 import com.mooing.wss.hos.model.Hospital;
+import com.mooing.wss.system.enums.UserRoleModule;
 import com.mooing.wss.system.enums.UserStatus;
 import com.mooing.wss.system.enums.UserType;
 import com.mooing.wss.system.model.Role;
@@ -67,7 +70,7 @@ public class UserService extends SystemBaseService {
 						user.setHospitalName(hospital.getName());
 						user.setHospitalAddress(hospital.getRegionName());
 					}
-					if(user.getUsertype()!=null){
+					if (user.getUsertype() != null) {
 						user.setUserTypeName(UserType.getNameByType(user.getUsertype()));
 					}
 					user.setUserStatus(UserStatus.getNameByStatus(user.getStatus()));
@@ -255,7 +258,10 @@ public class UserService extends SystemBaseService {
 	 */
 	public Map<String, Object> grantModule(User loginUser, int userid) throws UserException {
 		// userAuthorityCheck(loginUser, userid);
-		List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByUserId", userid);
+		Map<String, Object> moduleMap = Maps.newHashMap();
+		moduleMap.put("objId", userid);
+		moduleMap.put("type", UserRoleModule.user.getType());
+		List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByObjId", moduleMap);
 		Map<String, Object> map = Maps.newHashMap();
 		map.put("moduleList", systemCache.findAllModule());
 		if (!CollectionUtils.isEmpty(moduleIds)) {
@@ -277,12 +283,63 @@ public class UserService extends SystemBaseService {
 		if (user == null || user.getId() == 0 || CollectionUtils.isEmpty(user.getModuleIds())) {
 			throw new UserException(UserException.USER_DEFAULT_EXCEPTION);
 		}
-		// 删除原用户模块权限
-		wssBaseDao.execute("Module.delSysModulesByUserid", user.getId());
-		// 新增用户模块权限
 		Map<String, Object> moduleMap = Maps.newHashMap();
-		moduleMap.put("userid", user.getId());
+		moduleMap.put("objId", user.getId());
 		moduleMap.put("moduleIds", user.getModuleIds());
-		wssBaseDao.execute("Module.addSysModulesByUserid", moduleMap);
+		moduleMap.put("type", UserRoleModule.user.getType());
+		// 删除原用户模块权限
+		wssBaseDao.execute("Module.delSysModulesByObjId", moduleMap);
+		// 新增用户模块权限
+		wssBaseDao.execute("Module.addSysModulesByObjId", moduleMap);
+	}
+
+	/**
+	 * 获取模块权限
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<String> findModulesByUser(int userId) {
+		try {
+			Map<String,Object> moduleMap = new HashMap<String,Object>();
+			moduleMap.put("objId", userId);
+			moduleMap.put("type", UserRoleModule.user.getType());
+			
+			List<String> moduleNames=Lists.newArrayList();
+			//查找用户的模块权限
+			List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByObjId", moduleMap);
+			if(CollectionUtils.isNotEmpty(moduleIds)){
+				for (Integer moduleId : moduleIds) {
+					moduleNames.add(e);
+				}
+			}
+			// 查找用户角色具有的模块权限
+			String byRole = "";
+			List _roleAcl = null;
+			List<SysUserRole> roles = sysUserRoleDao.findList("from SysUserRole ur where ur.user.id = ?", userId);
+			for (SysUserRole commUserRole : roles) {
+				SysRole role = commUserRole.getRole();
+				byRole = "select acl.id, acl.sysModuleId from SysACL acl where acl.principalType = ? and acl.principalId = ?";
+				_roleAcl = sysAclDao.findList(byRole, "role", role.getId());
+				for (Object object : _roleAcl) {
+					Object[] arr = (Object[]) object;
+					result.put(arr[1], arr[0]);
+				}
+			}
+			Set coll = result.keySet();
+			List<String> temp = sysModuleDao.findSnListByIds(coll);
+			List<String> acls = new ArrayList();
+			for (String str : temp) {
+				acls.add("'" + str + "'");
+			}
+			// for (Object object : coll) {
+			// int moduleId = (Integer)object;
+			// SysModule m = sysModuleDao.get(SysModule.class, moduleId);
+			// }
+			return acls;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

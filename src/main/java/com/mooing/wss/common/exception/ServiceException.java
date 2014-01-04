@@ -12,6 +12,12 @@ public class ServiceException extends Exception {
 	 */
 	public static final String ROOT_NOT_DEL = "0";
 	
+	
+	/**
+	 * 默认异常
+	 */
+	public static final String DEFAULT_EXCEPTION = "1";
+	
 
 	public ServiceException(Throwable cause) {
 		super(cause);
