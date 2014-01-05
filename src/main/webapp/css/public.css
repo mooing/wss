@@ -9,5 +9,7 @@
 .pageFormContent p{
 	height: auto;
 }
-#header{height:85px}
+#header{height:95px;background: url(./themes/default/images/header_bg.png) no-repeat left top;}
 #leftside, #container, #splitBar, #splitBarProxy{top:90px}
+#header .headerNav{height: 60px;}
+#leftside, #container, #splitBar, #splitBarProxy{top: 100px;}
