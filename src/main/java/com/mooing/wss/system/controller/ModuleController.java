@@ -101,7 +101,7 @@ public class ModuleController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.addNode(loginUser, module);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"), navTabId);
 		} catch (UserException e) {
 			mv.addObject("user", new User());
 			// not authority
@@ -130,7 +130,7 @@ public class ModuleController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.delNode(loginUser, id);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"), navTabId);
 		} catch (UserException e) {
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
@@ -140,6 +140,10 @@ public class ModuleController extends BaseController {
 			// not authority
 			if (ServiceException.ROOT_NOT_DEL.equals(e.getMessage())) {
 				errormsg = "不能删除根节点！";
+			}
+			// not authority
+			if (ServiceException.MODULE_AUTHORITY_ISEXIST_EXCEPTION.equals(e.getMessage())) {
+				errormsg = "权限唯一标识已经存在，建议：父模块.子模块！";
 			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
@@ -163,9 +167,13 @@ public class ModuleController extends BaseController {
 			Module module = moduleService.toUpdateNode(loginUser, moduleid);
 			mv.addObject("module", module);
 		} catch (UserException e) {
-			mv.addObject("user", new User());
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
+				mv.addObject("error", "1");
+			}
+		} catch (ServiceException e) {
+			// not authority
+			if (ServiceException.ROOT_NOT_DEL.equals(e.getMessage())) {
 				mv.addObject("error", "1");
 			}
 		} catch (Exception e) {
@@ -175,7 +183,7 @@ public class ModuleController extends BaseController {
 	}
 
 	/**
-	 * delete节点
+	 * update节点
 	 * 
 	 * @param id
 	 *            节点id
@@ -189,15 +197,50 @@ public class ModuleController extends BaseController {
 		try {
 			User loginUser = getLoginUser(session);
 			moduleService.updateNode(loginUser, module);
-			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"),navTabId);
+			return ajaxDialogDoneSuccess(getMessage("msg.operation.success"), navTabId);
 		} catch (UserException e) {
 			// not authority
 			if (UserException.USER_TYPE_NOT_AUTHORITY.equals(e.getMessage())) {
 				errormsg = "当前用户类型没有操作权限！";
 			}
+		} catch (ServiceException e) {
+			// not authority
+			if (ServiceException.ROOT_NOT_DEL.equals(e.getMessage())) {
+				errormsg = "不能修改根节点！";
+			}
+			// not authority
+			if (ServiceException.MODULE_AUTHORITY_ISEXIST_EXCEPTION.equals(e.getMessage())) {
+				errormsg = "权限唯一标识已经存在，建议：父模块.子模块！";
+			}
 		} catch (Exception e) {
 			mv.addObject("error", 0);
 		}
 		return ajaxDoneError(errormsg);
+	}
+
+	/**
+	 * 获取一级菜单
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("maintree")
+	public @ResponseBody
+	String getFirstModule(HttpServletResponse response, HttpSession session) {
+		String jsonString = moduleService.getFirstModule();
+		return jsonString;
+	}
+
+	/**
+	 * 获取一级菜单下所有模块
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("layouttree")
+	public @ResponseBody
+	String findLayoutModule(HttpServletResponse response, HttpSession session) {
+		String jsonString = moduleService.findUnFirstModule();
+		return jsonString;
 	}
 }

@@ -1,5 +1,7 @@
 package com.mooing.wss.system.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,9 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mooing.wss.common.controller.BaseController;
 import com.mooing.wss.common.util.Sha1Util;
 import com.mooing.wss.common.util.ValidCodeUtil;
+import com.mooing.wss.system.model.Module;
 import com.mooing.wss.system.model.User;
 import com.mooing.wss.system.model.UserConstants;
 import com.mooing.wss.system.model.UserSession;
+import com.mooing.wss.system.service.ModuleService;
 import com.mooing.wss.system.service.SystemService;
 import com.mooing.wss.system.service.UserService;
 
@@ -38,6 +42,8 @@ public class SystemController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private ModuleService moduleService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request) {
@@ -45,7 +51,7 @@ public class SystemController extends BaseController {
 		log.info("当前登录用户请求的的路径为：{}", requestUrl);
 		return new ModelAndView("user/login");
 	}
-	
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request) {
 		return new ModelAndView("layout");
@@ -53,7 +59,7 @@ public class SystemController extends BaseController {
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ModelAndView loginAcion(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request,
-			@RequestParam("validCode") String validCode,HttpServletResponse response) {
+			@RequestParam("validCode") String validCode, HttpServletResponse response) {
 
 		String errorMsg = "";
 
@@ -64,10 +70,10 @@ public class SystemController extends BaseController {
 			mv.addObject("errorMsg", errorMsg);
 			return mv;
 		}
-		
-		//验证码
-		boolean codeRes=systemService.checkValidCode(validCode, request.getSession());
-		if(!codeRes){
+
+		// 验证码
+		boolean codeRes = systemService.checkValidCode(validCode, request.getSession());
+		if (!codeRes) {
 			mv = new ModelAndView("user/login");
 			errorMsg = "登录失败, 验证码不正确!";
 			mv.addObject("errorMsg", errorMsg);
@@ -97,8 +103,15 @@ public class SystemController extends BaseController {
 			mv.addObject("errorMsg", errorMsg);
 			return mv;
 		}
-		
-		
+		mv = new ModelAndView();
+
+		// 获取当前用户所有模块权限,包括角色对应的权限
+		List<String> moduleAuthList = userService.findModulesByUser(user.getId());
+		user.setModuleAuthList(moduleAuthList);
+ 
+		// 动态获取模块数据
+//		List<Module> firstModuleList = moduleService.getFirstModule();
+//		mv.addObject("firstModuleList", firstModuleList);
 
 		UserSession userSession = new UserSession(user);
 		// 设置用户会话信息
@@ -106,8 +119,7 @@ public class SystemController extends BaseController {
 		session.setAttribute(UserConstants.USER_SESSION_KEY, userSession);
 
 		log.info("login succ! username - {} , ip: {}", username, this.getIpAddr(request));
-		mv = new ModelAndView("redirect:/system/home");
-
+		mv.setViewName("redirect:/system/home");
 		return mv;
 	}
 

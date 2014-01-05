@@ -1,0 +1,34 @@
+<div class="pageContent">
+	
+	<form method="post" action="/role/saveGrantModule" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+	<input type="hidden" value="$!{moduleMap.roleid}" name="id">
+	<div class="accordionContent" id="module-tree-grant" layoutH="35" ids="${moduleMap.moduleIds}">
+    </div>
+    
+    <div class="formBar">
+        <ul>
+            <li>
+                <div class="buttonActive">
+                    <div class="buttonContent">
+                        <button type="submit">提交</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="button">
+                    <div class="buttonContent">
+                        <button type="button" class="close">取消</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+</div>
+
+<script src="/js/module/module.js"></script>
+<script>
+$(function() {
+    f.module.loadTree({container:"#module-tree-grant",collapse:"expand",treeCheck:"treeCheck"});
+});    
+</script>

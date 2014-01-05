@@ -19,12 +19,12 @@ public class Module extends BaseModel {
 	/**
 	 * 模块名称
 	 */
-	private String name;
+	private String modname;
 
 	/**
 	 * 父id
 	 */
-	private Integer pId;
+	private Integer pid;
 
 	/**
 	 * 英文名
@@ -39,6 +39,18 @@ public class Module extends BaseModel {
 	 * 序号
 	 */
 	private int sort;
+	/**
+	 * 链接
+	 */
+	private String href;
+	/**
+	 * 权限标识
+	 */
+	private String authorityRel;
+	/**
+	 * 父节点权限标识
+	 */
+	private String pAuthorityRel;
 
 	public String getSen() {
 		return sen;
@@ -64,20 +76,44 @@ public class Module extends BaseModel {
 		this.leaf = leaf;
 	}
 
-	public String getName() {
-		return name;
+	public String getHref() {
+		return href;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHref(String href) {
+		this.href = href;
 	}
 
-	public Integer getPId() {
-		return pId;
+	public String getAuthorityRel() {
+		return authorityRel;
 	}
 
-	public void setpId(Integer pId) {
-		this.pId = pId;
+	public void setAuthorityRel(String authorityRel) {
+		this.authorityRel = authorityRel;
+	}
+
+	public String getpAuthorityRel() {
+		return pAuthorityRel;
+	}
+
+	public void setpAuthorityRel(String pAuthorityRel) {
+		this.pAuthorityRel = pAuthorityRel;
+	}
+
+	public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+
+	public String getModname() {
+		return modname;
+	}
+
+	public void setModname(String modname) {
+		this.modname = modname;
 	}
 
 }

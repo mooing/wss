@@ -6,8 +6,16 @@
     <div class="pageFormContent" layoutH="56">
         <p>
             <label>模块名称:</label>
-            <input type="text" name="name" class="required" value="$!{module.name}"/>
+            <input type="text" name="modname" class="required" value="$!{module.modname}"/>
             <input type="hidden" name="id" value="${module.id}"  />
+        </p>
+        <p>
+            <label>模块链接:</label>
+            <input type="text" name="href" class="required" value="$!{module.href}"/>
+        </p>
+        <p>
+            <label>模块权限唯一标识(英文或数字,建议:父模块.子模块):</label>
+            <input type="text" name="authorityRel" class="required" value="$!{module.authorityRel}"/>
         </p>
     </div>
     <div class="formBar">

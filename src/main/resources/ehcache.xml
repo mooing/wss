@@ -15,6 +15,16 @@
 		maxElementsOnDisk="100" eternal="false" overflowToDisk="true"
 		diskSpoolBufferSizeMB="20" timeToIdleSeconds="100" timeToLiveSeconds="100"
 		transactionalMode="off" memoryStoreEvictionPolicy="LRU" />
+	<!-- 一级模块缓存 -->
+	<cache name="system.firstModuleCache" maxElementsInMemory="100"
+		maxElementsOnDisk="100" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="100" timeToLiveSeconds="100"
+		transactionalMode="off" memoryStoreEvictionPolicy="LRU" />
+	<!-- 一级模块下所有缓存 -->
+	<cache name="system.unFirstModule" maxElementsInMemory="100"
+		maxElementsOnDisk="100" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="100" timeToLiveSeconds="100"
+		transactionalMode="off" memoryStoreEvictionPolicy="LRU" />
 	<!-- hospital缓存 -->
 	<cache name="hospitalAllCache" maxElementsInMemory="100"
 		maxElementsOnDisk="100" eternal="false" overflowToDisk="true"

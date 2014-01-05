@@ -17,6 +17,10 @@ public class ServiceException extends Exception {
 	 * 默认异常
 	 */
 	public static final String DEFAULT_EXCEPTION = "1";
+	/**
+	 * 模块权限名已存在
+	 */
+	public static final String MODULE_AUTHORITY_ISEXIST_EXCEPTION = "2";
 	
 
 	public ServiceException(Throwable cause) {

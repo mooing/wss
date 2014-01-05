@@ -69,6 +69,8 @@ public class User extends BaseModel {
 	private List<Integer> roleIds;
 	// 当前用户模块id list
 	private List<Integer> moduleIds;
+	// 当前 用户所有模块权限,包括角色对应的权限
+	private List<String> moduleAuthList;
 
 	public String getUsername() {
 		return username;
@@ -196,6 +198,14 @@ public class User extends BaseModel {
 
 	public void setModuleIds(List<Integer> moduleIds) {
 		this.moduleIds = moduleIds;
+	}
+
+	public List<String> getModuleAuthList() {
+		return moduleAuthList;
+	}
+
+	public void setModuleAuthList(List<String> moduleAuthList) {
+		this.moduleAuthList = moduleAuthList;
 	}
 
 }

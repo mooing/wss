@@ -46,10 +46,31 @@ public class SystemCache {
 		moduleList = wssBaseDao.executeForObjectList("Module.findModuleByPid", pid);
 		return moduleList;
 	}
+
 	@Cacheable(cacheName = "moduleCache")
 	public List<Module> findAllModule() {
 		List<Module> moduleList = new ArrayList<Module>();
 		moduleList = wssBaseDao.executeForObjectList("Module.findAllModule", null);
+		return moduleList;
+	}
+
+
+	/**
+	 * 获取一级菜单 
+	 */
+	@Cacheable(cacheName = "system.firstModuleCache")
+	public List<Module> getFirstModule() {
+		List<Module> moduleList = new ArrayList<Module>();
+		moduleList = wssBaseDao.executeForObjectList("Module.findByFirstModule", null);
+		return moduleList;
+	}
+	/**
+	 * 获取一级菜单下所有菜单 
+	 */
+	@Cacheable(cacheName = "system.unFirstModule")
+	public List<Module> findUnFirstModule() {
+		List<Module> moduleList = new ArrayList<Module>();
+		moduleList = wssBaseDao.executeForObjectList("Module.findUnFirstModule", null);
 		return moduleList;
 	}
 }

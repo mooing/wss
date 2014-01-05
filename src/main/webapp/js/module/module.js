@@ -7,8 +7,8 @@ f.module = {
             tree = '<ul>';
         }
         for (var i in data) {
-            if (data[i].pId == pId) {
-                tree += "<li  target='mid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"'>" + data[i].name + "</a>";
+            if (data[i].pid == pId) {
+                tree += "<li  target='mid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"'>" + data[i].modname + "</a>";
                 tree += arguments.callee(data, data[i].id,option);
                 tree += "</li>";
             }

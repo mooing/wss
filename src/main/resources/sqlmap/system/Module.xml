@@ -3,83 +3,159 @@
 <mapper namespace="Module">
 
 	<!-- 根据父id 获取模块数据 -->
-	<select id="findAllModule" resultType="Module" >
-		select 
+	<select id="findAllModule" resultType="Module">
+		select
 		id,
-		modname name,
+		modname,
 		leaf,
-		pid pId,
+		pid,
 		sen,
 		sort,
 		status
-	 from
-		sys_module  
+		from
+		sys_module
 	</select>
 	<!-- 根据父id，查询模块 -->
 	<select id="findModuleByPid" resultType="Module" parameterType="int">
-		select 
+		select
 		id,
-		modname name,
-		pid 
-	 from
-		sys_module  where pid=#{pid}
+		modname,
+		pid
+		from
+		sys_module where pid=#{pid}
 	</select>
 	<!-- 根据id，查询模块 -->
 	<select id="findById" resultType="Module" parameterType="int">
-		select 
+		select
 		id,
-		modname name,
-		pid 
-	 from
-		sys_module  where id=#{id}
+		modname,
+		pid
+		from
+		sys_module where id=#{id}
 	</select>
-	
+
 	<!-- 增加模块 -->
 	<insert id="addModule" parameterType="Module">
 		insert into sys_module
 		(
-		modname ,
-		pid 
+		modname,
+		pid,
+		href,
+		authority_rel ,
+		p_authority_rel
 		)values(
-			#{name},
-			#{pId}
+		#{modname},
+		#{pid},
+		#{href},
+		#{authorityRel},
+		#{pAuthorityRel}
 		)
 	</insert>
 	<!-- delModule -->
 	<delete id="delModule" parameterType="int">
-		delete from sys_module where id=#{id}
+		delete from sys_module
+		where id=#{id}
 	</delete>
 	<update id="updateModule" parameterType="Module">
-		update sys_module set modname=#{name} where id=#{id} 
+		update sys_module set
+		modname=#{modname} ,
+		href=#{href},authority_rel=#{authorityRel},p_authority_rel=#{pAuthorityRel}
+		where id=#{id}
 	</update>
-	
+
 	<!-- 用户列表,授予模块权限,根据用户id查找其所有模块 -->
 	<select id="findModulesByObjId" resultType="int" parameterType="map">
-		select 
+		select
 		module_id
-	 from
-		sys_role_module  where obj_id=#{objId} and type=#{type}
+		from
+		sys_role_module where obj_id=#{objId} and
+		type=#{type}
 	</select>
+
 	<!-- 根据用户id，删除对应的模块角色 -->
 	<delete id="delSysModulesByObjId" parameterType="map">
-		delete from sys_role_module  where obj_id=#{objId} and type=#{type}
+		delete from
+		sys_role_module where obj_id=#{objId} and type=#{type}
 	</delete>
-	
+
 	<insert id="addSysModulesByObjId" parameterType="map">
-		insert into 
+		insert into
 		sys_role_module(
-			obj_id,
-			module_id,
-			type
+		obj_id,
+		module_id,
+		type
 		)
-		values 
-		<foreach collection="moduleIds" item="moduleId" index="index" separator=",">
-		(
-		#{objId},
-		#{moduleId},
-		#{type}
-		)
+		values
+		<foreach collection="moduleIds" item="moduleId" index="index"
+			separator=",">
+			(
+			#{objId},
+			#{moduleId},
+			#{type}
+			)
 		</foreach>
 	</insert>
-	
+
+
+	<!-- 用户登录时，查询当前用户模块，返回权限标识名 -->
+	<select id="findModuleAuthorityMarksByObjId" resultType="string"
+		parameterType="map">
+		select
+		module.authority_rel authorityRel
+		from
+		sys_role_module sysrole, sys_module module where
+		sysrole.module_id=module.id and sysrole.obj_id=#{objId} and
+		sysrole.type=#{type}
+	</select>
+	<!-- 按级别获取模块，供动态菜单显示使用 -->
+	<select id="findByFirstModule" resultType="Module">
+		select
+		id,
+		modname,
+		pid,
+		href,
+		authority_rel authorityRel,
+		p_authority_rel pAuthorityRel
+		from
+		sys_module where pid=1
+	</select>
+	<!-- 获取一级菜单下的所有菜单，供动态菜单显示使用 -->
+	<select id="findUnFirstModule" resultType="Module">
+		select
+		id,
+		modname,
+		pid,
+		href,
+		authority_rel authorityRel,
+		p_authority_rel pAuthorityRel
+		from
+		sys_module where pid!=1 and pid!=0
+	</select>
+	<!-- 验证权限名是否重复 -->
+	<select id="getModuleCountByAuthorityRel" resultType="int"
+		parameterType="string">
+		select
+		count(*)
+		from
+		sys_module where
+		authority_rel=#{authorityRel}
+	</select>
+	<!--更新时， 验证权限名是否重复 -->
+	<select id="getUpdateModuleCountByAuthorityRel" resultType="int"
+		parameterType="map">
+		select
+		count(*)
+		from
+		sys_module where
+		authority_rel=#{authorityRel} and id!=#{id}
+	</select>
+	<!--获取父模块，权限名 -->
+	<select id="getAuthorityRelByPid" resultType="string"
+		parameterType="int">
+		select
+		authority_rel authorityRel
+		from
+		sys_module where
+		id=#{pid}
+	</select>
 </mapper>

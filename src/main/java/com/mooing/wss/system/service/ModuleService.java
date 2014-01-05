@@ -1,6 +1,8 @@
 package com.mooing.wss.system.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -61,38 +63,87 @@ public class ModuleService extends SystemBaseService {
 	 *            节点名称
 	 * @throws UserException
 	 */
-	@TriggersRemove(cacheName = "moduleCache", removeAll = true)
-	public void addNode(User loginUser, Module module) throws UserException {
+	@TriggersRemove(cacheName = { "moduleCache", "system.firstModuleCache" }, removeAll = true)
+	public void addNode(User loginUser, Module module) throws UserException, ServiceException {
 		userAuthorityCheck(loginUser);
-		if (module != null && !StringUtils.isBlank(module.getName())) {
+		if (module != null && !StringUtils.isBlank(module.getModname())) {
+			// 验证权限名是否重复
+			Integer moduleCount = wssBaseDao.executeForObject("Module.getModuleCountByAuthorityRel", module.getAuthorityRel(), Integer.class);
+			if (moduleCount != null && moduleCount > 0) {
+				log.error(" ModuleService | addNode ,moduleCount gt 0,AuthorityRel is exits,AuthorityRel:{}", module.getAuthorityRel());
+				throw new ServiceException(ServiceException.MODULE_AUTHORITY_ISEXIST_EXCEPTION);
+			}
+			// 获取父模块，权限名
+			String parentAuthorityRel = wssBaseDao.executeForObject("Module.getAuthorityRelByPid", module.getPid(), String.class);
+			if (StringUtils.isBlank(parentAuthorityRel)) {
+				log.error(" ModuleService | addNode ,parentAuthorityRel is null,module.getPid():{}", module.getPid());
+				throw new ServiceException(ServiceException.DEFAULT_EXCEPTION);
+			}
+			module.setpAuthorityRel(parentAuthorityRel);
 			wssBaseDao.execute("Module.addModule", module);
 		}
 	}
 
-	@TriggersRemove(cacheName = "moduleCache", removeAll = true)
+	@TriggersRemove(cacheName = { "moduleCache", "system.firstModuleCache" }, removeAll = true)
 	public void delNode(User loginUser, int id) throws UserException, ServiceException {
 		userAuthorityCheck(loginUser);
-		if(id==1){
-			//不能删除根节点
+		if (id == 1) {
+			// 不能删除根节点
 			throw new ServiceException(ServiceException.ROOT_NOT_DEL);
 		}
 		wssBaseDao.execute("Module.delModule", id);
 	}
 
-	@TriggersRemove(cacheName = "moduleCache", removeAll = true)
-	public void updateNode(User loginUser, Module module) throws UserException {
+	@TriggersRemove(cacheName = { "moduleCache", "system.firstModuleCache" }, removeAll = true)
+	public void updateNode(User loginUser, Module module) throws UserException, ServiceException {
 		userAuthorityCheck(loginUser);
-		if (module != null && !StringUtils.isBlank(module.getName())) {
+		if (module != null && !StringUtils.isBlank(module.getModname())) {
+			if (module.getId() == 1) {
+				// 不能删除根节点
+				throw new ServiceException(ServiceException.ROOT_NOT_DEL);
+			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("authorityRel", module.getAuthorityRel());
+			map.put("id", module.getId());
+			// 验证权限名是否重复
+			Integer moduleCount = wssBaseDao.executeForObject("Module.getUpdateModuleCountByAuthorityRel", map, Integer.class);
+			if (moduleCount != null && moduleCount > 0) {
+				log.error(" ModuleService | updateNode ,moduleCount gt 0,AuthorityRel is exits,AuthorityRel:{}", module.getAuthorityRel());
+				throw new ServiceException(ServiceException.MODULE_AUTHORITY_ISEXIST_EXCEPTION);
+			}
 			wssBaseDao.execute("Module.updateModule", module);
 		}
 	}
 
-	public Module toUpdateNode(User loginUser, int moduleid) throws UserException {
+	public Module toUpdateNode(User loginUser, int moduleid) throws UserException, ServiceException {
 		userAuthorityCheck(loginUser);
-		if(moduleid!=0){
+		if (moduleid == 1) {
+			// 不能删除根节点
+			throw new ServiceException(ServiceException.ROOT_NOT_DEL);
+		}
+		if (moduleid != 0) {
 			return wssBaseDao.executeForObject("Module.findById", moduleid, Module.class);
 		}
 		return null;
+	}
+
+	/**
+	 * 获取一级菜单，供layout使用
+	 */
+	public String getFirstModule() {
+		String jsonString = JSON.toJSONString(systemCache.getFirstModule());
+		log.info("ModuleSerivce| getFirstModule ,json:{}", jsonString);
+		return jsonString;
+	}
+
+	/**
+	 * 获取一级菜单下所有菜单，供layout使用
+	 */
+	public String findUnFirstModule() {
+		List<Module> moduleList = systemCache.findUnFirstModule();
+		String jsonString = JSON.toJSONString(moduleList);
+		log.info("ModuleSerivce| findUnFirstModule ,json:{}", jsonString);
+		return jsonString;
 	}
 
 }

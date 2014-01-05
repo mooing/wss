@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.exception.SystemException;
@@ -294,53 +295,47 @@ public class UserService extends SystemBaseService {
 	}
 
 	/**
-	 * 获取模块权限
+	 * 获取模块权限,包括用户和角色分别对应的模块权限，用于页面判断权限使用
 	 * 
 	 * @param userId
 	 * @return
 	 */
-	public List<String> findModulesByUser(int userId) {
+	public List<String> findModulesByUser(int userid) {
 		try {
-			Map<String,Object> moduleMap = new HashMap<String,Object>();
-			moduleMap.put("objId", userId);
+			Map<String, Object> moduleMap = new HashMap<String, Object>();
+			moduleMap.put("objId", userid);
 			moduleMap.put("type", UserRoleModule.user.getType());
-			
-			List<String> moduleNames=Lists.newArrayList();
-			//查找用户的模块权限
-			List<Integer> moduleIds = wssBaseDao.executeForObjectList("Module.findModulesByObjId", moduleMap);
-			if(CollectionUtils.isNotEmpty(moduleIds)){
-				for (Integer moduleId : moduleIds) {
-//					moduleNames.add(e);
+
+			// 当前用户的权限列表集合
+			Set<String> moduleNames = Sets.newHashSet();
+			// 查找用户的模块权限 ,返回权限标识，用户页面控制权限
+			List<String> userAuthorityMarkList = wssBaseDao.executeForObjectList("Module.findModuleAuthorityMarksByObjId", moduleMap);
+			if (CollectionUtils.isNotEmpty(userAuthorityMarkList)) {
+				for (String moduleAuthorityMark : userAuthorityMarkList) {
+					moduleNames.add(moduleAuthorityMark);
 				}
 			}
-//			// 查找用户角色具有的模块权限
-//			String byRole = "";
-//			List _roleAcl = null;
-//			List<SysUserRole> roles = sysUserRoleDao.findList("from SysUserRole ur where ur.user.id = ?", userId);
-//			for (SysUserRole commUserRole : roles) {
-//				SysRole role = commUserRole.getRole();
-//				byRole = "select acl.id, acl.sysModuleId from SysACL acl where acl.principalType = ? and acl.principalId = ?";
-//				_roleAcl = sysAclDao.findList(byRole, "role", role.getId());
-//				for (Object object : _roleAcl) {
-//					Object[] arr = (Object[]) object;
-//					result.put(arr[1], arr[0]);
-//				}
-//			}
-//			Set coll = result.keySet();
-//			List<String> temp = sysModuleDao.findSnListByIds(coll);
-//			List<String> acls = new ArrayList();
-//			for (String str : temp) {
-//				acls.add("'" + str + "'");
-//			}
-			// for (Object object : coll) {
-			// int moduleId = (Integer)object;
-			// SysModule m = sysModuleDao.get(SysModule.class, moduleId);
-			// }
-//			return acls;
+
+			// 查询当前用户角色
+			List<Integer> roleIds = wssBaseDao.executeForObjectList("Role.findRoleIdByUserId", userid);
+			if (CollectionUtils.isNotEmpty(roleIds)) {
+				moduleMap.put("type", UserRoleModule.role.getType());
+				for (Integer roleid : roleIds) {
+					moduleMap.put("objId", roleid);
+					// 查找用户角色具有的模块权限,并添加到权限列表中
+					List<String> roleAuthorityMarkList = wssBaseDao.executeForObjectList("Module.findModuleAuthorityMarksByObjId", moduleMap);
+					if (CollectionUtils.isNotEmpty(roleAuthorityMarkList)) {
+						for (String moduleAuthorityMark : roleAuthorityMarkList) {
+							moduleNames.add(moduleAuthorityMark);
+						}
+					}
+				}
+			}
+
+			return Lists.newArrayList(moduleNames);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return null;
 		}
-		return null;
 	}
 }
