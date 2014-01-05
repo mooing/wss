@@ -147,7 +147,7 @@ input.disabled, textarea.disabled { border-color:#9eabb3 #d5dbdf #d5dbdf #9eabb3
 body, #splitBar { background:#e5edef;}
 #splitBarProxy { border-color:#c0c0c0; background:#CCC;}
 
-#header, #header .headerNav { background:url(./images/header_bg.png) repeat-x;}
+/*#header, #header .headerNav { background:url(./images/header_bg.png) repeat-x;}*/
 #header { background-color:#102c4a;}
 #header .logo { background:url(./images/logo.png) no-repeat;}
 #header .nav li { float:left; margin-left:-1px; padding:0 8px; line-height:11px; background:url(./images/listLine.png) no-repeat;}
