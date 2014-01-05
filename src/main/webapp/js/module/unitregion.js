@@ -3,7 +3,7 @@ f.region = {
         var tree,
             onclick = "";
         if (pId == 0) {
-            tree = '<ul class="tree treeFolder '+option.treeCheck+' '+option.collapse+' ">';
+            tree = '<ul class="tree treeFolder '+option.collapse+' ">';
         } else {
             tree = '<ul>';
         }
@@ -11,7 +11,7 @@ f.region = {
             if (data[i].pId == pId) {
                 // 带回的id和值
                 onclick = option.lookup ? '$.bringBack({regionCode:"'+data[i].id+'", regionName:"'+data[i].name+'"})' : "";
-                tree += "<li  target='mid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"' "+(!!onclick ? "onclick='"+onclick+"'" : "")+">" + data[i].name + "</a>";
+                tree += "<li  target='rid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"' "+(!!onclick ? "onclick='"+onclick+"'" : "")+">" + data[i].name + "</a>";
                 tree += arguments.callee(data, data[i].id,option);
                 tree += "</li>";
             }
@@ -25,7 +25,7 @@ f.region = {
             option.ids = $(option.container).attr("ids").split(",");
         }
         $.ajax({
-            url:"/module/alltree",
+            url:"/region/curregion",
             data:{"guid":new Date().getTime()},
             async:false,
             dataType:"json",
@@ -38,7 +38,7 @@ f.region = {
         collapse:"collapse",
         treeCheck:"",
         oncheck:$.noop,
-        container:"#region-tree",
+        container:"#region-tree-lookup",
         ids:[]
     }
 }

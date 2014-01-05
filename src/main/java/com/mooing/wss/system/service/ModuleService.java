@@ -6,12 +6,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.mooing.wss.common.cache.base.SystemCache;
 import com.mooing.wss.common.exception.ServiceException;
@@ -129,18 +131,46 @@ public class ModuleService extends SystemBaseService {
 
 	/**
 	 * 获取一级菜单，供layout使用
+	 * 
+	 * @param loginUser
 	 */
-	public String getFirstModule() {
-		String jsonString = JSON.toJSONString(systemCache.getFirstModule());
+	public String getFirstModule(User loginUser) {
+		List<Module> firstModule = systemCache.getFirstModule();
+		getLoginUserModuleAuth(loginUser, firstModule);
+		String jsonString = JSON.toJSONString(firstModule);
 		log.info("ModuleSerivce| getFirstModule ,json:{}", jsonString);
 		return jsonString;
 	}
 
 	/**
+	 * 去除无权限模块
+	 * 
+	 * @param loginUser
+	 * @param firstModule
+	 */
+	private void getLoginUserModuleAuth(User loginUser, List<Module> firstModule) {
+		if (CollectionUtils.isNotEmpty(firstModule)) {
+			List<String> moduleAuthList = loginUser.getModuleAuthList();
+			List<Module> removeList = Lists.newArrayList();
+			if (CollectionUtils.isNotEmpty(moduleAuthList)) {
+				for (Module module : firstModule) {
+					for (String auth : moduleAuthList) {
+						if (module.getAuthorityRel().equals(auth)) {
+							removeList.add(module);
+						}
+					}
+				}
+				firstModule.removeAll(removeList);
+			}
+		}
+	}
+
+	/**
 	 * 获取一级菜单下所有菜单，供layout使用
 	 */
-	public String findUnFirstModule() {
+	public String findUnFirstModule(User loginUser) {
 		List<Module> moduleList = systemCache.findUnFirstModule();
+		getLoginUserModuleAuth(loginUser, moduleList);
 		String jsonString = JSON.toJSONString(moduleList);
 		log.info("ModuleSerivce| findUnFirstModule ,json:{}", jsonString);
 		return jsonString;

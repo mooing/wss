@@ -14,6 +14,7 @@
 		sys_region where  
 		pcode=#{pcode}
 	</select>
+
 	<!-- 根据leve，查询所有地区 -->
 	<select id="findRegionByLevel" resultType="Region"
 		parameterType="int">
@@ -37,5 +38,18 @@
 		level
 		from
 		sys_region
+	</select>
+	
+		<!-- 按code，like查询下级所有地区 -->
+	<select id="findRegionByLikeCode" resultType="Region" parameterType="string">
+		select
+		id,
+		code,
+		level,
+		name,
+		pcode
+		from
+		sys_region where  
+		code like  CONCAT('${code}','%' )  
 	</select>
 </mapper>

@@ -227,7 +227,8 @@ public class ModuleController extends BaseController {
 	@RequestMapping("maintree")
 	public @ResponseBody
 	String getFirstModule(HttpServletResponse response, HttpSession session) {
-		String jsonString = moduleService.getFirstModule();
+		User loginUser = getLoginUser(session);
+		String jsonString = moduleService.getFirstModule(loginUser);
 		return jsonString;
 	}
 
@@ -240,7 +241,8 @@ public class ModuleController extends BaseController {
 	@RequestMapping("layouttree")
 	public @ResponseBody
 	String findLayoutModule(HttpServletResponse response, HttpSession session) {
-		String jsonString = moduleService.findUnFirstModule();
+		User loginUser = getLoginUser(session);
+		String jsonString = moduleService.findUnFirstModule(loginUser);
 		return jsonString;
 	}
 }
