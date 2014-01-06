@@ -1,6 +1,7 @@
 package com.mooing.wss.dic.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mooing.wss.common.cache.base.RegionCache;
 import com.mooing.wss.common.dao.GenericBaseDAO;
 import com.mooing.wss.dic.model.Region;
@@ -52,9 +54,16 @@ public class RegionService {
 	public String findRegionByCode(String regionCode, User loginUser) {
 		List<Region> regionList = Lists.newArrayList();
 		if (loginUser.getUsername().equals("admin")) {
-			regionList = regionCache.findAllRegion();
+//			regionList = regionCache.findAllRegion();
+			//FIXME
+			regionCode="41";
+			Map<String, String> map=Maps.newHashMap();
+			map.put("regionCode", regionCode);
+			regionList = wssBaseDao.executeForObjectList("Region.findRegionByLikeCode", map);
 		} else {
-			regionList = wssBaseDao.executeForObjectList("Region.findRegionByLikeCode", regionCode);
+			Map<String, String> map=Maps.newHashMap();
+			map.put("regionCode", regionCode);
+			regionList = wssBaseDao.executeForObjectList("Region.findRegionByLikeCode", map);
 		}
 		return JSON.toJSONString(regionList);
 	}

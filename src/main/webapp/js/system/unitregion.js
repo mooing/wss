@@ -2,17 +2,17 @@ f.region = {
     getTree:function(data, pId, option){
         var tree,
             onclick = "";
-        if (pId == 0) {
+        if (pId == 41) {
             tree = '<ul class="tree treeFolder '+option.collapse+' ">';
         } else {
             tree = '<ul>';
         }
         for (var i in data) {
-            if (data[i].pId == pId) {
+            if (data[i].pcode == pId) {
                 // 带回的id和值
-                onclick = option.lookup ? '$.bringBack({regionCode:"'+data[i].id+'", regionName:"'+data[i].name+'"})' : "";
-                tree += "<li  target='rid'  rel='" + data[i].id + "'><a href='javascript:void(0);' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"' "+(!!onclick ? "onclick='"+onclick+"'" : "")+">" + data[i].name + "</a>";
-                tree += arguments.callee(data, data[i].id,option);
+                onclick = option.lookup ? '$.bringBack({regionCode:"'+data[i].code+'", regionName:"'+data[i].name+'"})' : "";
+                tree += "<li  target='rid'  rel='" + data[i].code + "'><a href='javascript:void(0);' "+($.inArray(data[i].code+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].code+"' "+(!!onclick ? "onclick='"+onclick+"'" : "")+">" + data[i].name + "</a>";
+                tree += arguments.callee(data, data[i].code,option);
                 tree += "</li>";
             }
         }
@@ -30,7 +30,7 @@ f.region = {
             async:false,
             dataType:"json",
             success:function( data ){
-                 $(option.container).html(that.getTree(data,0,option).replaceAll("<ul></ul>",""));
+                 $(option.container).html(that.getTree(data,41,option).replaceAll("<ul></ul>",""));
             }
         });
     },
@@ -38,7 +38,7 @@ f.region = {
         collapse:"collapse",
         treeCheck:"",
         oncheck:$.noop,
-        container:"#region-tree-lookup",
+        container:"#unit-tree-lookup",
         ids:[]
     }
 }

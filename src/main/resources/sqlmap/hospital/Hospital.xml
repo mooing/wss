@@ -134,4 +134,13 @@
 		hos.status
 	from hos_hospital hos ,sys_region region where hos.region_code=region.code
 	</select>
+	
+	<!-- 获取当前登录用户下所有单位-->
+	<select id="findUnitByLikeRegionCode" resultType="Hospital" parameterType="map">
+		select 
+		hos.id,
+		hos.pid,
+		hos.name
+	from hos_hospital hos where  region_code like concat('${regionCode}','%')  order by pid 
+	</select>
 </mapper>

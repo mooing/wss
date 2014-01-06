@@ -167,4 +167,30 @@ public class UnitController extends BaseController {
 		}
 		return ajaxDoneError(errormsg);
 	}
+	/**
+	 * 添加医生时,调用单位,跳转到选择单位页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("gounitlookup")
+	public ModelAndView goUnitLookup() {
+		ModelAndView mv = new ModelAndView("doctor/unitLookup");
+		return mv;
+	}
+
+	/**
+	 * 获取当前登录用户下所有单位
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("curunit")
+	public @ResponseBody
+	String findLoginUserAllUnit(HttpSession session) {
+		User loginUser = getLoginUser(session);
+		// 系统admin,特殊处理
+		return unitService.findUnitByCode(loginUser.getRegionCode(), loginUser);
+	}
+	
+	
 }

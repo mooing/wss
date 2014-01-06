@@ -1,11 +1,13 @@
 package com.mooing.wss.hos.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.mooing.wss.common.cache.base.UnitCache;
 import com.mooing.wss.common.dao.GenericBaseDAO;
@@ -27,12 +31,12 @@ import com.mooing.wss.system.model.User;
 
 /**
  * 单位管理
-*
-*
-*
-* @author kaiming.chi
-*
-* @date 2013-12-29 下午11:14:31
+ * 
+ * 
+ * 
+ * @author kaiming.chi
+ * 
+ * @date 2013-12-29 下午11:14:31
  */
 @Service
 public class UnitService {
@@ -137,6 +141,28 @@ public class UnitService {
 		String jsonString = JSON.toJSONString(unitCache.hospitalAllCache());
 		log.info("UnitSerivce| findAllUnitTree ,json:{}", jsonString);
 		return jsonString;
+	}
+
+	/**
+	 * 获取当前登录用户下所有单位
+	 * 
+	 * @param regionCode
+	 * @param loginUser
+	 * @return
+	 */
+	public String findUnitByCode(String regionCode, User loginUser) {
+		List<Hospital> unitList = Lists.newArrayList();
+		int pUnitId=0;
+			Map<String, String> map = Maps.newHashMap();
+			map.put("regionCode", "41");
+			unitList = wssBaseDao.executeForObjectList("Hospital.findUnitByLikeRegionCode", map);
+			if(CollectionUtils.isNotEmpty(unitList)){
+				pUnitId=unitList.get(0).getPid();
+			}
+		Map<String, Object> jsonMap=new HashMap<String, Object>();
+		jsonMap.put("pUnitId", pUnitId);
+		jsonMap.put("unitList", unitList);
+		return JSON.toJSONString(jsonMap);
 	}
 
 }

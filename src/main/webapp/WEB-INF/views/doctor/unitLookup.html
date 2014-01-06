@@ -1,8 +1,5 @@
 <div class="pageContent">
-	
-	<form method="post" action="/role/saveGrantModule" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-	<input type="hidden" value="$!{moduleMap.roleid}" name="id">
-	<div class="accordionContent" id="module-tree-grant" layoutH="35" ids="${moduleMap.moduleIds}">
+    <div class="accordionContent" id="unit-tree-lookup" layoutH="35">
     </div>
     
     <div class="formBar">
@@ -23,12 +20,11 @@
             </li>
         </ul>
     </div>
-</form>
 </div>
 
-<script src="/js/system/module.js"></script>
+<script src="/js/system/doctor-unit.js"></script>
 <script>
 $(function() {
-    f.module.loadTree({container:"#module-tree-grant",collapse:"expand",treeCheck:"treeCheck"});
+    f.region.loadTree({container:"#unit-tree-lookup","lookup":true});
 });    
 </script>

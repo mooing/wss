@@ -41,7 +41,7 @@
 	</select>
 	
 		<!-- 按code，like查询下级所有地区 -->
-	<select id="findRegionByLikeCode" resultType="Region" parameterType="string">
+	<select id="findRegionByLikeCode" resultType="Region" parameterType="map">
 		select
 		id,
 		code,
@@ -50,6 +50,6 @@
 		pcode
 		from
 		sys_region where  
-		code like  CONCAT('${code}','%' )  
+		code like  CONCAT('${regionCode}','%' )  
 	</select>
 </mapper>
