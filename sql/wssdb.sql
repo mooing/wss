@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50130
 File Encoding         : 65001
 
-Date: 2014-01-04 14:17:09
+Date: 2014-01-06 22:52:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -233,13 +233,14 @@ CREATE TABLE `hos_doctor` (
   `status` tinyint(4) DEFAULT '1' COMMENT '状态  0:无效；1：有效 默认有效',
   `remark` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='医生表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='医生表';
 
 -- ----------------------------
 -- Records of hos_doctor
 -- ----------------------------
 INSERT INTO hos_doctor VALUES ('1', '9', '李医生', null, '1', '1', '1', '152122', '1', '1', '0', '1', '', null, null, '', '', null, '', '-1', '', '0', '');
 INSERT INTO hos_doctor VALUES ('2', '10', '李医生', null, '2', '1', '1', '1521221985', '0', '1', '0', '2', '主任', null, null, 'chimooing@163.com', '1111', null, '21312312', '-1', '44444', '1', '1111111');
+INSERT INTO hos_doctor VALUES ('3', '11', '李医生12', null, '2', '4', '1', '1521221985', '0', '0', '0', '2', '科长', null, null, '', '', null, '', '-1', '', '1', '');
 
 -- ----------------------------
 -- Table structure for `hos_hospital`
@@ -267,13 +268,17 @@ CREATE TABLE `hos_hospital` (
   `remark` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='医院单位表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='医院单位表';
 
 -- ----------------------------
 -- Records of hos_hospital
 -- ----------------------------
 INSERT INTO hos_hospital VALUES ('1', '妇幼系统', '0', '0', '0', '0', null, '1', null, null, null, null, null, '0', null, null, null, '1', null);
-INSERT INTO hos_hospital VALUES ('2', '驻马店妇幼', '101', '12', '4602010002', '1', '12', '1', '1', '芳芳', '1212', '121212', '1', '1', '12', '', '', '1', '');
+INSERT INTO hos_hospital VALUES ('2', '驻马店妇幼', '101', '12', '4102010002', '1', '12', '1', '1', '芳芳', '1212', '121212', '1', '1', '12', '', '', '1', '');
+INSERT INTO hos_hospital VALUES ('3', '妇幼保健分院11', '101', '12', '410104', '2', '订单1', '1', '1', '1222', '122123123123', '121212', '1', '1', '12', '', '', '1', '');
+INSERT INTO hos_hospital VALUES ('4', '妇幼保健分院12', '101', '12', '4117', '1', '订单1', '2', '1', '1212', '12121212', '1212', '1', '1', '1', '', '', '1', '');
+INSERT INTO hos_hospital VALUES ('5', '驻马店妇幼2', '12', '12', '411721', '2', '12', '2', '1', '1222', '122123123123', '121212', '1', '1', '12', '', '', '1', '');
+INSERT INTO hos_hospital VALUES ('6', '妇幼保健分院11313', '101', '12', '411728', '5', '订单1', '2', '1', '1212', '122123123123', '121212', '1', '2', '12', '', '', '1', '');
 
 -- ----------------------------
 -- Table structure for `subject`
@@ -315,29 +320,26 @@ CREATE TABLE `sys_module` (
   `pid` int(11) DEFAULT NULL COMMENT '父id',
   `sen` varchar(50) DEFAULT NULL COMMENT '英文名',
   `sort` int(11) DEFAULT NULL COMMENT '序号',
+  `href` varchar(100) DEFAULT NULL,
+  `authority_rel` varchar(50) DEFAULT NULL,
+  `p_authority_rel` varchar(50) DEFAULT NULL,
   `status` tinyint(4) DEFAULT '1' COMMENT '状态:0:不可用；1：可用 默认可用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='系统模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='系统模块表';
 
 -- ----------------------------
 -- Records of sys_module
 -- ----------------------------
-INSERT INTO sys_module VALUES ('1', '妇幼系统', '', '0', null, '1', '1');
-INSERT INTO sys_module VALUES ('2', '系统管理', '', '0', null, null, '1');
-INSERT INTO sys_module VALUES ('3', '医院管理', '', '0', null, null, '1');
-INSERT INTO sys_module VALUES ('4', '出生证明', '', '0', null, null, '1');
-INSERT INTO sys_module VALUES ('5', '用户管理', '', '2', null, null, '1');
-INSERT INTO sys_module VALUES ('6', '角色管理', '', '2', null, null, '1');
-INSERT INTO sys_module VALUES ('7', '日志管理', '', '2', null, null, '1');
-INSERT INTO sys_module VALUES ('8', '基础配置', '', '2', null, null, '1');
-INSERT INTO sys_module VALUES ('9', '证件管理', '', '4', null, null, '1');
-INSERT INTO sys_module VALUES ('10', '证件办理', '', '4', null, null, '1');
-INSERT INTO sys_module VALUES ('11', '查询统计', '', '4', null, null, '1');
-INSERT INTO sys_module VALUES ('12', '证件入库', '', '4', null, null, '1');
-INSERT INTO sys_module VALUES ('13', '单位管理', null, '3', null, null, '1');
-INSERT INTO sys_module VALUES ('14', '医生管理', null, '3', null, null, '1');
-INSERT INTO sys_module VALUES ('16', '孕妇管理', null, '15', null, null, '1');
-INSERT INTO sys_module VALUES ('17', '儿童系统', null, '1', null, null, '1');
+INSERT INTO sys_module VALUES ('1', '妇幼系统', '', '0', '', '1', '', 'fy.root', null, '1');
+INSERT INTO sys_module VALUES ('2', '系统管理', null, '1', null, null, '', 'system', 'fy.root', '1');
+INSERT INTO sys_module VALUES ('3', '医院管理', null, '1', null, null, '', 'hospital', 'fy.root', '1');
+INSERT INTO sys_module VALUES ('4', '出生证明', null, '1', null, null, '', 'cert', 'fy.root', '1');
+INSERT INTO sys_module VALUES ('5', '用户管理', null, '2', null, null, '/user/list', 'systemUser', 'system', '1');
+INSERT INTO sys_module VALUES ('6', '角色管理', null, '2', null, null, '/role/list', 'systemRole', 'system', '1');
+INSERT INTO sys_module VALUES ('7', '模块管理', null, '2', null, null, '/module/totree', 'systemModule', 'system', '1');
+INSERT INTO sys_module VALUES ('8', '单位管理', null, '3', null, null, '/unit/totree', 'hospitalUnit', 'hospital', '1');
+INSERT INTO sys_module VALUES ('9', '医生管理', null, '3', null, null, '/doctor/list', 'hospitalDoctor', 'hospital', '1');
+INSERT INTO sys_module VALUES ('10', '子模块', null, '5', null, null, '', 'systemUserChild', 'systemUser', '1');
 
 -- ----------------------------
 -- Table structure for `sys_region`
@@ -28093,7 +28095,7 @@ CREATE TABLE `sys_role_module` (
   `module_id` int(11) NOT NULL COMMENT '模块id',
   `type` int(11) DEFAULT NULL COMMENT '类型 ,1:角色；2：用户',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='角色用户--模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='角色用户--模块表';
 
 -- ----------------------------
 -- Records of sys_role_module
@@ -28101,16 +28103,14 @@ CREATE TABLE `sys_role_module` (
 INSERT INTO sys_role_module VALUES ('16', '1', '3', '2');
 INSERT INTO sys_role_module VALUES ('17', '1', '13', '2');
 INSERT INTO sys_role_module VALUES ('18', '1', '14', '2');
-INSERT INTO sys_role_module VALUES ('19', '3', '2', '2');
-INSERT INTO sys_role_module VALUES ('20', '3', '5', '2');
-INSERT INTO sys_role_module VALUES ('21', '3', '6', '2');
-INSERT INTO sys_role_module VALUES ('22', '3', '7', '2');
-INSERT INTO sys_role_module VALUES ('23', '3', '8', '2');
-INSERT INTO sys_role_module VALUES ('30', '3', '4', '1');
-INSERT INTO sys_role_module VALUES ('31', '3', '9', '1');
-INSERT INTO sys_role_module VALUES ('32', '3', '10', '1');
-INSERT INTO sys_role_module VALUES ('33', '3', '11', '1');
-INSERT INTO sys_role_module VALUES ('34', '3', '12', '1');
+INSERT INTO sys_role_module VALUES ('35', '3', '2', '2');
+INSERT INTO sys_role_module VALUES ('36', '3', '5', '2');
+INSERT INTO sys_role_module VALUES ('37', '3', '6', '2');
+INSERT INTO sys_role_module VALUES ('38', '3', '7', '2');
+INSERT INTO sys_role_module VALUES ('39', '3', '3', '1');
+INSERT INTO sys_role_module VALUES ('40', '3', '8', '1');
+INSERT INTO sys_role_module VALUES ('41', '3', '9', '1');
+INSERT INTO sys_role_module VALUES ('42', '3', '4', '1');
 
 -- ----------------------------
 -- Table structure for `sys_user`
@@ -28129,7 +28129,7 @@ CREATE TABLE `sys_user` (
   `status` tinyint(4) DEFAULT '1' COMMENT '用户状态  0：无效；1：有效 默认有效',
   PRIMARY KEY (`id`),
   KEY `Index_user_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
@@ -28139,6 +28139,7 @@ INSERT INTO sys_user VALUES ('2', 'test1', '111', '6ce65e2812c1b570c55a1e24c4be5
 INSERT INTO sys_user VALUES ('3', 'mooing', 'ckm', '14bd94e76d7310d6b7341efa7d1b7402305725', '2', '2013-12-29 16:36:37', '2013-12-29 16:36:37', null, '144NFKI39nmeB10oh9Hk', '1');
 INSERT INTO sys_user VALUES ('9', 'ww111', null, 'ffaf420d0d6aa5e22aa0aae4f4e9a5e1d1e929', null, '2014-01-01 19:01:11', '2014-01-01 19:01:11', null, '30z4fpRdhMLAp0NkUyS3', '1');
 INSERT INTO sys_user VALUES ('10', 'ww11123', null, '2ceacc3386363e769732f35a877f3c01b71bb4', null, '2014-01-01 19:11:06', '2014-01-01 19:11:06', null, 'vMmowAF51yHk9fYCagf5', '1');
+INSERT INTO sys_user VALUES ('11', 'ww111122222', null, '5d1f061efb7aedad73866cbb985ba6257cbc94', null, '2014-01-06 21:55:47', '2014-01-06 21:55:47', null, '6iv8D4YGikEAaR6PGb3w', '1');
 
 -- ----------------------------
 -- Table structure for `sys_user_role`
@@ -28149,13 +28150,13 @@ CREATE TABLE `sys_user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO sys_user_role VALUES ('20', '1', '2');
 INSERT INTO sys_user_role VALUES ('21', '1', '1');
-INSERT INTO sys_user_role VALUES ('26', '3', '3');
-INSERT INTO sys_user_role VALUES ('27', '3', '4');
-INSERT INTO sys_user_role VALUES ('28', '3', '2');
+INSERT INTO sys_user_role VALUES ('29', '3', '3');
+INSERT INTO sys_user_role VALUES ('30', '3', '4');
+INSERT INTO sys_user_role VALUES ('31', '3', '2');
