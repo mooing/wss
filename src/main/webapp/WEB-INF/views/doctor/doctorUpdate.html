@@ -18,13 +18,15 @@
             <label>性别：</label>
              <select class="combox required" name="sex" >
                  <option value="">--请选择--</option>
-                 <option value="1" #if($!{doctor.id}==1) selected  #end>男</option>
-                 <option value="2"  #if($!{doctor.id}==2) selected  #end>女</option>
+                 <option value="1" #if($!{doctor.sex}==1) selected  #end>男</option>
+                 <option value="2"  #if($!{doctor.sex}==2) selected  #end>女</option>
              </select>        
         </p>
        <p>
             <label>工作单位：</label>
-            <input type="text" name="hospitalId" value="1" value="$!{doctor.hospitalId}"/>
+               <input type="hidden" name="hospitalId" value="$!{doctor.hospitalId}">
+            <input type="text" readonly="" name="hospitalName" class="textInput readonly" value="$!{doctor.hospitalName}">
+            <a lookupgroup="" href="/unit/gounitlookup" class="btnLook"  width="350" height="400">查找带回</a>
         </p>
        <p>
             <label>证件类型：</label>

@@ -81,6 +81,8 @@
 		hos.name,
 		hos.region_code regionCode,
 		hos.ext_address extAddress,
+		hos.hos_code hosCode,
+		hos.org_code orgCode,
 		hos.sort,
 		hos.isbjy,
 		hos.contacts,
@@ -102,6 +104,7 @@
 		hos.pid,
 		hos.name,
 		hos.region_code regionCode,
+		region.name regionName,
 		hos.ext_address extAddress,
 		hos.sort,
 		hos.isbjy,
@@ -112,7 +115,7 @@
 		hos.level,
 		hos.classify_code classifyCode,
 		hos.status
-	from hos_hospital hos  where id=#{id}  
+	from hos_hospital hos  ,sys_region region where hos.region_code=region.code and hos.id=#{id}  
 	</select>
 	<!-- 查询所有医院 及对应地址信息-->
 	<select id="findHospitalAndRegion" resultType="Hospital">

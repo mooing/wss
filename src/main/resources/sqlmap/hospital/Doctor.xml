@@ -44,6 +44,7 @@
 		doc.id,
 		doc.user_id userid,
 		doc.name,
+		hos.name hospitalName,
 		u.username,
 		doc.birthday,
 		doc.sex,
@@ -67,7 +68,7 @@
 		doc.status,
 		doc.remark
 		from
-		hos_doctor doc ,sys_user u where doc.user_id=u.id and doc.id=#{id}
+		hos_doctor doc ,sys_user u,hos_hospital hos where doc.user_id=u.id and doc.hospital_id=hos.id and doc.id=#{id}
 		</select>
 
 	<!-- 医生管理时 ,保存医生信息 -->

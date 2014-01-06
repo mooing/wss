@@ -34,7 +34,7 @@ import com.mooing.wss.system.model.User;
 public class DoctorController extends BaseController {
 	@Autowired
 	private DoctorService doctorService;
-	public static String navTabId = "hospitalUnit";
+	public static String navTabId = "hospitalDoctor";
 
 	@RequestMapping("list")
 	public ModelAndView findAllDoctor(SearchBoxModel searchBox, HttpSession session) {

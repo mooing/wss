@@ -3,7 +3,7 @@
 <span>当前登录用户没有新增用户权限,请用管理员身份登录！</span>
 #else
 <form method="post" action="/doctor/add" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-    <div class="pageFormContent" layoutH="35">
+    <div class="pageFormContent" layoutH="50">
         <p>
             <label>用户名：</label>
             <input type="text" name="username" class="required" />        
@@ -18,7 +18,7 @@
         </p>
         <p>
             <label>性别：</label>
-             <select class="combox required" name="sex" >
+             <select class="required combox" name="sex" >
                  <option value="">--请选择--</option>
                  <option value="1">男</option>
                  <option value="2">女</option>
@@ -28,7 +28,7 @@
             <label>工作单位：</label>
              <input type="hidden" name="hospitalId" value="">
             <input type="text" readonly="" name="hospitalName" class="textInput readonly">
-            <a lookupgroup="" href="/unit/gounitlookup" class="btnLook">查找带回</a>
+            <a lookupgroup="" href="/unit/gounitlookup" class="btnLook"  width="350" height="400">查找带回</a>
         </p>
        <p>
             <label>证件类型：</label>

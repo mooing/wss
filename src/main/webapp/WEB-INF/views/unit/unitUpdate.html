@@ -21,8 +21,8 @@
         <p>
             <label>所在地区：</label>
              <input type="hidden" name="regionCode" value="$!{hospital.regionCode}">
-            <input type="text" readonly="" name="regionName" class="textInput readonly">
-             <a lookupgroup="" href="/region/goregionlookup" class="btnLook">查找带回</a>
+            <input type="text" readonly="" name="regionName" class="textInput readonly" value=$!{hospital.regionName}>
+             <a lookupgroup="" href="/region/goregionlookup"  width="350" height="400" class="btnLook">查找带回</a>
         </p>
         <p>
             <label>补充地区：</label>

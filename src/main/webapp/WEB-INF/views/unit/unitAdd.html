@@ -5,7 +5,7 @@
 <form method="post" action="/unit/addunit" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
     
     <input type="hidden" name="pid" value="${pid}">
-    <div class="pageFormContent" layoutH="35">
+    <div class="pageFormContent" layoutH="50">
         <p>
             <label>单位名称：</label>
             <input type="text" name="name" class="required" />        
@@ -22,7 +22,7 @@
             <label>所在地区：</label>
             <input type="hidden" name="regionCode" value="">
             <input type="text" readonly="" name="regionName" class="textInput readonly">
-            <a lookupgroup="" href="/region/goregionlookup" class="btnLook">查找带回</a>
+            <a lookupgroup="" href="/region/goregionlookup"  width="350" height="400" class="btnLook">查找带回</a>
         </p>
         <p>
             <label>补充地区：</label>
