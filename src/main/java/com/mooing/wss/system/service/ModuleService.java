@@ -143,6 +143,17 @@ public class ModuleService extends SystemBaseService {
 	}
 
 	/**
+	 * 获取一级菜单，供layout使用
+	 * 
+	 * @param loginUser
+	 */
+	public List<Module> getFirstModuleList(User loginUser) {
+		List<Module> firstModule = systemCache.getFirstModule();
+		getLoginUserModuleAuth(loginUser, firstModule);
+		return firstModule;
+	}
+
+	/**
 	 * 去除无权限模块
 	 * 
 	 * @param loginUser
@@ -150,17 +161,20 @@ public class ModuleService extends SystemBaseService {
 	 */
 	private void getLoginUserModuleAuth(User loginUser, List<Module> firstModule) {
 		if (CollectionUtils.isNotEmpty(firstModule)) {
-			List<String> moduleAuthList = loginUser.getModuleAuthList();
-			List<Module> removeList = Lists.newArrayList();
-			if (CollectionUtils.isNotEmpty(moduleAuthList)) {
-				for (Module module : firstModule) {
-					for (String auth : moduleAuthList) {
-						if (module.getAuthorityRel().equals(auth)) {
-							removeList.add(module);
+			// admin 拥有最高权限
+			if (!loginUser.getUsername().equals("admin")) {
+				List<String> moduleAuthList = loginUser.getModuleAuthList();
+				List<Module> removeList = Lists.newArrayList();
+				if (CollectionUtils.isNotEmpty(moduleAuthList)) {
+					for (Module module : firstModule) {
+						for (String auth : moduleAuthList) {
+							if (module.getAuthorityRel().equals(auth)) {
+								removeList.add(module);
+							}
 						}
 					}
+					firstModule.removeAll(removeList);
 				}
-				firstModule.removeAll(removeList);
 			}
 		}
 	}

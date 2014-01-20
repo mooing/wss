@@ -1,11 +1,7 @@
-f.module = {
+f.layout = {
     getTree:function(data, pId, option){
         var tree;
-        if (pId == 2) {
-            tree = '<div class="accordionContent"  ><ul class="tree treeFolder '+option.collapse+' ">';
-        } else {
-            tree = '<ul>';
-        }
+            tree = '<div class="accordionContent"  ><ul class="tree">';
         for (var i in data) {
             if (data[i].pid == pId) {
                 tree += "<li  target='mid'  rel='" + data[i].id + "'><a target='navTab'  rel='" + data[i].authorityRel + "' href='"+data[i].href+"' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"'>" + data[i].modname + "</a>";

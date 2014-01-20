@@ -11,21 +11,13 @@
         </div>
         <div id="navMenu">
             <ul>
+            #foreach($!firstModule in $!firstModuleList )
                 <li class="selected">
-                    <a href="javascript:void(0)" rel="system">
-                        <span>系统管理</span>
+                    <a href="javascript:void(0)" rel="$!{firstModule.authorityRel}">
+                        <span>${firstModule.modname}</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:void(0)" rel="hospital">
-                        <span>医院管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" rel="cert">
-                        <span>出生证明</span>
-                    </a>
-                </li>
+                #end
             </ul>
         </div>
     </div>
@@ -52,96 +44,10 @@
                         系统管理
                     </h2>
                 </div> -->
-                <div class="accordionContent" rel="system">
-                    <ul class="tree">
-                        <li>
-                            <a href="/user/list" target="navTab" rel="systemUser">用户管理</a>
-                        </li>
-                        <li>
-                            <a href="/role/list" target="navTab" rel="systemRole">角色管理</a>
-                        </li>
-                        <li>
-                            <a href="/module/totree" target="navTab" rel="systemModule">模块管理</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="accordionContent" rel="hospital">
-                    <ul class="tree">
-                        <li>
-                            <a href="/unit/totree" target="navTab" rel="hospitalUnit">单位管理</a>
-                        </li>
-                        <li>
-                            <a href="/doctor/list" target="navTab" rel="hospitalDoctor">医生管理</a>
-                        </li>
-                    </ul>
-                </div>
                 
-                <!-- <div class="accordionHeader">
-                    <h2>
-                        <span>Folder</span>
-                        出生证明
-                    </h2>
-                </div> -->
-                <div class="accordionContent" rel="cert" style="display: none;">
-                    <ul class="tree treeFolder">
-                        <li>
-                            <a>证件管理</a>
-                            <ul>
-                                <li>
-                                    <a href="/test/list" target="navTab" rel="">证件入库</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">证件申请</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">证件召回</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">废证入库</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a>证件办理</a>
-                            <ul>
-                                <li>
-                                    <a href="/cert/unissue" target="navTab" rel="">待签发列表</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">已签发列表</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">特殊签发</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a>查询统计</a>
-                            <ul>
-                                <li>
-                                    <a href="" target="navTab" rel="">单证追踪</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">动态库存</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">证件使用综合统计</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">办证查询统计</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">废证率统计分析</a>
-                                </li>
-                                <li>
-                                    <a href="" target="navTab" rel="">统计报表</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                <div class="accordionContent" id="layout-module-tree">
+    </div>
+                
             </div>
         </div>
     </div>
@@ -182,9 +88,14 @@
             </div>
         </div>
     </div>
-
 </div>
-
+<script src="/js/layout/layout.js"></script>
+<script>
+	$(function() {
+	    f.layout.loadTree();
+	    
+	});
+</script>
 <!-- footer -->
 <div id="footer">Copyright &copy; 2013</div>
 #parse("/WEB-INF/views/common/footer.html")

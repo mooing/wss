@@ -53,8 +53,12 @@ public class SystemController extends BaseController {
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public ModelAndView home(HttpServletRequest request) {
-		return new ModelAndView("layout");
+	public ModelAndView home(HttpServletRequest request, HttpSession session) {
+		ModelAndView mv = new ModelAndView("layout");
+		User loginUser = getLoginUser(session);
+		List<Module> firstModuleList = moduleService.getFirstModuleList(loginUser);
+		mv.addObject("firstModuleList", firstModuleList);
+		return mv;
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -108,10 +112,10 @@ public class SystemController extends BaseController {
 		// 获取当前用户所有模块权限,包括角色对应的权限
 		List<String> moduleAuthList = userService.findModulesByUser(user.getId());
 		user.setModuleAuthList(moduleAuthList);
- 
+
 		// 动态获取模块数据
-//		List<Module> firstModuleList = moduleService.getFirstModule();
-//		mv.addObject("firstModuleList", firstModuleList);
+		// List<Module> firstModuleList = moduleService.getFirstModule();
+		// mv.addObject("firstModuleList", firstModuleList);
 
 		UserSession userSession = new UserSession(user);
 		// 设置用户会话信息
