@@ -1,7 +1,8 @@
+var f = {};
 f.layout = {
-    getTree:function(data, pId, option){
+    getTree:function(data, pId, option,isTree){
         var tree;
-            tree = '<div class="accordionContent"  ><ul class="tree">';
+        tree = isTree ? '<ul class="tree">' : '<ul>';
         for (var i in data) {
             if (data[i].pid == pId) {
                 tree += "<li  target='mid'  rel='" + data[i].id + "'><a target='navTab'  rel='" + data[i].authorityRel + "' href='"+data[i].href+"' "+($.inArray(data[i].id+"",option.ids) >= 0 ? 'checked' : '')+" tname='moduleIds' tvalue='"+data[i].id+"'>" + data[i].modname + "</a>";
@@ -9,7 +10,7 @@ f.layout = {
                 tree += "</li>";
             }
         }
-        return tree + "</ul></div>";
+        return tree + "</ul>";
     },   
     
     loadMain:function(){
@@ -19,7 +20,8 @@ f.layout = {
          async:false,
          dataType:"json",
          success:function( data ){
-        	 var mainMenu;
+        	 var mainMenu,
+                $menu = $("");
          	  mainMenu=' <ul>';
          	  for(var i=0;i<data.length;i++){
          		 mainMenu+='<li>';
@@ -27,9 +29,19 @@ f.layout = {
          		 mainMenu+='<span>'+data[i].modname+'</span>';
          		 mainMenu+='</a>';
          		 mainMenu+='</li>';
-         	  }
+                $("#menuContainer").append('<div class="accordionContent" rel="'+data[i].authorityRel+'" pid="'+data[i].id+'"></div>');
+              }
               mainMenu+=' </ul>';
               $("#navMenu").html(mainMenu);
+              // 顶导
+            $("#navMenu a").click(function(){
+                var title = $(this).text(),
+                    rel = $(this).attr("rel");
+                $("#navMenu li").removeClass("selected");
+                $(this).closest("li").addClass("selected");
+                $("#sidebar .toggleCollapse h2").text( title );
+                $("#sidebar .accordionContent").hide().filter("[rel="+rel+"]").show();
+            });
          }
      });
     },
@@ -48,7 +60,10 @@ f.layout = {
             async:false,
             dataType:"json",
             success:function( data ){
-                 $(option.container).html(that.getTree(data,2,option).replaceAll("<ul></ul>",""));
+                $("#menuContainer .accordionContent").each(function(){
+                    var pid = $(this).attr("pid");
+                    $(this).html( that.getTree(data,pid,option,true).replaceAll('<ul></ul>',"") );
+                });
             }
         });
     },
@@ -56,7 +71,7 @@ f.layout = {
         collapse:"collapse",
         treeCheck:"",
         oncheck:$.noop,
-        container:"#layout-module-tree",
+        container:"",
         ids:[]
     }
 

@@ -38,10 +38,11 @@
     <script src="/js/dwz.min.js"></script>
     <script src="/js/dwz.regional.zh.js"></script>
     <script src="/js/main.js"></script>
-
+	<script src="/js/layout/layout.js"></script>
     <script type="text/javascript">
-    var f = {};
+    // var f = {};
 	$(function(){
+		f.layout.loadTree();
 		DWZ.init("/js/dwz.frag.xml", {
 			loginUrl:"/system/login", 
 			loginTitle:"登录",
